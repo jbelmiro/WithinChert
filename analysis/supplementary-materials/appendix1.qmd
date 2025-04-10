@@ -1,0 +1,1922 @@
+---
+title: "Title Goes Here"
+author:
+  - Jane Doe:
+      correspondence: "yes"
+      email: janedoe@fosg.org
+      orcid: 0000-0003-1689-0557
+      institute:
+        - fosg
+        - fop
+  - John Q. Doe:
+      institute: fosg
+      orcid: 0000-0003-1689-0558
+  - Peder Ås:
+      institute: fosg
+      orcid: 0000-0003-1689-0559
+  - Juan Pérez:
+      orcid: 0000-0003-1689-0551
+      institute:
+        - name: Acme Corporation
+  - Max Mustermann:
+      orcid: 0000-0003-1689-0552
+institute:
+  - fosg:
+      name: Formatting Open Science Group
+      address: 23 Science Street, Eureka, Mississippi, USA
+  - fop: Federation of Planets
+title-block-published: "Last updated"  
+date: now
+date-format: long
+format: 
+  docx:
+    reference-doc: "../templates/template.docx" # Insert path for the DOCX file
+execute:
+  echo: true
+  warning: false
+  message: false
+  comment: "#>"
+  fig-path: "../figures/SOM"
+  fig-dpi: 600
+filters:
+  - ../templates/scholarly-metadata.lua
+  - ../templates/author-info-blocks.lua
+  - ../templates/pagebreak.lua
+bibliography: references.bib
+csl: "../templates/journal-of-archaeological-science.csl" # Insert path for the bib-style
+
+---
+
+# Supplementary materials 1
+
+## XRD results
+
+In this subsection we present the individual spectra graphs for all XRD samples, organised by geological formation, excluding those presented in the main paper and the results analysed and interpreted at the Geociencias Barcelona-CSIC. The original data necessary to produce these visualisations can be found and freely accessed in our online compendium, in the associated GitHub project under the path "../data/xrd_data".
+
+```{r}
+#| label: somxrd-library
+
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(janitor)
+library(tidyr)
+library(ggpmisc)
+
+```
+
+```{r}
+#| label: somxrd-readtables
+
+# Read grouped supporting data
+xrd_perc <- read_csv('data/xrd_data/xrd_goals.csv') # File with component percentage of all samples for annotations
+xrd_marks <- read_csv('data/xrd_data/xrd_peaks.csv') # File with peak data and d spacing for plot labels
+
+xrd_marks <- xrd_marks |> # Correct the quartz denomination on base dataset
+  dplyr::mutate(Phase = case_when(
+    Phase == "SiO2" ~ "Quartz",
+    TRUE ~ Phase))
+
+# Read individual xrd files
+sp6_xrd <- read_csv('data/xrd_data/SP6_xrd.csv')
+sp7_xrd <- read_csv('data/xrd_data/SP7_xrd.csv')
+sp10_xrd <- read_csv('data/xrd_data/SP10_xrd.csv')
+sp14_xrd <- read_csv('data/xrd_data/SP14_xrd.csv')
+sp18_xrd <- read_csv('data/xrd_data/SP18_xrd.csv')
+sp21_xrd <- read_csv('data/xrd_data/SP21_xrd.csv')
+sp28_xrd <- read_csv('data/xrd_data/SP28_xrd.csv')
+sp30_xrd <- read_csv('data/xrd_data/SP30_xrd.csv')
+sp33_xrd <- read_csv('data/xrd_data/SP33_xrd.csv')
+sp34_xrd <- read_csv('data/xrd_data/SP34_xrd.csv')
+sp40_xrd <- read_csv('data/xrd_data/SP40_xrd.csv')
+sp50_xrd <- read_csv('data/xrd_data/SP50_xrd.csv')
+sp52_xrd <- read_csv('data/xrd_data/SP52_xrd.csv')
+sp57_xrd <- read_csv('data/xrd_data/SP57_xrd.csv')
+sp59_xrd <- read_csv('data/xrd_data/SP59_xrd.csv')
+sp61_xrd <- read_csv('data/xrd_data/SP61_xrd.csv')
+sp63_xrd <- read_csv('data/xrd_data/SP63_xrd.csv')
+sp66_xrd <- read_csv('data/xrd_data/SP66_xrd.csv')
+
+```
+
+```{r}
+#| label: fig-xrd-sp6
+#| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Cabo S. Vicente (SP6_CSV). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+
+# SP6 Cabo S. Vicente
+sp6_marks <- xrd_marks |>
+  filter(Sample == "SP6")
+sp6_perc <- xrd_perc |>
+  filter(Sample == "SP6") |>
+  select(-Sample, -ESD)
+
+
+sp6_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 5000) |> 
+  select(-Quartz_nb, -Dolomite_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz, Dolomite), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Dolomite", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 50000)) +
+  geom_point(data = sp6_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp6_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon", "steelblue1" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 50000, label = list(cbind(sp6_perc)))
+
+```
+
+```{r}
+#| label: fig-xrd-sp7
+#| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Cabo S. Vicente (SP7_CSV). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+
+sp7_marks <- xrd_marks |>
+  filter(Sample == "SP7")
+sp7_perc <- xrd_perc |>
+  filter(Sample == "SP7") |>
+  select(-Sample, -ESD)
+
+sp7_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |> 
+  rename(Quartz = `Quartz (SiO2)`) |> 
+  rename(Dolomite = `Dolomite (CaMg(CO3)2)`) |> 
+  select(-Quartz_nb, -Dolomite_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz, Dolomite), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Dolomite", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 65000)) +
+  geom_point(data = sp7_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp7_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon", "steelblue1" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 60000, label = list(cbind(sp7_perc)))
+
+```
+
+```{r}
+#| label: fig-xrd-sp10
+#| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Ponta dos Altos (SP10_PdA). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+
+sp10_marks <- xrd_marks |>
+  filter(Sample == "SP10")
+sp10_perc <- xrd_perc |>
+  filter(Sample == "SP10") |>
+  select(-Sample, -ESD)
+
+sp10_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |> 
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz, Calcite), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Calcite", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 55000)) +
+  geom_point(data = sp10_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp10_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon", "steelblue1" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 55000, label = list(cbind(sp10_perc)))
+
+```
+
+```{r}
+#| label: fig-xrd-sp14
+#| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Praia do Belixe (SP14_PBX). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+
+sp14_marks <- xrd_marks |>
+  filter(Sample == "SP14")
+sp14_perc <- xrd_perc |>
+  filter(Sample == "SP14") |>
+  select(-Sample, -ESD)
+
+sp14_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |> 
+  select(-Quartz_nb, -Dolomite_nb, -Halite_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz, Dolomite, Halite), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Dolomite", "Halite", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 50000)) +
+  geom_point(data = sp14_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp14_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon", "steelblue1", "darkgoldenrod1" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 50000, label = list(cbind(sp14_perc)))
+
+```
+
+```{r}
+#| label: fig-xrd-sp18
+#| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Praia do Belixe (SP18_PBX). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+
+sp18_marks <- xrd_marks |>
+  filter(Sample == "SP18")
+sp18_perc <- xrd_perc |>
+  filter(Sample == "SP18") |>
+  select(-Sample, -ESD)
+
+sp18_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |> 
+  select(-Quartz_nb, -Dolomite_nb, -Halite_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz, Dolomite, Halite), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Dolomite", "Halite", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 50000)) +
+  geom_point(data = sp18_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp18_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon", "steelblue1", "darkgoldenrod1" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 50000, label = list(cbind(sp18_perc)))
+
+```
+
+```{r}
+#| label: fig-xrd-sp21
+#| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Belixe Sul, north of Praia do Belixe (SP21_BLS). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+
+sp21_marks <- xrd_marks |>
+  filter(Sample == "SP21")
+sp21_perc <- xrd_perc |>
+  filter(Sample == "SP21") |>
+  select(-Sample, -ESD)
+
+sp21_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |>
+  select(-Quartz_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 55000)) +
+  geom_point(data = sp21_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp21_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 50000, label = list(cbind(sp21_perc)))
+
+```
+
+```{r}
+#| label: fig-xrd-sp28
+#| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Aspa, north of Cabo S. Vicente (SP28_ASP). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+
+sp28_marks <- xrd_marks |>
+  filter(Sample == "SP28")
+sp28_perc <- xrd_perc |>
+  filter(Sample == "SP28") |>
+  select(-Sample, -ESD)
+
+sp28_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |>
+  select(-Quartz_nb, -Dolomite_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz, Dolomite), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Dolomite", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 60000)) +
+  geom_point(data = sp28_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp28_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon", "steelblue1" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 55000, label = list(cbind(sp28_perc)))
+
+```
+
+```{r}
+#| label: fig-xrd-sp30
+#| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Foz dos Fornos (SP30_FZF). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+
+sp30_marks <- xrd_marks |>
+  filter(Sample == "SP30")
+sp30_perc <- xrd_perc |>
+  filter(Sample == "SP30") |>
+  select(-Sample, -ESD)
+
+sp30_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |>
+  select(-Quartz_nb, -Dolomite_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz, Dolomite), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Dolomite", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 60000)) +
+  geom_point(data = sp30_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp30_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon", "steelblue1" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 55000, label = list(cbind(sp30_perc)))
+
+```
+
+```{r}
+#| label: fig-xrd-sp33
+#| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Foz dos Fornos (SP33_FZF). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+
+sp33_marks <- xrd_marks |>
+  filter(Sample == "SP33")
+sp33_perc <- xrd_perc |>
+  filter(Sample == "SP33") |>
+  select(-Sample, -ESD)
+
+sp33_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |>
+  select(-Quartz_nb, -Dolomite_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz, Dolomite), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Dolomite", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 60000)) +
+  geom_point(data = sp33_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp33_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon", "steelblue1" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 55000, label = list(cbind(sp33_perc)))
+
+```
+
+```{r}
+#| label: fig-xrd-sp34
+#| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Ponta dos Altos (SP34_PdA_a). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+
+sp34_marks <- xrd_marks |>
+  filter(Sample == "SP34")
+sp34_perc <- xrd_perc |>
+  filter(Sample == "SP34") |>
+  select(-Sample, -ESD)
+
+sp34_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |>
+  select(-Quartz_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 60000)) +
+  geom_point(data = sp34_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp34_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 55000, label = list(cbind(sp34_perc)))
+
+```
+
+```{r}
+#| label: fig-xrd-sp40
+#| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Ferrel (SP40_b). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+
+sp40_marks <- xrd_marks |>
+  filter(Sample == "SP40")
+sp40_perc <- xrd_perc |>
+  filter(Sample == "SP40") |>
+  select(-Sample, -ESD)
+
+sp40_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |> 
+  rename(Quartz = SiO2) |> 
+  select(-SiO2_nb, -Calcite_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz, Calcite), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Calcite", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 50000)) +
+  geom_point(data = sp40_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp40_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon", "darkseagreen" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 50000, label = list(cbind(sp40_perc)))
+
+```
+
+```{r}
+#| label: fig-xrd-sp50
+#| fig-cap: Plot of minerals identified through XRD in the Middle Jurassic (Malhão formation) chert sample from the outcrop Casal da Colina (SP50_CdC). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+
+sp50_marks <- xrd_marks |>
+  filter(Sample == "SP50")
+sp50_perc <- xrd_perc |>
+  filter(Sample == "SP50") |>
+  select(-Sample, -ESD)
+
+sp50_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |>
+  select(-Quartz_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 70000)) +
+  geom_point(data = sp50_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp50_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 65000, label = list(cbind(sp50_perc)))
+
+```
+
+```{r}
+#| label: fig-xrd-sp52
+#| fig-cap: Plot of minerals identified through XRD in the Middle Jurassic (Malhão formation) chert sample from the outcrop Casal da Colina (SP52_CdC). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+
+sp52_marks <- xrd_marks |>
+  filter(Sample == "SP52")
+sp52_perc <- xrd_perc |>
+  filter(Sample == "SP52") |>
+  select(-Sample, -ESD)
+
+sp52_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |> 
+  select(-Quartz_nb, -Dolomite_nb, -Calcite_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz, Dolomite ,Calcite), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Dolomite", "Calcite", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 65000)) +
+  geom_point(data = sp52_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp52_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon", "steelblue1", "darkseagreen" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 55000, label = list(cbind(sp52_perc)))
+
+```
+
+```{r}
+#| label: fig-xrd-sp57
+#| fig-cap: Plot of minerals identified through XRD in the Upper Jurassic (Jordana formations) chert sample from the outcrop Jordana (SP57_JOR). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+
+sp57_marks <- xrd_marks |>
+  filter(Sample == "SP57")
+sp57_perc <- xrd_perc |>
+  filter(Sample == "SP57") |>
+  select(-Sample, -ESD)
+
+sp57_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |> 
+  select(-Quartz_nb, -Calcite_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz, Calcite), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Calcite", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 35000)) +
+  geom_point(data = sp57_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp57_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon", "darkseagreen" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 30000, label = list(cbind(sp57_perc)))
+
+```
+
+```{r}
+#| label: fig-xrd-sp59
+#| fig-cap: Plot of minerals identified through XRD in the Upper Jurassic (Jordana formation) chert sample from the outcrop Jordana (SP59_JOR). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+
+sp59_marks <- xrd_marks |>
+  filter(Sample == "SP59")
+sp59_perc <- xrd_perc |>
+  filter(Sample == "SP59") |>
+  select(-Sample, -ESD)
+
+sp59_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |> 
+  select(-Quartz_nb, -Calcite_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz, Calcite), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Calcite", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 35000)) +
+  geom_point(data = sp59_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp59_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon", "darkseagreen" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 30000, label = list(cbind(sp59_perc)))
+
+```
+
+```{r}
+#| label: fig-xrd-sp61
+#| fig-cap: Plot of minerals identified through XRD in the Upper Jurassic (Jordana formation) chert sample from the secondary outcrop Peral (SP61_PER). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+
+sp61_marks <- xrd_marks |>
+  filter(Sample == "SP61")
+sp61_perc <- xrd_perc |>
+  filter(Sample == "SP61") |>
+  select(-Sample, -ESD)
+
+sp61_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |> 
+  select(-Quartz_nb, -Calcite_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz, Calcite), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Calcite", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 65000)) +
+  geom_point(data = sp61_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp61_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon", "darkseagreen" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 60000, label = list(cbind(sp61_perc)))
+
+```
+
+```{r}
+#| label: fig-xrd-sp63
+#| fig-cap: Plot of minerals identified through XRD in the Middle Jurassic (Malhão formation) chert sample from the outcrop Oliveiras (SP63_OLV). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+
+sp63_marks <- xrd_marks |>
+  filter(Sample == "SP63")
+sp63_perc <- xrd_perc |>
+  filter(Sample == "SP63") |>
+  select(-Sample, -ESD)
+
+sp63_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |>
+  select(-Quartz_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 70000)) +
+  geom_point(data = sp63_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp63_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 65000, label = list(cbind(sp63_perc)))
+
+```
+
+```{r}
+#| label: fig-xrd-sp66
+#| fig-cap: Plot of minerals identified through XRD in the Middle Jurassic (Malhão formation) chert sample from the outcrop Malhão (SP66_MALH). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+
+sp66_marks <- xrd_marks |>
+  filter(Sample == "SP66")
+sp66_perc <- xrd_perc |>
+  filter(Sample == "SP66") |>
+  select(-Sample, -ESD)
+
+sp66_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |>
+  select(-Quartz_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 70000)) +
+  geom_point(data = sp66_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp66_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 65000, label = list(cbind(sp66_perc)))
+
+```
+
+## SEM-EDS results
+
+```{r}
+#| label: sem-read-som
+
+M2_3_map2 <- read_csv('analysis/data/raw_data/sem_data/M2_3_map2.csv')
+M3_1 <- read_csv('analysis/data/raw_data/sem_data/M3_1_map1_map2.csv')
+M3_3_s1 <- read_csv('analysis/data/raw_data/sem_data/M3_3_s1.csv')
+M3_3_s2 <- read_csv('analysis/data/raw_data/sem_data/M3_3_s2.csv')
+M4_2_s5_1 <- read_csv('analysis/data/raw_data/sem_data/M4_2_s5_1.csv')
+M4_2_s5_4 <- read_csv('analysis/data/raw_data/sem_data/M4_2_s5_4.csv')
+M8_2 <- read_csv('analysis/data/raw_data/sem_data/M8_2.csv')
+M10_4 <- read_csv('analysis/data/raw_data/sem_data/M10_4.csv')
+M11_1 <- read_csv('analysis/data/raw_data/sem_data/M11_1.csv')
+M12_1_s2_1 <- read_csv('analysis/data/raw_data/sem_data/M12_1_s2_1.csv')
+M12_1_s3_1 <- read_csv('analysis/data/raw_data/sem_data/M12_1_s3_1.csv')
+M12_3_s3_2 <- read_csv('analysis/data/raw_data/sem_data/M12_3_s3_2.csv')
+M12_5_s1_1 <- read_csv('analysis/data/raw_data/sem_data/M12_5_s1_1.csv')
+M12_5_s1_3 <- read_csv('analysis/data/raw_data/sem_data/M12_5_s1_3.csv')
+M12_5_s3_3 <- read_csv('analysis/data/raw_data/sem_data/M12_5_s3_3.csv')
+M12_5_s6_1 <- read_csv('analysis/data/raw_data/sem_data/M12_5_s6_1.csv')
+M12_5_s6_2 <- read_csv('analysis/data/raw_data/sem_data/M12_5_s6_2.csv')
+M13_1_3_s2 <- read_csv('analysis/data/raw_data/sem_data/M13_1_3_s2.csv')
+M14_3_2_s1_1 <- read_csv('analysis/data/raw_data/sem_data/M14_3_2_s1_1.csv')
+M14_3_2_s2_1 <- read_csv('analysis/data/raw_data/sem_data/M14_3_2_s2_1.csv')
+M14_4_1 <- read_csv('analysis/data/raw_data/sem_data/M14_4_1.csv')
+M15_2_s2_1 <- read_csv('analysis/data/raw_data/sem_data/M15_2_s2_1.csv')
+M15_2_s2_2 <- read_csv('analysis/data/raw_data/sem_data/M15_2_s2_2.csv')
+M16_1_1 <- read_csv('analysis/data/raw_data/sem_data/M16_1_1.csv')
+M18_1_1 <- read_csv('analysis/data/raw_data/sem_data/M18_1_1.csv')
+M18_5_1 <- read_csv('analysis/data/raw_data/sem_data/M18_5_1.csv')
+M20_2_1 <- read_csv('analysis/data/raw_data/sem_data/M20_2_1.csv')
+M22_4.1_1 <- read_csv('analysis/data/raw_data/sem_data/M22_4.1_1.csv')
+M22_5.1_1 <- read_csv('analysis/data/raw_data/sem_data/M22_5.1_1.csv')
+M22_5.1_3 <- read_csv('analysis/data/raw_data/sem_data/M22_5.1_3.csv')
+M23_2_1 <- read_csv('analysis/data/raw_data/sem_data/M23_2_1.csv')
+M23_7_1 <- read_csv('analysis/data/raw_data/sem_data/M23_7_1.csv')
+M24_1_1 <- read_csv('analysis/data/raw_data/sem_data/M24_1_1.csv')
+M24_1_2 <- read_csv('analysis/data/raw_data/sem_data/M24_1_2.csv')
+
+```
+
+
+```{r}
+#| label: sem-graphs-som
+
+# Prepare the energy ranges
+energy_ranges <- list(
+  C = c(0.2, 0.3),
+  O = c(0.5, 0.6),
+  F = c(0.67, 0.69),
+  Na = c(1.04, 1.06),
+  Mg = c(1.25, 1.27),
+  Mg_beta = c(1.3, 1.4),
+  Al = c(1.48, 1.5),
+  Si = c(1.7, 1.8),
+  P = c(2, 2.1),
+  S = c(2.3, 2.32),
+  S_beta = c(2.46, 2.47),
+  Cl = c(2.62, 2.64),
+  K = c(3.31, 3.33),
+  K_beta = c(3.59, 3.61),
+  Ca = c(3.68, 3.7),
+  Ca_beta = c(4.01, 4.02),
+  Ca_L = c(0.34, 0.36),
+  Ti = c(4.5, 4.6),
+  Ti_beta = c(4.9, 5),
+  Ti_L = c(0.45, 0.47),
+  Fe = c(6.38, 6.41),
+  Fe_beta = c(7, 7.2),
+  Fe_L = c(0.69, 0.73))
+
+# M24_1_2
+filtered_M24_1_2 <- subset(M24_1_2, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M24_1_2 <- list()
+for (element in names(energy_ranges)) {
+  range_M24_1_2 <- energy_ranges[[element]]
+  subset_M24_1_2 <- subset(filtered_M24_1_2, Energy >= range_M24_1_2[1] & Energy <= range_M24_1_2[2])
+  if (nrow(subset_M24_1_2) > 0) {
+    max_row_M24_1_2 <- subset_M24_1_2[which.max(subset_M24_1_2$Counts), ]
+    peaks_list_M24_1_2[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M24_1_2$Energy,
+      Counts = max_row_M24_1_2$Counts
+    )
+  }
+}
+
+peaks_M24_1_2 <- do.call(rbind, peaks_list_M24_1_2)
+rownames(peaks_M24_1_2) <- NULL
+peaks_M24_1_2 <- peaks_M24_1_2 |> 
+  filter(Counts > 250) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F", "S_beta", "S", "Cl"))
+
+M24_1_2_graph <- filtered_M24_1_2 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M24_1_2, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M24_1_2, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M24_1_1
+filtered_M24_1_1 <- subset(M24_1_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M24_1_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M24_1_1 <- energy_ranges[[element]]
+  subset_M24_1_1 <- subset(filtered_M24_1_1, Energy >= range_M24_1_1[1] & Energy <= range_M24_1_1[2])
+  if (nrow(subset_M24_1_1) > 0) {
+    max_row_M24_1_1 <- subset_M24_1_1[which.max(subset_M24_1_1$Counts), ]
+    peaks_list_M24_1_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M24_1_1$Energy,
+      Counts = max_row_M24_1_1$Counts
+    )
+  }
+}
+
+peaks_M24_1_1 <- do.call(rbind, peaks_list_M24_1_1)
+rownames(peaks_M24_1_1) <- NULL
+peaks_M24_1_1 <- peaks_M24_1_1 |> 
+  filter(Counts > 300) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F", "P", "S", "Cl"))
+
+M24_1_1_graph <- filtered_M24_1_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M24_1_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M24_1_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M23_7_1
+filtered_M23_7_1 <- subset(M23_7_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M23_7_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M23_7_1 <- energy_ranges[[element]]
+  subset_M23_7_1 <- subset(filtered_M23_7_1, Energy >= range_M23_7_1[1] & Energy <= range_M23_7_1[2])
+  if (nrow(subset_M23_7_1) > 0) {
+    max_row_M23_7_1 <- subset_M23_7_1[which.max(subset_M23_7_1$Counts), ]
+    peaks_list_M23_7_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M23_7_1$Energy,
+      Counts = max_row_M23_7_1$Counts
+    )
+  }
+}
+
+peaks_M23_7_1 <- do.call(rbind, peaks_list_M23_7_1)
+rownames(peaks_M23_7_1) <- NULL
+peaks_M23_7_1 <- peaks_M23_7_1 |> 
+  filter(Counts > 100) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M23_7_1_graph <- filtered_M23_7_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M23_7_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M23_7_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M23_2_1
+filtered_M23_2_1 <- subset(M23_2_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M23_2_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M23_2_1 <- energy_ranges[[element]]
+  subset_M23_2_1 <- subset(filtered_M23_2_1, Energy >= range_M23_2_1[1] & Energy <= range_M23_2_1[2])
+  if (nrow(subset_M23_2_1) > 0) {
+    max_row_M23_2_1 <- subset_M23_2_1[which.max(subset_M23_2_1$Counts), ]
+    peaks_list_M23_2_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M23_2_1$Energy,
+      Counts = max_row_M23_2_1$Counts
+    )
+  }
+}
+
+peaks_M23_2_1 <- do.call(rbind, peaks_list_M23_2_1)
+rownames(peaks_M23_2_1) <- NULL
+peaks_M23_2_1 <- peaks_M23_2_1 |> 
+  filter(Counts > 70) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F", "K_beta"))
+
+M23_2_1_graph <- filtered_M23_2_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M23_2_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M23_2_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M22_5.1_3
+filtered_M22_5.1_3 <- subset(M22_5.1_3, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M22_5.1_3 <- list()
+for (element in names(energy_ranges)) {
+  range_M22_5.1_3 <- energy_ranges[[element]]
+  subset_M22_5.1_3 <- subset(filtered_M22_5.1_3, Energy >= range_M22_5.1_3[1] & Energy <= range_M22_5.1_3[2])
+  if (nrow(subset_M22_5.1_3) > 0) {
+    max_row_M22_5.1_3 <- subset_M22_5.1_3[which.max(subset_M22_5.1_3$Counts), ]
+    peaks_list_M22_5.1_3[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M22_5.1_3$Energy,
+      Counts = max_row_M22_5.1_3$Counts
+    )
+  }
+}
+
+peaks_M22_5.1_3 <- do.call(rbind, peaks_list_M22_5.1_3)
+rownames(peaks_M22_5.1_3) <- NULL
+peaks_M22_5.1_3 <- peaks_M22_5.1_3 |> 
+  filter(Counts > 55) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M22_5.1_3_graph <- filtered_M22_5.1_3 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M22_5.1_3, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M22_5.1_3, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M22_5.1_1
+filtered_M22_5.1_1 <- subset(M22_5.1_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M22_5.1_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M22_5.1_1 <- energy_ranges[[element]]
+  subset_M22_5.1_1 <- subset(filtered_M22_5.1_1, Energy >= range_M22_5.1_1[1] & Energy <= range_M22_5.1_1[2])
+  if (nrow(subset_M22_5.1_1) > 0) {
+    max_row_M22_5.1_1 <- subset_M22_5.1_1[which.max(subset_M22_5.1_1$Counts), ]
+    peaks_list_M22_5.1_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M22_5.1_1$Energy,
+      Counts = max_row_M22_5.1_1$Counts
+    )
+  }
+}
+
+peaks_M22_5.1_1 <- do.call(rbind, peaks_list_M22_5.1_1)
+rownames(peaks_M22_5.1_1) <- NULL
+peaks_M22_5.1_1 <- peaks_M22_5.1_1 |> 
+  filter(Counts > 70) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F", "S"))
+
+M22_5.1_1_graph <- filtered_M22_5.1_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M22_5.1_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M22_5.1_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M22_4.1_1
+filtered_M22_4.1_1 <- subset(M22_4.1_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M22_4.1_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M22_4.1_1 <- energy_ranges[[element]]
+  subset_M22_4.1_1 <- subset(filtered_M22_4.1_1, Energy >= range_M22_4.1_1[1] & Energy <= range_M22_4.1_1[2])
+  if (nrow(subset_M22_4.1_1) > 0) {
+    max_row_M22_4.1_1 <- subset_M22_4.1_1[which.max(subset_M22_4.1_1$Counts), ]
+    peaks_list_M22_4.1_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M22_4.1_1$Energy,
+      Counts = max_row_M22_4.1_1$Counts
+    )
+  }
+}
+
+peaks_M22_4.1_1 <- do.call(rbind, peaks_list_M22_4.1_1)
+rownames(peaks_M22_4.1_1) <- NULL
+peaks_M22_4.1_1 <- peaks_M22_4.1_1 |> 
+  filter(Counts > 50) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M22_4.1_1_graph <- filtered_M22_4.1_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M22_4.1_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M22_4.1_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M20_2_1
+filtered_M20_2_1 <- subset(M20_2_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M20_2_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M20_2_1 <- energy_ranges[[element]]
+  subset_M20_2_1 <- subset(filtered_M20_2_1, Energy >= range_M20_2_1[1] & Energy <= range_M20_2_1[2])
+  if (nrow(subset_M20_2_1) > 0) {
+    max_row_M20_2_1 <- subset_M20_2_1[which.max(subset_M20_2_1$Counts), ]
+    peaks_list_M20_2_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M20_2_1$Energy,
+      Counts = max_row_M20_2_1$Counts
+    )
+  }
+}
+
+peaks_M20_2_1 <- do.call(rbind, peaks_list_M20_2_1)
+rownames(peaks_M20_2_1) <- NULL
+peaks_M20_2_1 <- peaks_M20_2_1 |> 
+  filter(Counts > 400) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F", "S", "Mg", "S_beta", "Ca_beta", "Ti_beta", "K_beta", "K"))
+
+M20_2_1_graph <- filtered_M20_2_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M20_2_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M20_2_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M18_5_1
+filtered_M18_5_1 <- subset(M18_5_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M18_5_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M18_5_1 <- energy_ranges[[element]]
+  subset_M18_5_1 <- subset(filtered_M18_5_1, Energy >= range_M18_5_1[1] & Energy <= range_M18_5_1[2])
+  if (nrow(subset_M18_5_1) > 0) {
+    max_row_M18_5_1 <- subset_M18_5_1[which.max(subset_M18_5_1$Counts), ]
+    peaks_list_M18_5_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M18_5_1$Energy,
+      Counts = max_row_M18_5_1$Counts
+    )
+  }
+}
+
+peaks_M18_5_1 <- do.call(rbind, peaks_list_M18_5_1)
+rownames(peaks_M18_5_1) <- NULL
+peaks_M18_5_1 <- peaks_M18_5_1 |> 
+  filter(Counts > 150) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M18_5_1_graph <- filtered_M18_5_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M18_5_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M18_5_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M18_1_1
+filtered_M18_1_1 <- subset(M18_1_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M18_1_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M18_1_1 <- energy_ranges[[element]]
+  subset_M18_1_1 <- subset(filtered_M18_1_1, Energy >= range_M18_1_1[1] & Energy <= range_M18_1_1[2])
+  if (nrow(subset_M18_1_1) > 0) {
+    max_row_M18_1_1 <- subset_M18_1_1[which.max(subset_M18_1_1$Counts), ]
+    peaks_list_M18_1_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M18_1_1$Energy,
+      Counts = max_row_M18_1_1$Counts
+    )
+  }
+}
+
+peaks_M18_1_1 <- do.call(rbind, peaks_list_M18_1_1)
+rownames(peaks_M18_1_1) <- NULL
+peaks_M18_1_1 <- peaks_M18_1_1 |> 
+  filter(Counts > 200) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M18_1_1_graph <- filtered_M18_1_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M18_1_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M18_1_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M16_1_1
+filtered_M16_1_1 <- subset(M16_1_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M16_1_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M16_1_1 <- energy_ranges[[element]]
+  subset_M16_1_1 <- subset(filtered_M16_1_1, Energy >= range_M16_1_1[1] & Energy <= range_M16_1_1[2])
+  if (nrow(subset_M16_1_1) > 0) {
+    max_row_M16_1_1 <- subset_M16_1_1[which.max(subset_M16_1_1$Counts), ]
+    peaks_list_M16_1_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M16_1_1$Energy,
+      Counts = max_row_M16_1_1$Counts
+    )
+  }
+}
+
+peaks_M16_1_1 <- do.call(rbind, peaks_list_M16_1_1)
+rownames(peaks_M16_1_1) <- NULL
+peaks_M16_1_1 <- peaks_M16_1_1 |> 
+  filter(Counts > 600) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F", "S_beta"))
+
+M16_1_1_graph <- filtered_M16_1_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M16_1_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M16_1_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M15_2_s2_2
+filtered_M15_2_s2_2 <- subset(M15_2_s2_2, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M15_2_s2_2 <- list()
+for (element in names(energy_ranges)) {
+  range_M15_2_s2_2 <- energy_ranges[[element]]
+  subset_M15_2_s2_2 <- subset(filtered_M15_2_s2_2, Energy >= range_M15_2_s2_2[1] & Energy <= range_M15_2_s2_2[2])
+  if (nrow(subset_M15_2_s2_2) > 0) {
+    max_row_M15_2_s2_2 <- subset_M15_2_s2_2[which.max(subset_M15_2_s2_2$Counts), ]
+    peaks_list_M15_2_s2_2[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M15_2_s2_2$Energy,
+      Counts = max_row_M15_2_s2_2$Counts
+    )
+  }
+}
+
+peaks_M15_2_s2_2 <- do.call(rbind, peaks_list_M15_2_s2_2)
+rownames(peaks_M15_2_s2_2) <- NULL
+peaks_M15_2_s2_2 <- peaks_M15_2_s2_2 |> 
+  filter(Counts > 300) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F", "Na", "P", "S", "Cl", "K", "Ca_beta", "S_beta", "Ca", "K_beta", "Ca_L"))
+
+M15_2_s2_2_graph <- filtered_M15_2_s2_2 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M15_2_s2_2, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M15_2_s2_2, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M15_2_s2_1
+filtered_M15_2_s2_1 <- subset(M15_2_s2_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M15_2_s2_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M15_2_s2_1 <- energy_ranges[[element]]
+  subset_M15_2_s2_1 <- subset(filtered_M15_2_s2_1, Energy >= range_M15_2_s2_1[1] & Energy <= range_M15_2_s2_1[2])
+  if (nrow(subset_M15_2_s2_1) > 0) {
+    max_row_M15_2_s2_1 <- subset_M15_2_s2_1[which.max(subset_M15_2_s2_1$Counts), ]
+    peaks_list_M15_2_s2_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M15_2_s2_1$Energy,
+      Counts = max_row_M15_2_s2_1$Counts
+    )
+  }
+}
+
+peaks_M15_2_s2_1 <- do.call(rbind, peaks_list_M15_2_s2_1)
+rownames(peaks_M15_2_s2_1) <- NULL
+peaks_M15_2_s2_1 <- peaks_M15_2_s2_1 |> 
+  filter(Counts > 500) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F", "K_beta"))
+
+M15_2_s2_1_graph <- filtered_M15_2_s2_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M15_2_s2_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M15_2_s2_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M14_4_1
+filtered_M14_4_1 <- subset(M14_4_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M14_4_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M14_4_1 <- energy_ranges[[element]]
+  subset_M14_4_1 <- subset(filtered_M14_4_1, Energy >= range_M14_4_1[1] & Energy <= range_M14_4_1[2])
+  if (nrow(subset_M14_4_1) > 0) {
+    max_row_M14_4_1 <- subset_M14_4_1[which.max(subset_M14_4_1$Counts), ]
+    peaks_list_M14_4_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M14_4_1$Energy,
+      Counts = max_row_M14_4_1$Counts
+    )
+  }
+}
+
+peaks_M14_4_1 <- do.call(rbind, peaks_list_M14_4_1)
+rownames(peaks_M14_4_1) <- NULL
+peaks_M14_4_1 <- peaks_M14_4_1 |> 
+  filter(Counts > 700) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M14_4_1_graph <- filtered_M14_4_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M14_4_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M14_4_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M14_3_2_s2_1
+filtered_M14_3_2_s2_1 <- subset(M14_3_2_s2_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M14_3_2_s2_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M14_3_2_s2_1 <- energy_ranges[[element]]
+  subset_M14_3_2_s2_1 <- subset(filtered_M14_3_2_s2_1, Energy >= range_M14_3_2_s2_1[1] & Energy <= range_M14_3_2_s2_1[2])
+  if (nrow(subset_M14_3_2_s2_1) > 0) {
+    max_row_M14_3_2_s2_1 <- subset_M14_3_2_s2_1[which.max(subset_M14_3_2_s2_1$Counts), ]
+    peaks_list_M14_3_2_s2_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M14_3_2_s2_1$Energy,
+      Counts = max_row_M14_3_2_s2_1$Counts
+    )
+  }
+}
+
+peaks_M14_3_2_s2_1 <- do.call(rbind, peaks_list_M14_3_2_s2_1)
+rownames(peaks_M14_3_2_s2_1) <- NULL
+peaks_M14_3_2_s2_1 <- peaks_M14_3_2_s2_1 |> 
+  filter(Counts > 60) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M14_3_2_s2_1_graph <- filtered_M14_3_2_s2_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M14_3_2_s2_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M14_3_2_s2_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M14_3_2_s1_1
+filtered_M14_3_2_s1_1 <- subset(M14_3_2_s1_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M14_3_2_s1_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M14_3_2_s1_1 <- energy_ranges[[element]]
+  subset_M14_3_2_s1_1 <- subset(filtered_M14_3_2_s1_1, Energy >= range_M14_3_2_s1_1[1] & Energy <= range_M14_3_2_s1_1[2])
+  if (nrow(subset_M14_3_2_s1_1) > 0) {
+    max_row_M14_3_2_s1_1 <- subset_M14_3_2_s1_1[which.max(subset_M14_3_2_s1_1$Counts), ]
+    peaks_list_M14_3_2_s1_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M14_3_2_s1_1$Energy,
+      Counts = max_row_M14_3_2_s1_1$Counts
+    )
+  }
+}
+
+peaks_M14_3_2_s1_1 <- do.call(rbind, peaks_list_M14_3_2_s1_1)
+rownames(peaks_M14_3_2_s1_1) <- NULL
+peaks_M14_3_2_s1_1 <- peaks_M14_3_2_s1_1 |> 
+  filter(Counts > 500) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M14_3_2_s1_1_graph <- filtered_M14_3_2_s1_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M14_3_2_s1_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M14_3_2_s1_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M13_1_3_s2
+filtered_M13_1_3_s2 <- subset(M13_1_3_s2, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M13_1_3_s2 <- list()
+for (element in names(energy_ranges)) {
+  range_M13_1_3_s2 <- energy_ranges[[element]]
+  subset_M13_1_3_s2 <- subset(filtered_M13_1_3_s2, Energy >= range_M13_1_3_s2[1] & Energy <= range_M13_1_3_s2[2])
+  if (nrow(subset_M13_1_3_s2) > 0) {
+    max_row_M13_1_3_s2 <- subset_M13_1_3_s2[which.max(subset_M13_1_3_s2$Counts), ]
+    peaks_list_M13_1_3_s2[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M13_1_3_s2$Energy,
+      Counts = max_row_M13_1_3_s2$Counts
+    )
+  }
+}
+
+peaks_M13_1_3_s2 <- do.call(rbind, peaks_list_M13_1_3_s2)
+rownames(peaks_M13_1_3_s2) <- NULL
+peaks_M13_1_3_s2 <- peaks_M13_1_3_s2 |> 
+  filter(Counts > 300) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M13_1_3_s2_graph <- filtered_M13_1_3_s2 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M13_1_3_s2, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M13_1_3_s2, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M12_5_s6_2
+filtered_M12_5_s6_2 <- subset(M12_5_s6_2, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M12_5_s6_2 <- list()
+for (element in names(energy_ranges)) {
+  range_M12_5_s6_2 <- energy_ranges[[element]]
+  subset_M12_5_s6_2 <- subset(filtered_M12_5_s6_2, Energy >= range_M12_5_s6_2[1] & Energy <= range_M12_5_s6_2[2])
+  if (nrow(subset_M12_5_s6_2) > 0) {
+    max_row_M12_5_s6_2 <- subset_M12_5_s6_2[which.max(subset_M12_5_s6_2$Counts), ]
+    peaks_list_M12_5_s6_2[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M12_5_s6_2$Energy,
+      Counts = max_row_M12_5_s6_2$Counts
+    )
+  }
+}
+
+peaks_M12_5_s6_2 <- do.call(rbind, peaks_list_M12_5_s6_2)
+rownames(peaks_M12_5_s6_2) <- NULL
+peaks_M12_5_s6_2 <- peaks_M12_5_s6_2 |> 
+  filter(Counts > 100) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M12_5_s6_2_graph <- filtered_M12_5_s6_2 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M12_5_s6_2, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M12_5_s6_2, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M12_5_s6_1
+filtered_M12_5_s6_1 <- subset(M12_5_s6_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M12_5_s6_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M12_5_s6_1 <- energy_ranges[[element]]
+  subset_M12_5_s6_1 <- subset(filtered_M12_5_s6_1, Energy >= range_M12_5_s6_1[1] & Energy <= range_M12_5_s6_1[2])
+  if (nrow(subset_M12_5_s6_1) > 0) {
+    max_row_M12_5_s6_1 <- subset_M12_5_s6_1[which.max(subset_M12_5_s6_1$Counts), ]
+    peaks_list_M12_5_s6_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M12_5_s6_1$Energy,
+      Counts = max_row_M12_5_s6_1$Counts
+    )
+  }
+}
+
+peaks_M12_5_s6_1 <- do.call(rbind, peaks_list_M12_5_s6_1)
+rownames(peaks_M12_5_s6_1) <- NULL
+peaks_M12_5_s6_1 <- peaks_M12_5_s6_1 |> 
+  filter(Counts > 100) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M12_5_s6_1_graph <- filtered_M12_5_s6_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M12_5_s6_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M12_5_s6_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M12_5_s3_3
+filtered_M12_5_s3_3 <- subset(M12_5_s3_3, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M12_5_s3_3 <- list()
+for (element in names(energy_ranges)) {
+  range_M12_5_s3_3 <- energy_ranges[[element]]
+  subset_M12_5_s3_3 <- subset(filtered_M12_5_s3_3, Energy >= range_M12_5_s3_3[1] & Energy <= range_M12_5_s3_3[2])
+  if (nrow(subset_M12_5_s3_3) > 0) {
+    max_row_M12_5_s3_3 <- subset_M12_5_s3_3[which.max(subset_M12_5_s3_3$Counts), ]
+    peaks_list_M12_5_s3_3[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M12_5_s3_3$Energy,
+      Counts = max_row_M12_5_s3_3$Counts
+    )
+  }
+}
+
+peaks_M12_5_s3_3 <- do.call(rbind, peaks_list_M12_5_s3_3)
+rownames(peaks_M12_5_s3_3) <- NULL
+peaks_M12_5_s3_3 <- peaks_M12_5_s3_3 |> 
+  filter(Counts > 100) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M12_5_s3_3_graph <- filtered_M12_5_s3_3 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M12_5_s3_3, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M12_5_s3_3, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M12_5_s1_3
+filtered_M12_5_s1_3 <- subset(M12_5_s1_3, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M12_5_s1_3 <- list()
+for (element in names(energy_ranges)) {
+  range_M12_5_s1_3 <- energy_ranges[[element]]
+  subset_M12_5_s1_3 <- subset(filtered_M12_5_s1_3, Energy >= range_M12_5_s1_3[1] & Energy <= range_M12_5_s1_3[2])
+  if (nrow(subset_M12_5_s1_3) > 0) {
+    max_row_M12_5_s1_3 <- subset_M12_5_s1_3[which.max(subset_M12_5_s1_3$Counts), ]
+    peaks_list_M12_5_s1_3[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M12_5_s1_3$Energy,
+      Counts = max_row_M12_5_s1_3$Counts
+    )
+  }
+}
+
+peaks_M12_5_s1_3 <- do.call(rbind, peaks_list_M12_5_s1_3)
+rownames(peaks_M12_5_s1_3) <- NULL
+peaks_M12_5_s1_3 <- peaks_M12_5_s1_3 |> 
+  filter(Counts > 100) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M12_5_s1_3_graph <- filtered_M12_5_s1_3 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M12_5_s1_3, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M12_5_s1_3, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M12_5_s1_1
+filtered_M12_5_s1_1 <- subset(M12_5_s1_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M12_5_s1_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M12_5_s1_1 <- energy_ranges[[element]]
+  subset_M12_5_s1_1 <- subset(filtered_M12_5_s1_1, Energy >= range_M12_5_s1_1[1] & Energy <= range_M12_5_s1_1[2])
+  if (nrow(subset_M12_5_s1_1) > 0) {
+    max_row_M12_5_s1_1 <- subset_M12_5_s1_1[which.max(subset_M12_5_s1_1$Counts), ]
+    peaks_list_M12_5_s1_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M12_5_s1_1$Energy,
+      Counts = max_row_M12_5_s1_1$Counts
+    )
+  }
+}
+
+peaks_M12_5_s1_1 <- do.call(rbind, peaks_list_M12_5_s1_1)
+rownames(peaks_M12_5_s1_1) <- NULL
+peaks_M12_5_s1_1 <- peaks_M12_5_s1_1 |> 
+  filter(Counts > 100) |> 
+  filter(!Element %in% c("Ti_L","Mg_beta", "F"))
+
+M12_5_s1_1_graph <- filtered_M12_5_s1_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M12_5_s1_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M12_5_s1_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M12_3_s3_2
+filtered_M12_3_s3_2 <- subset(M12_3_s3_2, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M12_3_s3_2 <- list()
+for (element in names(energy_ranges)) {
+  range_M12_3_s3_2 <- energy_ranges[[element]]
+  subset_M12_3_s3_2 <- subset(filtered_M12_3_s3_2, Energy >= range_M12_3_s3_2[1] & Energy <= range_M12_3_s3_2[2])
+  if (nrow(subset_M12_3_s3_2) > 0) {
+    max_row_M12_3_s3_2 <- subset_M12_3_s3_2[which.max(subset_M12_3_s3_2$Counts), ]
+    peaks_list_M12_3_s3_2[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M12_3_s3_2$Energy,
+      Counts = max_row_M12_3_s3_2$Counts
+    )
+  }
+}
+
+peaks_M12_3_s3_2 <- do.call(rbind, peaks_list_M12_3_s3_2)
+rownames(peaks_M12_3_s3_2) <- NULL
+peaks_M12_3_s3_2 <- peaks_M12_3_s3_2 |> 
+  filter(Counts > 100) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M12_3_s3_2_graph <- filtered_M12_3_s3_2 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M12_3_s3_2, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M12_3_s3_2, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M12_1_s3_1
+filtered_M12_1_s3_1 <- subset(M12_1_s3_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M12_1_s3_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M12_1_s3_1 <- energy_ranges[[element]]
+  subset_M12_1_s3_1 <- subset(filtered_M12_1_s3_1, Energy >= range_M12_1_s3_1[1] & Energy <= range_M12_1_s3_1[2])
+  if (nrow(subset_M12_1_s3_1) > 0) {
+    max_row_M12_1_s3_1 <- subset_M12_1_s3_1[which.max(subset_M12_1_s3_1$Counts), ]
+    peaks_list_M12_1_s3_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M12_1_s3_1$Energy,
+      Counts = max_row_M12_1_s3_1$Counts
+    )
+  }
+}
+
+peaks_M12_1_s3_1 <- do.call(rbind, peaks_list_M12_1_s3_1)
+rownames(peaks_M12_1_s3_1) <- NULL
+peaks_M12_1_s3_1 <- peaks_M12_1_s3_1 |> 
+  filter(Counts > 90) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M12_1_s3_1_graph <- filtered_M12_1_s3_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M12_1_s3_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M12_1_s3_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M12_1_s2_1
+filtered_M12_1_s2_1 <- subset(M12_1_s2_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M12_1_s2_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M12_1_s2_1 <- energy_ranges[[element]]
+  subset_M12_1_s2_1 <- subset(filtered_M12_1_s2_1, Energy >= range_M12_1_s2_1[1] & Energy <= range_M12_1_s2_1[2])
+  if (nrow(subset_M12_1_s2_1) > 0) {
+    max_row_M12_1_s2_1 <- subset_M12_1_s2_1[which.max(subset_M12_1_s2_1$Counts), ]
+    peaks_list_M12_1_s2_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M12_1_s2_1$Energy,
+      Counts = max_row_M12_1_s2_1$Counts
+    )
+  }
+}
+
+peaks_M12_1_s2_1 <- do.call(rbind, peaks_list_M12_1_s2_1)
+rownames(peaks_M12_1_s2_1) <- NULL
+peaks_M12_1_s2_1 <- peaks_M12_1_s2_1 |> 
+  filter(Counts > 100) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M12_1_s2_1_graph <- filtered_M12_1_s2_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M12_1_s2_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M12_1_s2_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M2_3_map2
+filtered_M2_3_map2 <- subset(M2_3_map2, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M2_3_map2 <- list()
+for (element in names(energy_ranges)) {
+  range_M2_3_map2 <- energy_ranges[[element]]
+  subset_M2_3_map2 <- subset(filtered_M2_3_map2, Energy >= range_M2_3_map2[1] & Energy <= range_M2_3_map2[2])
+  if (nrow(subset_M2_3_map2) > 0) {
+    max_row_M2_3_map2 <- subset_M2_3_map2[which.max(subset_M2_3_map2$Counts), ]
+    peaks_list_M2_3_map2[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M2_3_map2$Energy,
+      Counts = max_row_M2_3_map2$Counts
+    )
+  }
+}
+
+peaks_M2_3_map2 <- do.call(rbind, peaks_list_M2_3_map2)
+rownames(peaks_M2_3_map2) <- NULL
+peaks_M2_3_map2 <- peaks_M2_3_map2 |> 
+  filter(Counts > 100)
+
+M2_3_map2_graph <- filtered_M2_3_map2 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M2_3_map2, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M2_3_map2, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+
+# M3_1
+filtered_M3_1 <- subset(M3_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M3_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M3_1 <- energy_ranges[[element]]
+  subset_M3_1 <- subset(filtered_M3_1, Energy >= range_M3_1[1] & Energy <= range_M3_1[2])
+  if (nrow(subset_M3_1) > 0) {
+    max_row_M3_1 <- subset_M3_1[which.max(subset_M3_1$Counts), ]
+    peaks_list_M3_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M3_1$Energy,
+      Counts = max_row_M3_1$Counts
+    )
+  }
+}
+
+peaks_M3_1 <- do.call(rbind, peaks_list_M3_1)
+rownames(peaks_M3_1) <- NULL
+peaks_M3_1 <- peaks_M3_1 |> 
+  filter(Counts > 100) |> 
+  filter(Element != "Ti_L")
+
+M3_1_graph <- filtered_M3_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M3_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M3_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+
+# M3_3_s1
+filtered_M3_3_s1 <- subset(M3_3_s1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M3_3_s1 <- list()
+for (element in names(energy_ranges)) {
+  range_M3_3_s1 <- energy_ranges[[element]]
+  subset_M3_3_s1 <- subset(filtered_M3_3_s1, Energy >= range_M3_3_s1[1] & Energy <= range_M3_3_s1[2])
+  if (nrow(subset_M3_3_s1) > 0) {
+    max_row_M3_3_s1 <- subset_M3_3_s1[which.max(subset_M3_3_s1$Counts), ]
+    peaks_list_M3_3_s1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M3_3_s1$Energy,
+      Counts = max_row_M3_3_s1$Counts
+    )
+  }
+}
+
+peaks_M3_3_s1 <- do.call(rbind, peaks_list_M3_3_s1)
+rownames(peaks_M3_3_s1) <- NULL
+peaks_M3_3_s1 <- peaks_M3_3_s1 |> 
+  filter(Counts > 100) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta"))
+
+M3_3_s1_graph <- filtered_M3_3_s1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M3_3_s1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M3_3_s1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M3_3_s2
+filtered_M3_3_s2 <- subset(M3_3_s2, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M3_3_s2 <- list()
+for (element in names(energy_ranges)) {
+  range_M3_3_s2 <- energy_ranges[[element]]
+  subset_M3_3_s2 <- subset(filtered_M3_3_s2, Energy >= range_M3_3_s2[1] & Energy <= range_M3_3_s2[2])
+  if (nrow(subset_M3_3_s2) > 0) {
+    max_row_M3_3_s2 <- subset_M3_3_s2[which.max(subset_M3_3_s2$Counts), ]
+    peaks_list_M3_3_s2[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M3_3_s2$Energy,
+      Counts = max_row_M3_3_s2$Counts
+    )
+  }
+}
+
+peaks_M3_3_s2 <- do.call(rbind, peaks_list_M3_3_s2)
+rownames(peaks_M3_3_s2) <- NULL
+peaks_M3_3_s2 <- peaks_M3_3_s2 |> 
+  filter(Counts > 90) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M3_3_s2_graph <- filtered_M3_3_s2 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M3_3_s2, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M3_3_s2, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M4_2_s5_1
+filtered_M4_2_s5_1 <- subset(M4_2_s5_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M4_2_s5_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M4_2_s5_1 <- energy_ranges[[element]]
+  subset_M4_2_s5_1 <- subset(filtered_M4_2_s5_1, Energy >= range_M4_2_s5_1[1] & Energy <= range_M4_2_s5_1[2])
+  if (nrow(subset_M4_2_s5_1) > 0) {
+    max_row_M4_2_s5_1 <- subset_M4_2_s5_1[which.max(subset_M4_2_s5_1$Counts), ]
+    peaks_list_M4_2_s5_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M4_2_s5_1$Energy,
+      Counts = max_row_M4_2_s5_1$Counts
+    )
+  }
+}
+
+peaks_M4_2_s5_1 <- do.call(rbind, peaks_list_M4_2_s5_1)
+rownames(peaks_M4_2_s5_1) <- NULL
+peaks_M4_2_s5_1 <- peaks_M4_2_s5_1 |> 
+  filter(Counts > 100) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta"))
+
+M4_2_s5_1_graph <- filtered_M4_2_s5_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M4_2_s5_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M4_2_s5_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M4_2_s5_4
+filtered_M4_2_s5_4 <- subset(M4_2_s5_4, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M4_2_s5_4 <- list()
+for (element in names(energy_ranges)) {
+  range_M4_2_s5_4 <- energy_ranges[[element]]
+  subset_M4_2_s5_4 <- subset(filtered_M4_2_s5_4, Energy >= range_M4_2_s5_4[1] & Energy <= range_M4_2_s5_4[2])
+  if (nrow(subset_M4_2_s5_4) > 0) {
+    max_row_M4_2_s5_4 <- subset_M4_2_s5_4[which.max(subset_M4_2_s5_4$Counts), ]
+    peaks_list_M4_2_s5_4[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M4_2_s5_4$Energy,
+      Counts = max_row_M4_2_s5_4$Counts
+    )
+  }
+}
+
+peaks_M4_2_s5_4 <- do.call(rbind, peaks_list_M4_2_s5_4)
+rownames(peaks_M4_2_s5_4) <- NULL
+peaks_M4_2_s5_4 <- peaks_M4_2_s5_4 |> 
+  filter(Counts > 100) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M4_2_s5_4_graph <- filtered_M4_2_s5_4 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M4_2_s5_4, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M4_2_s5_4, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M8_2
+filtered_M8_2 <- subset(M8_2, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M8_2 <- list()
+for (element in names(energy_ranges)) {
+  range_M8_2 <- energy_ranges[[element]]
+  subset_M8_2 <- subset(filtered_M8_2, Energy >= range_M8_2[1] & Energy <= range_M8_2[2])
+  if (nrow(subset_M8_2) > 0) {
+    max_row_M8_2 <- subset_M8_2[which.max(subset_M8_2$Counts), ]
+    peaks_list_M8_2[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M8_2$Energy,
+      Counts = max_row_M8_2$Counts
+    )
+  }
+}
+
+peaks_M8_2 <- do.call(rbind, peaks_list_M8_2)
+rownames(peaks_M8_2) <- NULL
+peaks_M8_2 <- peaks_M8_2 |> 
+  filter(Counts > 100) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M8_2_graph <- filtered_M8_2 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M8_2, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M8_2, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M10_4
+filtered_M10_4 <- subset(M10_4, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M10_4 <- list()
+for (element in names(energy_ranges)) {
+  range_M10_4 <- energy_ranges[[element]]
+  subset_M10_4 <- subset(filtered_M10_4, Energy >= range_M10_4[1] & Energy <= range_M10_4[2])
+  if (nrow(subset_M10_4) > 0) {
+    max_row_M10_4 <- subset_M10_4[which.max(subset_M10_4$Counts), ]
+    peaks_list_M10_4[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M10_4$Energy,
+      Counts = max_row_M10_4$Counts
+    )
+  }
+}
+
+peaks_M10_4 <- do.call(rbind, peaks_list_M10_4)
+rownames(peaks_M10_4) <- NULL
+peaks_M10_4 <- peaks_M10_4 |> 
+  filter(Counts > 100) |> 
+  filter(!Element %in% c("Ti_L","Mg_beta", "F", "Ca_L", "Fe_L", "Na", "Mg", "P", "S", "Cl", "Ca", "Fe_beta"))
+
+M10_4_graph <- filtered_M10_4 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M10_4, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M10_4, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M11_1
+filtered_M11_1 <- subset(M11_1, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M11_1 <- list()
+for (element in names(energy_ranges)) {
+  range_M11_1 <- energy_ranges[[element]]
+  subset_M11_1 <- subset(filtered_M11_1, Energy >= range_M11_1[1] & Energy <= range_M11_1[2])
+  if (nrow(subset_M11_1) > 0) {
+    max_row_M11_1 <- subset_M11_1[which.max(subset_M11_1$Counts), ]
+    peaks_list_M11_1[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M11_1$Energy,
+      Counts = max_row_M11_1$Counts
+    )
+  }
+}
+
+peaks_M11_1 <- do.call(rbind, peaks_list_M11_1)
+rownames(peaks_M11_1) <- NULL
+peaks_M11_1 <- peaks_M11_1 |> 
+  filter(Counts > 100) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M11_1_graph <- filtered_M11_1 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M11_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M11_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+```
+
+
+### Geological samples
+
+#### Lower Jurassic of western Algarve
+
+The analysed samples from the Lower Jurassic outcrops are homogeneous regarding their structure, inclusions and mineral compositions. The analysis of their composition and inclusions shows no specific differences between the outcrops, and they will be described as a single group (Carixian, Lower Jurassic formations of Western Algarve, including the inland outcrop of Ferrel).
+
+They are mainly composed of cryptocrystalline quartz (predominantly silica or SiO2), and small peaks of aluminium, with a single sample also showing a high aluminium peak. Small peaks of chlorine and potassium can also be identified in less than 50% of the samples.
+
+Phosphatised skeletal remains are very frequent, occurring in more than 80% of the samples. These are all composed of calcium and phosphorus, and frequently show an associated smaller peak of sulphur (\~50% of the samples) or sulphur and fluorine (\~70% of the samples). These fossils also frequently show some oxidation, due to the associated presence of iron bands or restricted areas within the phosphatised skeletal remains. These skeletal remains are frequently irregular and indeterminate; however, a small number of samples show phosphatised skeletal remains with homogeneous oval shapes, which are currently indeterminate.
+
+Finally, iron oxides are present in all the samples, with an iron (Fe) composition. Other types of iron oxides are also present in lesser frequencies, as equally large peaks of iron and titanium (40% of the samples), iron and fluoride (20%), and titanium with a small peak of iron (\<10%). A single sample shows a high titanium peak without iron and another titanium with a smaller peak of phosphorus. Most of these iron or titanium inclusions have irregular shapes and varying sizes. Albeit rare (present in 3 samples), pyrite can be identified in the form of spherical framboids or dispersed pyrite nanocrystals.

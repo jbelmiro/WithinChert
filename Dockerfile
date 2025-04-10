@@ -2,7 +2,7 @@
 FROM rocker/verse:4.4.1
 
 # required
-MAINTAINER Your Name <your_email@somewhere.com>
+MAINTAINER JBelmiro <jfbelmiro@ualg.pt>
 
 COPY . /WithinChert
 

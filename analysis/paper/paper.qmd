@@ -62,6 +62,593 @@ Highlights: `r rmarkdown::metadata$highlights`
 
 <!-- The actual document text starts here: -->
 
+```{r}
+#| label: libraries
+
+library(readr)
+library(dplyr)
+library(janitor)
+library(tidyr)
+library(gt)
+library(ggplot2)
+library(cowplot)
+library(tidyverse)
+library(ggfortify)
+library(FactoMineR)
+library(factoextra)
+library(ggpmisc)
+library(magick)
+
+```
+
+```{r}
+#| label: xrd-readtables
+
+# Read grouped supporting data
+xrd_perc <- read_csv('data/xrd_data/xrd_goals.csv') # File with component percentage of all samples for annotations
+xrd_marks <- read_csv('data/xrd_data/xrd_peaks.csv') # File with peak data and d spacing for plot labels
+
+# Read individual xrd files
+sp15_xrd <- read_csv('data/xrd_data/SP15_xrd.csv')
+sp58_xrd <- read_csv('data/xrd_data/SP58_xrd.csv')
+sp62_xrd <- read_csv('data/xrd_data/SP62_xrd.csv')
+sp69_xrd <- read_csv('data/xrd_data/SP69_xrd.csv')
+
+```
+
+```{r}
+#| label: xrd-graphs
+
+xrd_marks <- xrd_marks |>
+  dplyr::mutate(Phase = case_when(
+    Phase == "SiO2" ~ "Quartz",
+    TRUE ~ Phase))
+
+# Colour codes
+## Observed = "lightsteelblue3"
+## Quartz = "salmon"
+## Dolomite = "steelblue1"
+## Calcite = "darkseagreen"
+## Halite = "darkgoldenrod1"
+## Background = "orchid"
+## Difference = "snow4"
+
+# SP15
+sp15_marks <- xrd_marks |>
+  filter(Sample == "SP15")
+sp15_perc <- xrd_perc |>
+  filter(Sample == "SP15") |>
+  select(-Sample, -ESD)
+
+sp15_plot <- sp15_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |> 
+  select(-Quartz_nb, -Dolomite_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz, Dolomite), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Dolomite", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 55000)) +
+  geom_point(data = sp15_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp15_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon", "steelblue1" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 55000, label = list(cbind(sp15_perc)))
+
+# SP58 Jordana
+sp58_marks <- xrd_marks |>
+  filter(Sample == "SP58")
+sp58_perc <- xrd_perc |>
+  filter(Sample == "SP58") |>
+  select(-Sample, -ESD)
+
+sp58_plot <- sp58_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |> 
+  select(-Quartz_nb, -Calcite_nb) |>
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz, Calcite), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Calcite", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 50000)) +
+  geom_point(data = sp58_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp58_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon", "darkseagreen" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 50000, label = list(cbind(sp58_perc)))
+
+# SP62 Oliveiras
+sp62_marks <- xrd_marks |> 
+  filter(Sample == "SP62")
+sp62_perc <- xrd_perc |> 
+  filter(Sample == "SP62") |> 
+  select(-Sample, -ESD)
+
+sp62_plot <- sp62_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |> 
+  select(-Quartz_nb) |> 
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 50000)) +
+  geom_point(data = sp62_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp62_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon", "orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 50000, label = list(cbind(sp62_perc)))  
+
+# SP69 Mareta
+sp69_marks <- xrd_marks |> 
+  filter(Sample == "SP69")
+sp69_perc <- xrd_perc |> 
+  filter(Sample == "SP69") |> 
+  select(-Sample, -ESD)
+
+sp69_plot <- sp69_xrd |> 
+  dplyr::mutate(Difference = Observed - Calculated - 3000) |> 
+  select(-Quartz_nb, -Calcite_nb) |> 
+  pivot_longer(cols = c(Difference, Background, Observed, Quartz, Calcite), 
+               names_to = "Phase", 
+               values_to = "Count") |> 
+  mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Calcite", "Background", "Difference"))) |>
+  ggplot(aes(x = Angle, y = Count, colour = Phase)) +
+  geom_line(linewidth = 0.5) +
+  labs(x = "Diffraction Angle", y = "Intensity") +
+  theme_minimal() +
+  coord_cartesian(ylim = c(-5000, 50000)) +
+  geom_point(data = sp69_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
+  geom_label(data = sp69_marks, aes(x = Angle, y = Intensity, label = d), 
+            size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
+  scale_colour_manual(values = c("lightsteelblue3", "salmon", "darkseagreen" ,"orchid","snow4")) +
+  annotate(geom = "table", x = 75, y = 50000, label = list(cbind(sp69_perc)))
+
+```
+
+```{r}
+#| label: pxrf-read
+
+pxrf_raw <- read_csv('data/pxrf_data_dec.csv')
+
+```
+
+```{r}
+#| label: sem-read
+
+M18_7 <- read_csv('data/sem_data/M18_7.csv')
+M18_8 <- read_csv('data/sem_data/M18_8.csv')
+M4_3 <- read_csv('data/sem_data/M4_3.csv')
+
+```
+
+
+```{r}
+#| label: sem-graphs
+
+# Prepare the energy ranges
+energy_ranges <- list(
+  C = c(0.2, 0.3),
+  O = c(0.5, 0.6),
+  Al = c(1.48, 1.5),
+  Si = c(1.7, 1.8),
+  P = c(2, 2.1),
+  Ca = c(3.68, 3.7),
+  Ca_beta = c(4.01, 4.02),
+  Ti = c(4.5, 4.6),
+  Ti_beta = c(4.9, 5),
+  Ti_L = c("0.45", "0.47"),
+  Fe = c(6.38, 6.41),
+  Fe_beta = c(7.05, 7.07),
+  Fe_L = c(0.71, 0.73))
+
+# M18_8
+filtered_M18_8 <- subset(M18_8, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M18_8 <- list()
+for (element in names(energy_ranges)) {
+  range_M18_8 <- energy_ranges[[element]]
+  subset_M18_8 <- subset(filtered_M18_8, Energy >= range_M18_8[1] & Energy <= range_M18_8[2])
+  if (nrow(subset_M18_8) > 0) {
+    max_row_M18_8 <- subset_M18_8[which.max(subset_M18_8$Counts), ]
+    peaks_list_M18_8[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M18_8$Energy,
+      Counts = max_row_M18_8$Counts
+    )
+  }
+}
+
+peaks_M18_8 <- do.call(rbind, peaks_list_M18_8)
+rownames(peaks_M18_8) <- NULL
+peaks_M18_8 <- peaks_M18_8 |> 
+  filter(Counts > 100) |> 
+  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+
+M18_8_graph <- filtered_M18_8 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M18_8, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M18_8, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M18_7
+filtered_M18_7 <- subset(M18_7, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M18_7 <- list()
+for (element in names(energy_ranges)) {
+  range_M18_7 <- energy_ranges[[element]]
+  subset_M18_7 <- subset(filtered_M18_7, Energy >= range_M18_7[1] & Energy <= range_M18_7[2])
+  if (nrow(subset_M18_7) > 0) {
+    max_row_M18_7 <- subset_M18_7[which.max(subset_M18_7$Counts), ]
+    peaks_list_M18_7[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M18_7$Energy,
+      Counts = max_row_M18_7$Counts
+    )
+  }
+}
+
+peaks_M18_7 <- do.call(rbind, peaks_list_M18_7)
+rownames(peaks_M18_7) <- NULL
+peaks_M18_7 <- peaks_M18_7 |> 
+  filter(Counts > 100)
+
+M18_7_graph <- filtered_M18_7 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M18_7, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M18_7, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+# M4_3
+filtered_M4_3 <- subset(M4_3, Energy >= 0.2 & Energy < 9)
+
+# Extract the exact peak energy and counts to place labels
+peaks_list_M4_3 <- list()
+for (element in names(energy_ranges)) {
+  range_M4_3 <- energy_ranges[[element]]
+  subset_M4_3 <- subset(filtered_M4_3, Energy >= range_M4_3[1] & Energy <= range_M4_3[2])
+  if (nrow(subset_M4_3) > 0) {
+    max_row_M4_3 <- subset_M4_3[which.max(subset_M4_3$Counts), ]
+    peaks_list_M4_3[[element]] <- data.frame(
+      Element = element,
+      Energy = max_row_M4_3$Energy,
+      Counts = max_row_M4_3$Counts
+    )
+  }
+}
+
+peaks_M4_3 <- do.call(rbind, peaks_list_M4_3)
+rownames(peaks_M4_3) <- NULL
+peaks_M4_3 <- peaks_M4_3 |> 
+  filter(Counts > 100)
+
+M4_3_graph <- filtered_M4_3 |> 
+  select(Energy, Counts) |>
+  ggplot(aes(x = Energy, y = Counts)) +
+  geom_area(fill = "snow3", alpha = 0.7) +
+  geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
+  labs(x = "Energy (keV)", y = "Intensity (Counts)") +
+  theme_minimal() +
+  geom_point(data = peaks_M4_3, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
+  geom_label(data = peaks_M4_3, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
+  theme(legend.position="none")
+
+```
+
+```{r}
+#| label: pxrf-database-setup
+
+## DB setup
+pxrf_db <- pxrf_raw |> 
+  filter(!Sample_ID %in% c("I19-1751", "H21-2126")) # Removing 2 altered samples
+pxrf_analysis <- pxrf_db |> 
+  select("Sample_ID", "pXRF_ID", "Formation/Type",
+         "Al2O3", "SiO2", "P2O5", "S", "Cl", "K2O", "CaO", "TiO2", "Fe2O3", "Cu",
+         "Sr", "Zr") |>  # Removed elements with 0 or <LOD values in all samples or in high percentages in all groups
+  mutate(`Formation/Type` = case_when(
+    `Formation/Type` == "TYPE 1" ~ "T1",
+    `Formation/Type` == "TYPE 2" | `Formation/Type` == "TYPE 2B" | `Formation/Type` == "TYPE 2R" ~ "T2",
+    `Formation/Type` == "TYPE 3" ~ "T3",
+    `Formation/Type` == "TYPE 4" ~ "T4",
+    `Formation/Type` == "TYPE 5" ~ "T5",
+    `Formation/Type` == "TYPE 6" | `Formation/Type` == "TYPE 6LLB" | `Formation/Type` == "TYPE 6E" ~ "T6",
+    `Formation/Type` == "TYPE 7" ~ "T7",
+    `Formation/Type` == "TYPE 8" ~ "T8",
+    `Formation/Type` == "TYPE 9" ~ "T9",
+    `Formation/Type` == "TYPE 10" ~ "T10",
+    `Formation/Type` == "TYPE 11" ~ "T11",
+    TRUE ~ `Formation/Type`
+  ))
+  
+```
+
+```{r}
+#| label: pxrf-fig-lod
+#| fig-cap: A barplot.
+
+# Table to see the occurrence of 0 or <LOD values within each element and by rm type, to choose the elements in which to apply statistics.
+# Combine the multiple columns into a single table
+lod_tab <- pxrf_db |>
+  select(-contains("Err")) |>
+  select(-pXRF_ID, -Application, -Method, -ElapsedTime, -`Cal Check`, -Sample_ID) |>
+  mutate(across(.cols = MgO:U,
+                .fns = ~ case_when(
+                  . == 0 ~"Success 0",
+                  . > 0 ~ "Success",
+                  TRUE ~ as.character(.))
+                ))
+# Reshape the data into a long format
+lod_tab_long <- lod_tab |>
+  pivot_longer(cols = MgO:U,  # Assuming these columns contain the 'Success' and 'LOD' values
+               names_to = "Element",  # New column for the names of elements
+               values_to = "Value")   # New column for the corresponding Success/LOD values
+
+lod_tab_summary <- lod_tab_long |>
+  group_by(Element, Value) |>
+  summarise(Count = n(), .groups = "drop")  # Count the occurrences of Success and LOD for each Element
+
+# Reshape the data into a wide format using pivot_wider
+lod_tab_table <- lod_tab_summary |>
+  pivot_wider(names_from = Value, values_from = Count, values_fill = list(Count = 0)) |> 
+  filter(Success > 80) |> 
+  select(Element, Success, "< LOD")
+lod_tab_table_long <- lod_tab_table |> 
+  pivot_longer(cols = c(Success, `< LOD`), names_to = "Metric", values_to = "Count") |> 
+  mutate(Metric = factor(Metric, levels = c("Success", "< LOD"))) 
+lod_tab_table_long |> 
+  ggplot(aes(x = Element, y = Count, fill = Metric)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Comparison of Success and < LOD", y = "Count") +
+  theme_minimal() +
+  scale_fill_manual(values = c("Success" = "#99D3A7", "< LOD" = "#ED7673"))
+
+
+# Create the bar plot
+ggplot(lod_tab_summary, aes(x = Element, y = Count, fill = Value)) +
+  geom_bar(stat = "identity", position = "stack") +  # Use stat = "identity" to use summarized counts
+  scale_fill_manual(values = c("Success" = "darkseagreen", "Success 0" = "lightgoldenrod1", "< LOD" = "indianred3")) +
+  labs(title = "Summarized Success and LOD Counts by Element",
+       y = "Count", 
+       fill = " ") +
+  theme_minimal() +
+ # facet_wrap(~ Element, scales = "free_y") +  # Facet by Element with independent y-axes
+  theme(axis.text.x = element_text(hjust = 1),
+        axis.title.x = element_blank()) +
+  #geom_text(data = lod_tab_summary_filtered, aes(label = Count), position=position_stack(vjust=0.5), colour="white", size = 3) +
+  coord_flip() +
+  scale_y_continuous(breaks = seq(0, max(lod_tab_summary$Count), by = 20))
+
+```
+
+```{r}
+#| label: pxrf-PCA
+#| include: false
+
+## a) PCA geological regional cherts
+pca_db_algarve <- pxrf_raw |> 
+  select(`Formation/Type`, P2O5, S, Cl, K2O, CaO, TiO2, Fe2O3) |>
+  filter(`Formation/Type` %in% c("LJW", "MJE", "UJE", "UJW", "TW"))
+# Convert "< LOD" values to NA
+pca_db_algarve[pca_db_algarve == "< LOD"] <- NA
+# Keep Group column separately before PCA
+pca_db_algarve$`Formation/Type` <- as.factor(pca_db_algarve$`Formation/Type`)  # Ensure it's a factor
+group_var_algarve <- pca_db_algarve$`Formation/Type`  
+# Convert numeric columns correctly
+df_numeric_alg <- pca_db_algarve %>%
+  select(-`Formation/Type`) %>%  # Remove Group for PCA
+  mutate(across(everything(), as.numeric))  # Convert all columns to numeric
+# Remove rows with NA (important: also filter group_var!)
+complete_cases_alg <- complete.cases(df_numeric_alg)  # Identify complete rows
+df_numeric_alg <- df_numeric_alg[complete_cases_alg, ]  # Remove NA rows
+group_var_algarve <- group_var_algarve[complete_cases_alg]  # Filter group_var accordingly
+# Scale values
+df_scaled_alg <- scale(df_numeric_alg)
+# Ensure row names are properly set
+rownames(df_scaled_alg) <- make.names(group_var_algarve, unique = TRUE)
+# Perform PCA
+pca_result_alg <- PCA(df_scaled_alg, graph = FALSE)
+# Summary of PCA
+summary(pca_result_alg)
+fviz_eig(pca_result_alg, addlabels = TRUE, ylim = c(0, 100))
+# PCA Biplot with Groups
+biplot_alg <- fviz_pca_biplot(pca_result_alg, 
+                label = "var", 
+                habillage = group_var_algarve,  # Use stored group column
+                addEllipses = TRUE, 
+                ellipse.level = 0.95) +
+  ggtitle(NULL)
+# Add Group column back for visualization
+df_pca_alg <- data.frame(pca_result_alg$ind$coord, Group = group_var_algarve)
+# PCA plot with groups
+scatter_alg <- ggplot(df_pca_alg, aes(x = Dim.1, y = Dim.2, color = Group, shape = Group)) +
+  geom_point(size = 3, alpha = 0.8) +
+  stat_ellipse(level = 0.95, aes(fill = Group), alpha = 0.2, geom = "polygon") +
+  theme_minimal() +
+  labs(title = "PCA of pXRF Data", x = "PC1", y = "PC2") +
+  theme(legend.position = "right")
+
+## b) PCA of geological cherts: local Lower Jurassic, Central Portugal and Cadiz
+pca_db_nl <- pxrf_raw |> 
+  select(`Formation/Type`, P2O5, K2O, TiO2, Fe2O3, Cu, S) |> # Removing CaO which is high NA in CPT
+  filter(`Formation/Type` %in% c("LJW", "CPT", "UCA"))
+# Convert "< LOD" values to NA
+pca_db_nl[pca_db_nl == "< LOD"] <- NA
+# Keep Group column separately before PCA
+pca_db_nl$`Formation/Type` <- as.factor(pca_db_nl$`Formation/Type`)  # Ensure it's a factor
+group_var_nl <- pca_db_nl$`Formation/Type`  
+# Convert numeric columns correctly
+df_numeric_nl <- pca_db_nl %>%
+  select(-`Formation/Type`) %>%  # Remove Group for PCA
+  mutate(across(everything(), as.numeric))  # Convert all columns to numeric
+# Remove rows with NA (important: also filter group_var!)
+complete_cases_nl <- complete.cases(df_numeric_nl)  # Identify complete rows
+df_numeric_nl <- df_numeric_nl[complete_cases_nl, ]  # Remove NA rows
+group_var_nl <- group_var_nl[complete_cases_nl]  # Filter group_var accordingly
+# Scale values
+df_scaled_nl <- scale(df_numeric_nl)
+# Ensure row names are properly set
+rownames(df_scaled_nl) <- make.names(group_var_nl, unique = TRUE)
+# Perform PCA
+pca_result_nl <- PCA(df_scaled_nl, graph = FALSE)
+# Summary of PCA
+summary(pca_result_nl)
+fviz_eig(pca_result_nl, addlabels = TRUE, ylim = c(0, 100))
+# PCA Biplot with Groups
+biplot_nl <- fviz_pca_biplot(pca_result_nl, 
+                label = "var", 
+                habillage = group_var_nl,  # Use stored group column
+                addEllipses = TRUE, 
+                ellipse.level = 0.95) +
+  ggtitle(NULL)
+# Add Group column back for visualization
+df_pca_nl <- data.frame(pca_result_nl$ind$coord, Group = group_var_nl)
+# PCA plot with groups
+scatter_nl <- ggplot(df_pca_nl, aes(x = Dim.1, y = Dim.2, color = Group, shape = Group)) +
+  geom_point(size = 3, alpha = 0.8) +
+  stat_ellipse(level = 0.95, aes(fill = Group), alpha = 0.2, geom = "polygon") +
+  theme_minimal() +
+  labs(title = "PCA of pXRF Data", x = "PC1", y = "PC2") +
+  theme(legend.position = "right")
+
+## c) PCA archaeological T6 compared to local Lower Jurassic and Central Portugal
+pca_db_comp <- pxrf_raw |> 
+  select(`Formation/Type`, P2O5, K2O, TiO2, Fe2O3, Cu, S) |> # Removing CaO which is high NA in CPT
+  mutate(`Formation/Type` = case_when(
+    `Formation/Type` == "TYPE 1" ~ "T1",
+    `Formation/Type` == "TYPE 2" | `Formation/Type` == "TYPE 2B" | `Formation/Type` == "TYPE 2R" ~ "T2",
+    `Formation/Type` == "TYPE 3" ~ "T3",
+    `Formation/Type` == "TYPE 4" ~ "T4",
+    `Formation/Type` == "TYPE 5" ~ "T5",
+    `Formation/Type` == "TYPE 6" | `Formation/Type` == "TYPE 6LLB" | `Formation/Type` == "TYPE 6E" ~ "T6",
+    `Formation/Type` == "TYPE 7" ~ "T7",
+    `Formation/Type` == "TYPE 8" ~ "T8",
+    `Formation/Type` == "TYPE 9" ~ "T9",
+    `Formation/Type` == "TYPE 10" ~ "T10",
+    `Formation/Type` == "TYPE 11" ~ "T11",
+    TRUE ~ `Formation/Type`
+  )) |> 
+  filter(`Formation/Type` %in% c("LJW","CPT", "T6"))
+# Convert "< LOD" values to NA
+pca_db_comp[pca_db_comp == "< LOD"] <- NA
+# Keep Group column separately before PCA
+pca_db_comp$`Formation/Type` <- as.factor(pca_db_comp$`Formation/Type`)  # Ensure it's a factor
+group_var_comp <- pca_db_comp$`Formation/Type`  
+# Convert numeric columns correctly
+df_numeric_comp <- pca_db_comp %>%
+  select(-`Formation/Type`) %>%  # Remove Group for PCA
+  mutate(across(everything(), as.numeric))  # Convert all columns to numeric
+# Remove rows with NA (important: also filter group_var!)
+complete_cases_comp <- complete.cases(df_numeric_comp)  # Identify complete rows
+df_numeric_comp <- df_numeric_comp[complete_cases_comp, ]  # Remove NA rows
+group_var_comp <- group_var_comp[complete_cases_comp]  # Filter group_var accordingly
+# Scale values
+df_scaled_comp <- scale(df_numeric_comp)
+# Ensure row names are properly set
+rownames(df_scaled_comp) <- make.names(group_var_comp, unique = TRUE)
+# Perform PCA
+pca_result_comp <- PCA(df_scaled_comp, graph = FALSE)
+# Summary of PCA
+summary(pca_result_comp)
+fviz_eig(pca_result_comp, addlabels = TRUE, ylim = c(0, 100))
+# PCA Biplot with Groups
+biplot_comp <- fviz_pca_biplot(pca_result_comp, 
+                label = "var", 
+                habillage = group_var_comp,  # Use stored group column
+                addEllipses = TRUE, 
+                ellipse.level = 0.80) +
+  ggtitle(NULL)
+# Add Group column back for visualization
+df_pca_comp <- data.frame(pca_result_comp$ind$coord, Group = group_var_comp)
+# PCA plot with groups
+scatter_comp <- ggplot(df_pca_comp, aes(x = Dim.1, y = Dim.2, color = Group, shape = Group)) +
+  geom_point(size = 3, alpha = 0.8) +
+  stat_ellipse(level = 0.95, aes(fill = Group), alpha = 0.2, geom = "polygon") +
+  theme_minimal() +
+  labs(title = "PCA of pXRF Data", x = "PC1", y = "PC2") +
+  theme(legend.position = "right")
+
+## d) PCA archaeological local cherts T2-5 and non-local T7 compared with local Lower Jurassic and UCA cherts
+pca_db_comp2 <- pxrf_raw |> 
+  select(`Formation/Type`, P2O5, TiO2, K2O,Fe2O3, Cu, S) |> # Removing CaO which is high NA in CPT
+  mutate(`Formation/Type` = case_when(
+    `Formation/Type` == "TYPE 1" ~ "T1",
+    `Formation/Type` == "TYPE 2" | `Formation/Type` == "TYPE 2B" | `Formation/Type` == "TYPE 2R" ~ "T2-5",
+    `Formation/Type` == "TYPE 3" ~ "T2-5",
+    `Formation/Type` == "TYPE 4" ~ "T2-5",
+    `Formation/Type` == "TYPE 5" ~ "T2-5",
+    `Formation/Type` == "TYPE 6" | `Formation/Type` == "TYPE 6LLB" | `Formation/Type` == "TYPE 6E" ~ "T6",
+    `Formation/Type` == "TYPE 7" ~ "T7",
+    `Formation/Type` == "TYPE 8" ~ "T8",
+    `Formation/Type` == "TYPE 9" ~ "T9",
+    `Formation/Type` == "TYPE 10" ~ "T10",
+    `Formation/Type` == "TYPE 11" ~ "T11",
+    TRUE ~ `Formation/Type`
+  )) |> 
+  filter(`Formation/Type` %in% c("LJW","UCA", "T7", "T2-5"))
+# Convert "< LOD" values to NA
+pca_db_comp2[pca_db_comp2 == "< LOD"] <- NA
+# Keep Group column separately before PCA
+pca_db_comp2$`Formation/Type` <- as.factor(pca_db_comp2$`Formation/Type`)  # Ensure it's a factor
+group_var_comp2 <- pca_db_comp2$`Formation/Type`  
+# Convert numeric columns correctly
+df_numeric_comp2 <- pca_db_comp2 %>%
+  select(-`Formation/Type`) %>%  # Remove Group for PCA
+  mutate(across(everything(), as.numeric))  # Convert all columns to numeric
+# Remove rows with NA (important: also filter group_var!)
+complete_cases_comp2 <- complete.cases(df_numeric_comp2)  # Identify complete rows
+df_numeric_comp2 <- df_numeric_comp2[complete_cases_comp2, ]  # Remove NA rows
+group_var_comp2 <- group_var_comp2[complete_cases_comp2]  # Filter group_var accordingly
+# Scale values
+df_scaled_comp2 <- scale(df_numeric_comp2)
+# Ensure row names are properly set
+rownames(df_scaled_comp2) <- make.names(group_var_comp2, unique = TRUE)
+# Perform PCA
+pca_result_comp2 <- PCA(df_scaled_comp2, graph = FALSE)
+# Summary of PCA
+summary(pca_result_comp2)
+fviz_eig(pca_result_comp2, addlabels = TRUE, ylim = c(0, 100))
+# PCA Biplot with Groups
+biplot_comp2 <- fviz_pca_biplot(pca_result_comp2, 
+                label = "var", 
+                habillage = group_var_comp2,  # Use stored group column
+                addEllipses = TRUE, 
+                ellipse.level = 0.80) +
+  ggtitle(NULL)
+# Add Group column back for visualization
+df_pca_comp2 <- data.frame(pca_result_comp2$ind$coord, Group = group_var_comp2)
+# PCA plot with groups
+scatter_comp2 <- ggplot(df_pca_comp2, aes(x = Dim.1, y = Dim.2, color = Group, shape = Group)) +
+  geom_point(size = 3, alpha = 0.8) +
+  stat_ellipse(level = 0.95, aes(fill = Group), alpha = 0.2, geom = "polygon") +
+  theme_minimal() +
+  labs(x = "PC1", y = "PC2") +
+  theme(legend.position = "right")
+
+```
+
+
+
 # Introduction
 
 Here is a citation [@Marwick2017]
@@ -72,30 +659,76 @@ Here is a citation [@Marwick2017]
 
 # Results
 
-<!-- Here's some example analysis code: -->
+All analysed samples are mainly composed of quartz; in all samples, the atomic percentage of oxygen is approximately double of the atomic percentage of silica, showing a 2:1 ratio (table +).
+
+Similarly, the presence of skeletal remains, represented by peaks of calcium, phosphorus and frequently accompanied by small peaks of sulphur, shows no patterns and occurs in samples from all formations and chert types. Although frequently without a discernible shape, oval fossils (although currently unidentified) were observed in LJW geological samples and archaeological samples from local cherts (T2 and T4). This type of large, oval fossil, also composed of calcium, phosphorus and sulphur, seems to be limited to local cherts and to specific areas of nodules, characterised by high amounts of these skeletal remains.
 
 ```{r}
-#| label: get-data
-#| eval: false
-# Note the path that we need to use to access our data files when rendering this document
-my_data <- read.csv(here::here('analysis/data/raw_data/my_csv_file.csv'))
+#| label: fig-skeletal
+#| fig-cap: "Skeletal remain from sample SP16_BLX, from the Lower Jurassic ourcrops of western Algarve. A: Detail of a phosphatized skeletal remain composed by calcium (A1), phosphorus (A2) and a small peak of sulphur (A3). The skeletal remain seems to be oxidized, with small peaks of iron within (A4)."
+
+knitr::include_graphics(here::here("figures/within-chert/M3_3_map1.png"))
+
 ```
 
 ```{r}
-#| label: fig-demo-plot
-#| fig-cap: "A plot of random numbers"
-plot(rnorm(10))
+#| label: fig-oval-fossils
+#| fig-cap: "A-C: General view and details from an archaeological sample from local chert type (T4). A: general view of a concentration of oval fossils. B: general view of a concentration of oval fossils and other inclusions. C: detail of an irregular inclusion composed of titanium (C1) and an oval phosphatised skeletal remain composed mainly of calcium (C2), phosphorus (C3) and a small peak of sulphur."
+
+knitr::include_graphics(here::here("figures/within-chert/M15_4.png"))
+
 ```
 
-@fig-demo-plot shows how we can have a caption and cross-reference for a plot. Note that figure label and cross-references must both be prefixed with `fig-`
+By observing the surfaces of samples and the presence of skeletal remains, some differences could be noted between local cherts and non-local archaeological samples. In comparison to the frequent to common skeletal remains in the Jurassic cherts from the Algarve, and archaeological cherts attributed to local sources (T2-5), cherts from non-local sources such as T6-8 show little porosity and rare presence of inclusions. Whenever present, skeletal remains are small and show small peaks (\<3 cpv/ev).
 
 ```{r}
-#| label: demo-inline-code
-#| echo: false
-x <- round(pi, 2)
+#| label: fig-t6-general
+#| fig-cap: "A-D: General view and details from an archaeological sample from non-local chert type (T6). A: general view of the sample with uncommon inclusions. B: detail of an inclusion seen in A,  composed mostly of iron and small peaks of calcium and phosphorus, making this inclusion a possible oxidised skeletal remains of a fossil. C: general view of the sample with no visible inclusions. D: detail of a small and irregular iron inclusion."
+
+#knitr::include_graphics(here::here("figures/within-chert/M18_7_M18_8.png"))
+M18_7_M18_8_fig <- magick::image_read(here::here("figures/within-chert/M18_7_M18_8.png"))
+M18_7_M18_8_gg <- cowplot::ggdraw() + cowplot::draw_image(M18_7_M18_8_fig)
+
+M18_7_M18_8_plots <- plot_grid(M18_7_graph, M18_8_graph, labels = c(1, 2))
+
+plot_grid(M18_7_M18_8_gg, M18_7_M18_8_plots, ncol = 1, rel_heights = c(1, 1))
+
 ```
 
-Here is an example of inline code `r x` in the middle of a sentence.
+The rarity of inclusions is not limited to skeletal remains, but to other inclusions such as oxides, which in T6-8 are small and rare. Despite this difference in abundance and size, oxides are mainly composed of iron, often associated with other elements, possibly suggesting the existence of iron oxide (Fe2O3), pyrite (FeS2) and ilmenite (FeTiO3). Iron oxides were found both as inclusions scattered in the samples, but also frequently associated with skeletal remains, which may be related to their oxidization. Pyrite was also identified in the shape of spherical pyrite framboids, as well as dispersed pyrite nanocrystals. These are characterised not only by large peaks of iron and associated sulphur, but also of round/angular small nanocrystals organised in spherical shapes, semi-spherical or simply dispersed crystals, frequently in association with spherical framboids. These were present mainly in geological samples from the Upper Jurassic (both west and eastern formations), but barely identified in archaeological samples.
+
+```{r}
+#| label: fig-framboids
+#| fig-cap: "A-B: Detail from the geological sample SP59_JOR from the Upper Jurassic outcrops (Jordana formation) of eastern Algarve. A: detailed view of a spherical pyrite framboid composed of iron (A1) and sulphur (A2). B: detailed view of an inclusion composed of iron (B1) and sulphur (B2)."
+
+knitr::include_graphics(here::here("figures/within-chert/M10_5_map1_map2.png"))
+
+```
+
+In a single sample from Lower Jurassic and samples from local T4 (both characterised by the previously mentioned oval fossils) inclusions composed of titanium (without associated iron) were identified, which may be related to the presence of rutile (TiO2). Small peaks of titanium (\<3 cpv/ev) were also identified in 3 out of 4 non-local T6 samples.
+
+Other elements were identified through EDS maps and spectra (e.g., chlorine, potassium or magnesium), although their distribution also showed no patterns between formations and chert types. The exception are calcium and aluminium.
+
+Whenever isolated, calcium can be found in high peaks in cherts from Upper Jurassic formations and is probably related to the presence of calcite inclusions.
+
+```{r}
+#| label: fig-calcite
+#| fig-cap: "A-B: General view of calcite inclusions (black arrows) from the geological sample SP69_MAR from the Upper Jurassic outcrops of western Algarve."
+
+knitr::include_graphics(here::here("figures/within-chert/M4_3.png"))
+
+```
+
+Aluminium may be related to the speed of sedimentation; high peaks of aluminum may be related to fastest sedimentations speeds and may be a useful component to identify differences between cherts. Almost all chert samples show aluminum peaks, although mostly small (\< 3 cpv/ev). An exception are cherts from the Eastern basin of the Algarve (MJE and UJE), samples from non-local archaeological T7 and T8. The exception to the presence of aluminum is the chalcedony (both geological from TW and archaeological group T1) and all archaeological samples from the non-local group T6, with sources previously attributed to the Cretaceous cherts from Central Portugal.
+
+```{r}
+#| label: fig-pca
+#| fig-cap: Several pcas
+
+plot_grid(biplot_alg, biplot_nl, biplot_comp, biplot_comp2, labels = c("a", "b", "c", "d"))
+
+```
+
 
 # Discussion
 
