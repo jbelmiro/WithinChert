@@ -737,7 +737,10 @@ peaks_M24_1_2 <- do.call(rbind, peaks_list_M24_1_2)
 rownames(peaks_M24_1_2) <- NULL
 peaks_M24_1_2 <- peaks_M24_1_2 |> 
   filter(Counts > 250) |> 
-  filter(!Element %in% c("Ti_L", "Mg_beta", "F", "S_beta", "S", "Cl"))
+  filter(!Element %in% c("Ti_L", "Mg_b", "F", "S_b", "S", "Cl"))
+peaks_M24_1_2_labels <- peaks_M24_1_2 |> 
+  filter(!Element %in% c("Fe_L", "Fe_b"))
+
 
 M24_1_2_graph <- filtered_M24_1_2 |> 
   select(Energy, Counts) |>
@@ -746,9 +749,12 @@ M24_1_2_graph <- filtered_M24_1_2 |>
   geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
   labs(x = "Energy (keV)", y = "Intensity (Counts)") +
   theme_minimal() +
+  coord_cartesian(ylim = c(0, 9500)) +
   geom_point(data = peaks_M24_1_2, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
-  geom_label(data = peaks_M24_1_2, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
-  theme(legend.position="none")
+  geom_text(data = peaks_M24_1_2_labels, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 5, vjust = -0.5, show.legend = FALSE) +
+  scale_colour_manual(values = c(
+  C = "#4461A8", O = "#2BACC2", F = "#3EADA9", Na = "#4FC46A", Mg = "#AEC491", Mg_b = "#AEC491", Al = "#F2C86C", Si = "#F5A838", P = "#EE850E", S = "#D54F34", S_b = "#D54F34", Cl = "#A51122", K = "#A71B4B", K_b = "#A71B4B", Ca = "#D35C79" , Ca_b = "#D35C79", Ca_L = "#D35C79", Ti = "#992766", Ti_b = "#992766", Ti_L = "#992766", Fe = "#762181" , Fe_b = "#762181" , Fe_L = "#762181")) +
+  theme(legend.position="none", axis.text = element_text(size = 15), axis.title = element_text(size = 18))
 
 # M24_1_1
 filtered_M24_1_1 <- subset(M24_1_1, Energy >= 0.2 & Energy < 9)
@@ -771,8 +777,10 @@ for (element in names(energy_ranges)) {
 peaks_M24_1_1 <- do.call(rbind, peaks_list_M24_1_1)
 rownames(peaks_M24_1_1) <- NULL
 peaks_M24_1_1 <- peaks_M24_1_1 |> 
-  filter(Counts > 300) |> 
-  filter(!Element %in% c("Ti_L", "Mg_beta", "F", "P", "S", "Cl"))
+  filter(Counts > 250) |> 
+  filter(!Element %in% c("Ti_L", "Mg_b", "F", "P", "S", "Cl", "S_b", "K", "K_b"))
+peaks_M24_1_1_labels <- peaks_M24_1_1 |> 
+  filter(!Element %in% c("Fe_L", "Fe_b"))
 
 M24_1_1_graph <- filtered_M24_1_1 |> 
   select(Energy, Counts) |>
@@ -781,9 +789,12 @@ M24_1_1_graph <- filtered_M24_1_1 |>
   geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
   labs(x = "Energy (keV)", y = "Intensity (Counts)") +
   theme_minimal() +
+  coord_cartesian(ylim = c(0, 8500)) +
   geom_point(data = peaks_M24_1_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
-  geom_label(data = peaks_M24_1_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
-  theme(legend.position="none")
+  geom_text(data = peaks_M24_1_1_labels, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 5, vjust = -0.5, show.legend = FALSE) +
+  scale_colour_manual(values = c(
+  C = "#4461A8", O = "#2BACC2", F = "#3EADA9", Na = "#4FC46A", Mg = "#AEC491", Mg_b = "#AEC491", Al = "#F2C86C", Si = "#F5A838", P = "#EE850E", S = "#D54F34", S_b = "#D54F34", Cl = "#A51122", K = "#A71B4B", K_b = "#A71B4B", Ca = "#D35C79" , Ca_b = "#D35C79", Ca_L = "#D35C79", Ti = "#992766", Ti_b = "#992766", Ti_L = "#992766", Fe = "#762181" , Fe_b = "#762181" , Fe_L = "#762181")) +
+  theme(legend.position="none", axis.text = element_text(size = 15), axis.title = element_text(size = 18))
 
 # M23_7_1
 filtered_M23_7_1 <- subset(M23_7_1, Energy >= 0.2 & Energy < 9)
@@ -807,7 +818,9 @@ peaks_M23_7_1 <- do.call(rbind, peaks_list_M23_7_1)
 rownames(peaks_M23_7_1) <- NULL
 peaks_M23_7_1 <- peaks_M23_7_1 |> 
   filter(Counts > 100) |> 
-  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+  filter(!Element %in% c("Ti_L", "Mg_b", "F"))
+peaks_M23_7_1_labels <- peaks_M23_7_1 |> 
+  filter(!Element %in% c("Fe_L", "Fe_b", "Mg_b", "S_b", "K_b", "Ca_b", "Ca_L", "Ti_b", "Ti_L"))
 
 M23_7_1_graph <- filtered_M23_7_1 |> 
   select(Energy, Counts) |>
@@ -816,9 +829,12 @@ M23_7_1_graph <- filtered_M23_7_1 |>
   geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
   labs(x = "Energy (keV)", y = "Intensity (Counts)") +
   theme_minimal() +
+  coord_cartesian(ylim = c(0, 2500)) +
   geom_point(data = peaks_M23_7_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
-  geom_label(data = peaks_M23_7_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
-  theme(legend.position="none")
+  geom_text(data = peaks_M23_7_1_labels, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 5, vjust = -0.5, show.legend = FALSE) +
+  scale_colour_manual(values = c(
+  C = "#4461A8", O = "#2BACC2", F = "#3EADA9", Na = "#4FC46A", Mg = "#AEC491", Mg_b = "#AEC491", Al = "#F2C86C", Si = "#F5A838", P = "#EE850E", S = "#D54F34", S_b = "#D54F34", Cl = "#A51122", K = "#A71B4B", K_b = "#A71B4B", Ca = "#D35C79" , Ca_b = "#D35C79", Ca_L = "#D35C79", Ti = "#992766", Ti_b = "#992766", Ti_L = "#992766", Fe = "#762181" , Fe_b = "#762181" , Fe_L = "#762181")) +
+  theme(legend.position="none", axis.text = element_text(size = 15), axis.title = element_text(size = 18))
 
 # M23_2_1
 filtered_M23_2_1 <- subset(M23_2_1, Energy >= 0.2 & Energy < 9)
@@ -842,7 +858,9 @@ peaks_M23_2_1 <- do.call(rbind, peaks_list_M23_2_1)
 rownames(peaks_M23_2_1) <- NULL
 peaks_M23_2_1 <- peaks_M23_2_1 |> 
   filter(Counts > 70) |> 
-  filter(!Element %in% c("Ti_L", "Mg_beta", "F", "K_beta"))
+  filter(!Element %in% c("Ti_L", "Mg_b", "F", "K_b"))
+peaks_M23_2_1_labels <- peaks_M23_2_1 |> 
+  filter(!Element %in% c("Fe_L", "Fe_b", "Mg_b", "S_b", "K_b", "Ca_b", "Ca_L", "Ti_b", "Ti_L"))
 
 M23_2_1_graph <- filtered_M23_2_1 |> 
   select(Energy, Counts) |>
@@ -851,9 +869,12 @@ M23_2_1_graph <- filtered_M23_2_1 |>
   geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
   labs(x = "Energy (keV)", y = "Intensity (Counts)") +
   theme_minimal() +
+  coord_cartesian(ylim = c(0, 2200)) +
   geom_point(data = peaks_M23_2_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
-  geom_label(data = peaks_M23_2_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
-  theme(legend.position="none")
+  geom_text(data = peaks_M23_2_1_labels, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 5, vjust = -0.5, show.legend = FALSE) +
+  scale_colour_manual(values = c(
+  C = "#4461A8", O = "#2BACC2", F = "#3EADA9", Na = "#4FC46A", Mg = "#AEC491", Mg_b = "#AEC491", Al = "#F2C86C", Si = "#F5A838", P = "#EE850E", S = "#D54F34", S_b = "#D54F34", Cl = "#A51122", K = "#A71B4B", K_b = "#A71B4B", Ca = "#D35C79" , Ca_b = "#D35C79", Ca_L = "#D35C79", Ti = "#992766", Ti_b = "#992766", Ti_L = "#992766", Fe = "#762181" , Fe_b = "#762181" , Fe_L = "#762181")) +
+  theme(legend.position="none", axis.text = element_text(size = 15), axis.title = element_text(size = 18))
 
 # M22_5.1_3
 filtered_M22_5.1_3 <- subset(M22_5.1_3, Energy >= 0.2 & Energy < 9)
@@ -877,7 +898,9 @@ peaks_M22_5.1_3 <- do.call(rbind, peaks_list_M22_5.1_3)
 rownames(peaks_M22_5.1_3) <- NULL
 peaks_M22_5.1_3 <- peaks_M22_5.1_3 |> 
   filter(Counts > 55) |> 
-  filter(!Element %in% c("Ti_L", "Mg_beta", "F"))
+  filter(!Element %in% c("Ti_L", "Mg_b", "F"))
+peaks_M22_5.1_3_labels <- peaks_M22_5.1_3 |> 
+  filter(!Element %in% c("Fe_L", "Fe_b", "Mg_b", "S_b", "K_b", "Ca_b", "Ca_L", "Ti_b", "Ti_L"))
 
 M22_5.1_3_graph <- filtered_M22_5.1_3 |> 
   select(Energy, Counts) |>
@@ -886,9 +909,12 @@ M22_5.1_3_graph <- filtered_M22_5.1_3 |>
   geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
   labs(x = "Energy (keV)", y = "Intensity (Counts)") +
   theme_minimal() +
+  coord_cartesian(ylim = c(0, 1800)) +
   geom_point(data = peaks_M22_5.1_3, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
-  geom_label(data = peaks_M22_5.1_3, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
-  theme(legend.position="none")
+  geom_text(data = peaks_M22_5.1_3_labels, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 5, vjust = -0.5, show.legend = FALSE) +
+  scale_colour_manual(values = c(
+  C = "#4461A8", O = "#2BACC2", F = "#3EADA9", Na = "#4FC46A", Mg = "#AEC491", Mg_b = "#AEC491", Al = "#F2C86C", Si = "#F5A838", P = "#EE850E", S = "#D54F34", S_b = "#D54F34", Cl = "#A51122", K = "#A71B4B", K_b = "#A71B4B", Ca = "#D35C79" , Ca_b = "#D35C79", Ca_L = "#D35C79", Ti = "#992766", Ti_b = "#992766", Ti_L = "#992766", Fe = "#762181" , Fe_b = "#762181" , Fe_L = "#762181")) +
+  theme(legend.position="none", axis.text = element_text(size = 15), axis.title = element_text(size = 18))
 
 # M22_5.1_1
 filtered_M22_5.1_1 <- subset(M22_5.1_1, Energy >= 0.2 & Energy < 9)
@@ -912,7 +938,9 @@ peaks_M22_5.1_1 <- do.call(rbind, peaks_list_M22_5.1_1)
 rownames(peaks_M22_5.1_1) <- NULL
 peaks_M22_5.1_1 <- peaks_M22_5.1_1 |> 
   filter(Counts > 70) |> 
-  filter(!Element %in% c("Ti_L", "Mg_beta", "F", "S"))
+  filter(!Element %in% c("Ti_L", "Mg_b", "F", "S"))
+peaks_M22_5.1_1_labels <- peaks_M22_5.1_1 |> 
+  filter(!Element %in% c("Fe_L", "Fe_b", "Mg_b", "S_b", "K_b", "Ca_b", "Ca_L", "Ti_b", "Ti_L"))
 
 M22_5.1_1_graph <- filtered_M22_5.1_1 |> 
   select(Energy, Counts) |>
@@ -921,9 +949,12 @@ M22_5.1_1_graph <- filtered_M22_5.1_1 |>
   geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
   labs(x = "Energy (keV)", y = "Intensity (Counts)") +
   theme_minimal() +
+  coord_cartesian(ylim = c(0, 3800)) +
   geom_point(data = peaks_M22_5.1_1, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
-  geom_label(data = peaks_M22_5.1_1, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 3, fill = "white", label.size = 0.2, vjust = -0.5, show.legend = FALSE) +
-  theme(legend.position="none")
+  geom_text(data = peaks_M22_5.1_1_labels, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 5, vjust = -0.5, show.legend = FALSE) +
+  scale_colour_manual(values = c(
+  C = "#4461A8", O = "#2BACC2", F = "#3EADA9", Na = "#4FC46A", Mg = "#AEC491", Mg_b = "#AEC491", Al = "#F2C86C", Si = "#F5A838", P = "#EE850E", S = "#D54F34", S_b = "#D54F34", Cl = "#A51122", K = "#A71B4B", K_b = "#A71B4B", Ca = "#D35C79" , Ca_b = "#D35C79", Ca_L = "#D35C79", Ti = "#992766", Ti_b = "#992766", Ti_L = "#992766", Fe = "#762181" , Fe_b = "#762181" , Fe_L = "#762181")) +
+  theme(legend.position="none", axis.text = element_text(size = 15), axis.title = element_text(size = 18))
 
 # M22_4.1_1
 filtered_M22_4.1_1 <- subset(M22_4.1_1, Energy >= 0.2 & Energy < 9)
