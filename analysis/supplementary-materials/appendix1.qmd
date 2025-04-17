@@ -691,29 +691,29 @@ M24_1_2 <- read_csv('analysis/data/raw_data/sem_data/M24_1_2.csv')
 
 # Prepare the energy ranges
 energy_ranges <- list(
-  C = c(0.2, 0.3),
-  O = c(0.5, 0.6),
-  F = c(0.67, 0.69),
-  Na = c(1.04, 1.06),
-  Mg = c(1.25, 1.27),
-  Mg_beta = c(1.3, 1.4),
-  Al = c(1.48, 1.5),
-  Si = c(1.7, 1.8),
-  P = c(2, 2.1),
-  S = c(2.3, 2.32),
-  S_beta = c(2.46, 2.47),
-  Cl = c(2.62, 2.64),
-  K = c(3.31, 3.33),
-  K_beta = c(3.59, 3.61),
-  Ca = c(3.68, 3.7),
-  Ca_beta = c(4.01, 4.02),
-  Ca_L = c(0.34, 0.36),
-  Ti = c(4.5, 4.6),
-  Ti_beta = c(4.9, 5),
-  Ti_L = c(0.45, 0.47),
-  Fe = c(6.38, 6.41),
-  Fe_beta = c(7, 7.2),
-  Fe_L = c(0.69, 0.73))
+  C = c(0.2, 0.3), # "#584B9F" dark blue
+  O = c(0.5, 0.6), # "#0086B3" blue
+  F = c(0.67, 0.69), # "#3EADA9"  greenish blue
+  Na = c(1.04, 1.06), # "#4FC46A"  green"
+  Mg = c(1.25, 1.27), # "#AEC491" yellowish green
+  Mg_b = c(1.3, 1.4), # "#AEC491" yellowish green
+  Al = c(1.48, 1.5), # "#F2C86C" yellow
+  Si = c(1.7, 1.8), # "#F5A838" orange
+  P = c(2, 2.1), # "#EE850E" dark orange
+  S = c(2.3, 2.32), # "#D54F34" red
+  S_b = c(2.46, 2.47), # "#D54F34" red
+  Cl = c(2.62, 2.64), # "#A51122" wine
+  K = c(3.31, 3.33), # "#A71B4B" pinkish red
+  K_b = c(3.59, 3.61), # "#A71B4B" pinkish red
+  Ca = c(3.68, 3.7), # "#D35C79" pink
+  Ca_b = c(4.01, 4.02), # "#D35C79" pink
+  Ca_L = c(0.34, 0.36), # "#D35C79" pink
+  Ti = c(4.5, 4.6), # "#BD3977" light purple
+  Ti_b = c(4.9, 5), # "#BD3977" light purple
+  Ti_L = c(0.45, 0.47), # "#BD3977" light purple
+  Fe = c(6.38, 6.41), # "#762181" purple
+  Fe_b = c(7, 7.2), # "#762181" purple
+  Fe_L = c(0.69, 0.73)) # "#762181" purple
 
 # M24_1_2
 filtered_M24_1_2 <- subset(M24_1_2, Energy >= 0.2 & Energy < 9)
