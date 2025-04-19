@@ -300,9 +300,9 @@ M18_8_graph <- filtered_M18_8 |>
   geom_text(data = peaks_M18_8_labels, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 5, vjust = -0.5, show.legend = FALSE) +
   scale_colour_manual(values = c(
   C = "#4461A8", O = "#2BACC2", F = "#3EADA9", Na = "#4FC46A", Mg = "#AEC491", Mg_b = "#AEC491", Al = "#F2C86C", Si = "#F5A838", P = "#EE850E", S = "#D54F34", S_b = "#D54F34", Cl = "#A51122", K = "#A71B4B", K_b = "#A71B4B", Ca = "#D35C79" , Ca_b = "#D35C79", Ca_L = "#D35C79", Ti = "#992766", Ti_b = "#992766", Ti_L = "#992766", Fe = "#762181" , Fe_b = "#762181" , Fe_L = "#762181")) +
-  theme(legend.position="none", axis.text = element_text(size = 15), axis.title = element_text(size = 18))
+  theme(legend.position="none", axis.text = element_text(size = 12), axis.title = element_text(size = 12))
 
-# ggsave("M18_8_graph.png", bg = "white" , dpi = 300, path = "analysis/figures/SOM/Graphs")
+# ggsave("M18_8_graph.png", bg = "white", width = 5, height = 3.75, unit ="in", dpi = 300, path = "analysis/figures/SOM/Graphs")
 
 # M18_7
 filtered_M18_7 <- subset(M18_7, Energy >= 0.2 & Energy < 9)
@@ -343,9 +343,9 @@ M18_7_graph <- filtered_M18_7 |>
   geom_text(data = peaks_M18_7_labels, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 5, vjust = -0.5, show.legend = FALSE) +
   scale_colour_manual(values = c(
   C = "#4461A8", O = "#2BACC2", F = "#3EADA9", Na = "#4FC46A", Mg = "#AEC491", Mg_b = "#AEC491", Al = "#F2C86C", Si = "#F5A838", P = "#EE850E", S = "#D54F34", S_b = "#D54F34", Cl = "#A51122", K = "#A71B4B", K_b = "#A71B4B", Ca = "#D35C79" , Ca_b = "#D35C79", Ca_L = "#D35C79", Ti = "#992766", Ti_b = "#992766", Ti_L = "#992766", Fe = "#762181" , Fe_b = "#762181" , Fe_L = "#762181")) +
-  theme(legend.position="none", axis.text = element_text(size = 15), axis.title = element_text(size = 18))
+  theme(legend.position="none", axis.text = element_text(size = 12), axis.title = element_text(size = 12))
 
-# ggsave("M18_7_graph.png", bg = "white" , dpi = 300, path = "analysis/figures/SOM/Graphs")
+# ggsave("M18_7_graph.png", bg = "white", width = 5, height = 3.75, unit ="in", dpi = 300, path = "analysis/figures/SOM/Graphs")
 
 # M4_3
 filtered_M4_3 <- subset(M4_3, Energy >= 0.2 & Energy < 9)
@@ -380,15 +380,15 @@ M4_3_graph <- filtered_M4_3 |>
   geom_line(linewidth = 0.5, alpha = 0.5, linetype = "solid", colour = "#8B8989") +
   labs(x = "Energy (keV)", y = "Intensity (Counts)") +
   theme_minimal() +
-  coord_cartesian(ylim = c(0, 5000)) +
+  coord_cartesian(ylim = c(0, 5000), xlim = c(0.3, 4.5)) +
   geom_point(data = peaks_M4_3, aes(x = Energy, y = Counts, colour = Element), size = 3, shape = 18) +
   #geom_text_repel(data = peaks_M4_3_labels, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 5, direction = "y", nudge_y = 0.5, max.overlaps = Inf, force = 1, show.legend = FALSE) +
   geom_text(data = peaks_M4_3_labels, aes(x = Energy, y = Counts, label = Element, colour = Element), size = 5, vjust = -0.5, show.legend = FALSE) +
   scale_colour_manual(values = c(
   C = "#4461A8", O = "#2BACC2", F = "#3EADA9", Na = "#4FC46A", Mg = "#AEC491", Mg_b = "#AEC491", Al = "#F2C86C", Si = "#F5A838", P = "#EE850E", S = "#D54F34", S_b = "#D54F34", Cl = "#A51122", K = "#A71B4B", K_b = "#A71B4B", Ca = "#D35C79" , Ca_b = "#D35C79", Ca_L = "#D35C79", Ti = "#992766", Ti_b = "#992766", Ti_L = "#992766", Fe = "#762181" , Fe_b = "#762181" , Fe_L = "#762181")) +  
-  theme(legend.position="none", axis.text = element_text(size = 15), axis.title = element_text(size = 18))
+  theme(legend.position="none", axis.text = element_text(size = 12), axis.title = element_text(size = 12))
 
-# ggsave("M4_3_graph.png", width = 10 ,bg = "white" , dpi = 300, path = "analysis/figures/SOM/Graphs")
+ggsave("M4_3_graph.png", width = 5, height = 3.75, units = "in", ,bg = "white" , dpi = 300, path = "analysis/figures/SOM/Graphs")
 
 ```
 
