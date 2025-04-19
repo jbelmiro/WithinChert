@@ -701,7 +701,7 @@ Similarly, the presence of skeletal remains, represented by peaks of calcium, ph
 
 ```{r}
 #| label: fig-skeletal
-#| fig-cap: "Skeletal remain from sample SP16_BLX, from the Lower Jurassic ourcrops of western Algarve. A: Detail of a phosphatized skeletal remain composed by calcium (A1), phosphorus (A2) and a small peak of sulphur (A3). The skeletal remain seems to be oxidized, with small peaks of iron within (A4)."
+#| fig-cap: "A) Skeletal remains from sample SP16_BLX, from the Lower Jurassic outcrops of western Algarve. B) Detail of skeletal remains composed of calcium (B1), phosphorus (B2) and a small peak of sulphur (B3). The skeletal remains seem to be oxidized, with small peaks of iron within (B4)."
 
 knitr::include_graphics(here::here("figures/within-chert/M3_3_map1.png"))
 
@@ -709,7 +709,7 @@ knitr::include_graphics(here::here("figures/within-chert/M3_3_map1.png"))
 
 ```{r}
 #| label: fig-oval-fossils
-#| fig-cap: "A-C: General view and details from an archaeological sample from local chert type (T4). A: general view of a concentration of oval fossils. B: general view of a concentration of oval fossils and other inclusions. C: detail of an irregular inclusion composed of titanium (C1) and an oval phosphatised skeletal remain composed mainly of calcium (C2), phosphorus (C3) and a small peak of sulphur."
+#| fig-cap: "A-C) General view and details from an archaeological sample from local chert type (T4). A) general view of a concentration of oval fossils. B) general view of a concentration of oval fossils and other inclusions. C) detail of an irregular inclusion composed of titanium (C1) and an oval skeletal remains composed mainly of calcium (C2), phosphorus (C3) and a small peak of sulphur."
 
 knitr::include_graphics(here::here("figures/within-chert/M15_4.png"))
 
@@ -719,7 +719,7 @@ By observing the surfaces of samples and the presence of skeletal remains, some 
 
 ```{r}
 #| label: fig-t6-general
-#| fig-cap: "A-D: General view and details from an archaeological sample from non-local chert type (T6). A: general view of the sample with uncommon inclusions. B: detail of an inclusion seen in A,  composed mostly of iron and small peaks of calcium and phosphorus, making this inclusion a possible oxidised skeletal remains of a fossil. C: general view of the sample with no visible inclusions. D: detail of a small and irregular iron inclusion."
+#| fig-cap: "A-D) General view and details from an archaeological sample from non-local chert type (T6). Dots represent the measured spectrum and shown in the corresponding graph. A) general view of the sample with uncommon inclusions. B) detail of an inclusion seen in A, composed mostly of iron and small peaks of calcium and phosphorus, making this inclusion a possible oxidised skeletal remains of a fossil (1). C) general view of the sample with no visible inclusions. D) detail of a small and irregular iron inclusion (2)."
 
 knitr::include_graphics(here::here("figures/within-chert/M18_7_M18_8_graphs.png"))
 
@@ -729,7 +729,7 @@ The rarity of inclusions is not limited to skeletal remains, but to other inclus
 
 ```{r}
 #| label: fig-framboids
-#| fig-cap: "A-B: Detail from the geological sample SP59_JOR from the Upper Jurassic outcrops (Jordana formation) of eastern Algarve. A: detailed view of a spherical pyrite framboid composed of iron (A1) and sulphur (A2). B: detailed view of an inclusion composed of iron (B1) and sulphur (B2)."
+#| fig-cap: "A-B) Detail from the geological sample SP59_JOR from the Upper Jurassic outcrops (Jordana formation) of eastern Algarve. A) detailed view of a spherical pyrite framboid composed of iron (A1) and sulphur (A2). B) detailed view of an inclusion composed of iron (B1) and sulphur (B2)."
 
 knitr::include_graphics(here::here("figures/within-chert/M10_5_map1_map2.png"))
 
@@ -743,7 +743,7 @@ Whenever isolated, calcium can be found in high peaks in cherts from Upper Juras
 
 ```{r}
 #| label: fig-calcite
-#| fig-cap: "A-B: General view of calcite inclusions (black arrows) from the geological sample SP69_MAR from the Upper Jurassic outcrops of western Algarve."
+#| fig-cap: "General view of calcite inclusions (light grey) from the geological sample SP69_MAR from the Upper Jurassic outcrops of western Algarve, composed mainly of calcium and silica (1). Dot represents the measured spectrum and is shown in the corresponding graph."
 
 knitr::include_graphics(here::here("figures/within-chert/M4_3_graphs.png"))
 
