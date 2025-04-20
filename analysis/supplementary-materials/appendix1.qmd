@@ -44,7 +44,6 @@ filters:
   - ../templates/pagebreak.lua
 bibliography: references.bib
 csl: "../templates/journal-of-archaeological-science.csl" # Insert path for the bib-style
-
 ---
 
 # Supplementary materials 1
@@ -2150,15 +2149,118 @@ M11_1_graph <- filtered_M11_1 |>
 
 ```
 
-
 ### Geological samples
 
 #### Lower Jurassic of western Algarve
 
-The analysed samples from the Lower Jurassic outcrops are homogeneous regarding their structure, inclusions and mineral compositions. The analysis of their composition and inclusions shows no specific differences between the outcrops, and they will be described as a single group (Carixian, Lower Jurassic formations of Western Algarve, including the inland outcrop of Ferrel).
+The analysed samples from the Lower Jurassic outcrops are homogeneous regarding their structure, inclusions and mineral compositions. The analysis of their composition and inclusions shows no specific differences between the outcrops, and they will be described as a single group (Carixian, Lower Jurassic formations of western Algarve, including the inland outcrop of Ferrel).
 
 They are mainly composed of cryptocrystalline quartz (predominantly silica or SiO2), and small peaks of aluminium, with a single sample also showing a high aluminium peak. Small peaks of chlorine and potassium can also be identified in less than 50% of the samples.
 
-Phosphatised skeletal remains are very frequent, occurring in more than 80% of the samples. These are all composed of calcium and phosphorus, and frequently show an associated smaller peak of sulphur (\~50% of the samples) or sulphur and fluorine (\~70% of the samples). These fossils also frequently show some oxidation, due to the associated presence of iron bands or restricted areas within the phosphatised skeletal remains. These skeletal remains are frequently irregular and indeterminate; however, a small number of samples show phosphatised skeletal remains with homogeneous oval shapes, which are currently indeterminate.
+Fossils are very frequent, occurring in more than 80% of the samples. These are all composed of calcium and phosphorus, and frequently show an associated smaller peak of sulphur (\~70% of the samples; @fig-m4-2 and @fig-m3-1). These fossils also frequently show some oxidation, due to the associated presence of iron bands or restricted areas within the fossils (@fig-m4-4, @fig-m2-3-mp1 and @fig-m23-3). These skeletal remains are frequently irregular and indeterminate; however, a small number of samples show fossils with homogeneous oval shapes, which are currently indeterminate (@fig-m8-3, @fig-m23-2 and @fig-m4-2-m23-2).
 
-Finally, iron oxides are present in all the samples, with an iron (Fe) composition. Other types of iron oxides are also present in lesser frequencies, as equally large peaks of iron and titanium (40% of the samples), iron and fluoride (20%), and titanium with a small peak of iron (\<10%). A single sample shows a high titanium peak without iron and another titanium with a smaller peak of phosphorus. Most of these iron or titanium inclusions have irregular shapes and varying sizes. Albeit rare (present in 3 samples), pyrite can be identified in the form of spherical framboids or dispersed pyrite nanocrystals.
+Finally, iron oxides are present in all the samples, with an iron (Fe) composition (@fig-m2-1-m4-1, @fig-m23-7 and @fig-m22-4). Other types of iron oxides are also present in lesser frequencies, as equally large peaks of iron and titanium (40% of the samples; @fig-m4-4) and titanium with a small peak of iron (\<10%). A single sample shows a high titanium peak without iron (@fig-m2-3-mp2) and another titanium with a smaller peak of phosphorus. Most of these iron or titanium inclusions have irregular shapes and varying sizes. Albeit rare (present in 3 samples), pyrite can possibly be identified in the form of spherical framboids or dispersed pyrite nanocrystals (@fig-m22-5-m23-2).
+
+```{r}
+#| label: fig-m4-2
+#| fig-cap: "A) general view of the sample (x250 magnification) showing several inclusions and porosity. B) detail of the inclusions (x900 magnification), showing an irregular  fossil composed mainly of calcium, phosphorus, and with small peaks of sulphur (1). Some iron oxides are found in close proximity to the fossil (2). Dots represent the location of the measured spectra plotted in graph 1 and 2. Geological sample SP34_PdA_b from the LJW formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M4_2_spectra5_graphs.png"))
+
+```
+
+```{r}
+#| label: fig-m3-1
+#| fig-cap: "A) detail of a fossil (x1k magnification) composed mainly of calcium, phosphorus, and with small peaks of sulphur (1). Dot represents the location of the measured spectrum plotted in graph 1. Geological sample SP40_FER from the LJW formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M3_1_map1_map2_graphs.png"))
+
+```
+
+```{r}
+#| label: fig-m4-4
+#| fig-cap: "A) detail of inclusions (x800 magnification) composed of calcium (A1), phosphorus (A2) and sulphur (A3), possibly corresponding to fossils, with a small peak of iron oxides (A4), and an inclusion composed of iron (A4) and titanium (A5). Geological sample SP8_PdA from the LJW formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M4_4_map1.png"))
+
+```
+
+```{r}
+#| label: fig-m2-3-mp1
+#| fig-cap: "A) general view of the sample (x250 magnification) showing several inclusions and porosity. B) detail of a fossil (x2.1k magnification) composed of calcium (B1) and phosphorus (B2) with trace presence of sulphur (B3). The fossils may be oxidized, due to the presence of iron (B4). Geological sample SP14_BLX from the LJW formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M2_3_map1_gen.png"))
+
+```
+
+```{r}
+#| label: fig-m23-3
+#| fig-cap: "A) detail of an irregular fossil (x1.6k magnification) composed of calcium (A1), phosphorus (A2), a small peak of sulphur, and iron speckles (A3) which correspond to the lighter dots in figure A. Geological sample SP32_FZF from the LJW formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M23_3_map1.png"))
+
+```
+
+```{r}
+#| label: fig-m8-3
+#| fig-cap: "A) general view of the sample (x250 magnification) showing a large oval fossil. B) detail of the fossil (x1k magnification) composed by calcium (B1), phosphorus (B2) and a small peak of sulphur (B3). The fossil may be oxidized, with small peaks of iron within (B4). Geological sample SP21_BLS from the LJW formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M8_3_map1.png"))
+
+```
+
+```{r}
+#| label: fig-m23-2
+#| fig-cap: "A) detail of an oval fossil (x850 magnification) composed of calcium (A1), phosphorus (A2) and iron speckles (A3) which correspond to the lighter dots in figure A. Geological sample SP30_FZF from the LJW formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M23_2_map1.png"))
+
+```
+
+```{r}
+#| label: fig-m4-2-m23-2
+#| fig-cap: "A) general view of the sample (x250 magnification) showing a large fossil. B) detailed view of the fossil (x650 magnification) mainly composed of calcium, phosphorus and small peaks of sulphur. Geological sample SP34_PdA_b from the LJW formation. C) general of the sample (x250 magnification) showing two large fossils. D) detail of the fossil (x1k magnification) composed of calcium, phosphorus and a small peak of sulphur. Geological sample SP30_FZF from the LJW formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M4_2_M23_2.png"))
+
+```
+
+```{r}
+#| label: fig-m2-1-m4-1
+#| fig-cap: "A) detail of inclusions (x420 magnification) mainly composed of iron (A1). Geological sample SP15_BLX from the LJW formation. B) detail of a small inclusion (x1k magnification) mainly composed of iron (B1), with small peaks of calcium and phosphorus. Geological sample SP10_PdA from the LJW formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M2_1_M4_1.png"))
+
+```
+
+```{r}
+#| label: fig-m23-7
+#| fig-cap: "Detail of small, round inclusions (x1.5 magnification) composed of iron within a quartz matrix composed of silicon, oxygen and a small peak of aluminium (1). Dot represents the location of the measured spectrum plotted in graph 1. Geological sample SP29_ASP from the LJW formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M23_7_spectra2_graph.png"))
+
+```
+
+```{r}
+#| label: fig-m22-4
+#| fig-cap: "Detail of an irregular inclusion (x1k magnification) composed mainly of iron (1). Dot represents the location of the measured spectrum plotted in graph 1. Geological sample SP41_FER from the LJW formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M22_4.1_spectra1_graph.png"))
+
+```
+
+```{r}
+#| label: fig-m2-3-mp2
+#| fig-cap: "Detail of an inclusion (x3.7k magnification) mainly composed of titanium. Dot represents the location of the measured spectrum plotted in graph 1. Geological sample SP14_BLX from the LJW formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M2_3_map2_graph.png"))
+
+```
+
+```{r}
+#| label: fig-m22-5-m23-2
+#| fig-cap: "A) detail of inclusions (x2.3k magnification) composed mainly of iron (A1). Possibly originally pyrite nanocrystal aggregates and spherical framboids. Geological sample SP40_FER from the LJW formation. B) detail of inclusions (x1.4k magnification) composed of iron, silicon and a small peak of aluminium (1). The cluster of rounded iron inclusions is possibly originally dispersed pyrite nanocrystals. Geological sample SP30_FZF from the LJW formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M22_5.1_M23_2_graph.png"))
+
+```
