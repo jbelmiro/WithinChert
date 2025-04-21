@@ -85,19 +85,24 @@ library(magick)
 #| label: xrd-readtables
 
 # Read grouped supporting data
-xrd_perc <- read_csv('data/xrd_data/xrd_goals.csv') # File with component percentage of all samples for annotations
-xrd_marks <- read_csv('data/xrd_data/xrd_peaks.csv') # File with peak data and d spacing for plot labels
+xrd_perc <- read_csv('analysis/data/raw_data/xrd_data/xrd_goals.csv') # File with component percentage of all samples for annotations
+xrd_marks <- read_csv('analysis/data/raw_data/xrd_data/xrd_peaks.csv') # File with peak data and d spacing for plot labels
 
 # Read individual xrd files
-sp15_xrd <- read_csv('data/xrd_data/SP15_xrd.csv')
-sp58_xrd <- read_csv('data/xrd_data/SP58_xrd.csv')
-sp62_xrd <- read_csv('data/xrd_data/SP62_xrd.csv')
-sp69_xrd <- read_csv('data/xrd_data/SP69_xrd.csv')
+sp15_xrd <- read_csv('analysis/data/raw_data/xrd_data/SP15_xrd.csv')
+sp58_xrd <- read_csv('analysis/data/raw_data/xrd_data/SP58_xrd.csv')
+sp62_xrd <- read_csv('analysis/data/raw_data/xrd_data/SP62_xrd.csv')
+sp69_xrd <- read_csv('analysis/data/raw_data/xrd_data/SP69_xrd.csv')
 
 ```
 
 ```{r}
 #| label: xrd-graphs
+
+# Turn value from percent table to percentages
+xrd_perc <- xrd_perc %>%
+  mutate(`Content (%)` = round(`Content (%)` * 100, 4))
+
 
 xrd_marks <- xrd_marks |>
   dplyr::mutate(Phase = case_when(

@@ -68,8 +68,12 @@ library(ggpmisc)
 #| label: somxrd-readtables
 
 # Read grouped supporting data
-xrd_perc <- read_csv('data/xrd_data/xrd_goals.csv') # File with component percentage of all samples for annotations
+xrd_perc <- read_csv('analysis/data/raw_data/xrd_data/xrd_goals.csv') # File with component percentage of all samples for annotations
 xrd_marks <- read_csv('data/xrd_data/xrd_peaks.csv') # File with peak data and d spacing for plot labels
+
+# Turn value from percent table to percentages
+xrd_perc <- xrd_perc %>%
+  mutate(`Content (%)` = round(`Content (%)` * 100, 4))
 
 xrd_marks <- xrd_marks |> # Correct the quartz denomination on base dataset
   dplyr::mutate(Phase = case_when(
@@ -81,7 +85,7 @@ sp6_xrd <- read_csv('data/xrd_data/SP6_xrd.csv')
 sp7_xrd <- read_csv('data/xrd_data/SP7_xrd.csv')
 sp10_xrd <- read_csv('data/xrd_data/SP10_xrd.csv')
 sp14_xrd <- read_csv('data/xrd_data/SP14_xrd.csv')
-sp18_xrd <- read_csv('data/xrd_data/SP18_xrd.csv')
+sp18_xrd <- read_csv('analysis/data/raw_data/xrd_data/SP18_xrd.csv')
 sp21_xrd <- read_csv('data/xrd_data/SP21_xrd.csv')
 sp28_xrd <- read_csv('data/xrd_data/SP28_xrd.csv')
 sp30_xrd <- read_csv('data/xrd_data/SP30_xrd.csv')
@@ -223,7 +227,7 @@ sp14_xrd |>
 
 ```{r}
 #| label: fig-xrd-sp18
-#| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Praia do Belixe (SP18_PBX). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Praia do Belixe (SP18_PBX). The rhombus shape signifies the main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
 
 sp18_marks <- xrd_marks |>
   filter(Sample == "SP18")
