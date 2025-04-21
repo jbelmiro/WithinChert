@@ -1,5 +1,5 @@
 ---
-title: "Title Goes Here"
+title: "Within chert: a multi-technique mineral and geochemical approach to the study of chert of southwestern Iberia"
 author:
   - Jane Doe:
       correspondence: "yes"
@@ -48,8 +48,7 @@ abstract: |
   Text of abstract
 keywords: |
   keyword 1; keyword 2; keyword 3
-highlights: |
-  These are the highlights. 
+
 ---
 
 <!-- This is the format for text comments that will be ignored during renderings. Do not put R code in these comments because it will not be ignored. -->
@@ -57,8 +56,6 @@ highlights: |
 <!-- With the following code you can access and display values from the yml header above. -->
 
 Keywords: `r rmarkdown::metadata$keywords`
-
-Highlights: `r rmarkdown::metadata$highlights`
 
 <!-- The actual document text starts here: -->
 
@@ -793,6 +790,20 @@ Although powder-XRD is a destructive technique, it has been used alongside petro
 
 This study utilised X-ray diffraction (XRD) to determine the mineral composition of 23 geological powdered samples of chert from the Algarve region (Table 1). These samples, previously characterised and published by our team (Belmiro et al., 2023), represent at least one specimen from each outcrop, with a focus on primary and sub-primary locations across all chert-bearing formations in the region. A detailed description of the sample preparation process is available in our online research repository.
 
+```{r}
+#| label: tbl-samples
+#| tbl-cap: "Number of samples (chips) used for the SEM-EDS study, by a) geological formation for the geological samples, and by b) type for the archaeological samples."
+
+# Read table
+tbl_samples <- read_csv('analysis/data/raw_data/geochem_samples_n.csv')
+# Turn NAs into empty strings
+tbl_samples <- tbl_samples %>%
+  mutate(across(everything(), ~ replace(.x, is.na(.x), "")))
+
+knitr::kable(tbl_samples)
+
+```
+
 The samples were analysed using a Bruker AXS D8 Discover XRD with the Da Vinci design, equipped with a Cu Kα source operating at 40 kV and 40 mA, and a Lynxeye 1D detector. Scans were conducted from 3° to 75° 2θ, with a 0.05° 2θ step, at the HERCULES Laboratory, University of Évora.
 
 Preliminary phase identification was performed using Diffrac.Suite™ (Bruker) and further refined with Profex (version 5.2.9) after converting raw files using PowDll Converter. All data processed in Profex was organised and plotted in R Studio, where visual representations of the XRD data were also generated. The code and original files used in this analysis are available in our online repository.
@@ -808,14 +819,6 @@ Although SEM-EDS is a versatile and efficient method, EDS has a relatively high 
 Despite this limitation, EDS coupled with SEM has been widely used alongside other techniques, such as petrography, XRD, and XRF, to characterise geological and archaeological lithic resources, including chert raw materials. This combined approach enhances the understanding of a formation’s characteristics and aids in identifying sources in provenance studies in the Iberian Peninsula (e.g., Abrunhosa et al., 2020; Columbu et al., 2023; Costa et al., 2022; Ortega et al., 2018).
 
 This study employed scanning electron microscopy and energy-dispersive X-ray spectroscopy (SEM-EDS) to analyse the surface structure and elemental composition of the samples. The analysis included 39 geological samples from all five chert-bearing formations (Belmiro et al., 2023; Table 2a). Additionally, 27 samples were examined from archaeological artefacts, representing all previously identified chert types (Belmiro et al., 2025; Table 2b).
-
-```{r}
-#| label: tbl-SEM-samples
-#| tbl-cap: "Number of samples (chips) used for the SEM-EDS study, by a) geological formation for the geological samples, and by b) type for the archaeological samples."
-
-
-
-```
 
 The samples consisted of lithic chips mounted in resin and sanded until minimal to no scratches were visible under the microscope. A detailed description of the sample preparation process and analysis is available in our online repository (SOM_1).
 
@@ -853,7 +856,13 @@ The XRD results are homogeneous, showing little differences between samples. The
 #| label: tbl-xrd-results
 #| tbl-cap: "Identified crystalline phases of chert geological samples from the Algarve. LJW: Lower Jurassic West; MJE: Middle Jurassic East; TW: Triassic West; UPE: Upper Jurassic East; UPW: Upper Jurassic West. (*) refers to results obtained from samples analysed and interpreted at the Geociencias Barcelona-CSIC. Content percentages of samples analysed at the Hércules laboratory are represented by x: xxx refers to > 90%; xx to 90-30%; x to 10-1%; (x) to <1%."
 
+# Read table
+xrd_results_tbl <- read_csv('analysis/data/raw_data/xrd_results.csv')
+# Turn NAs into empty strings
+xrd_results_tbl <- xrd_results_tbl %>%
+  mutate(across(everything(), ~ replace(.x, is.na(.x), "")))
 
+knitr::kable(xrd_results_tbl)
 
 ```
 

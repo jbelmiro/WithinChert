@@ -46,7 +46,7 @@ bibliography: references.bib
 csl: "../templates/journal-of-archaeological-science.csl" # Insert path for the bib-style
 ---
 
-# Supplementary materials 1
+# Online resource 4
 
 ## XRD results
 
