@@ -1,0 +1,94 @@
+---
+title: "Online resource 1. Sample preparation and detailed method description"
+subtitle: "Within chert: a multi-technique mineral and geochemical approach to the study of chert of southwestern Iberia"
+author: Joana Belmiro
+date: now
+date-format: long
+format: 
+  docx:
+    reference-doc: "../templates/template.docx" # Insert path for the DOCX file
+execute:
+  echo: false
+  warning: false
+  message: false
+  comment: "#>"
+  fig-path: "../figures/"
+  fig-dpi: 600
+filters:
+  - ../templates/scholarly-metadata.lua
+  - ../templates/author-info-blocks.lua
+  - ../templates/pagebreak.lua
+bibliography: references.bib
+csl: "../templates/journal-of-archaeological-science.csl" # Insert path for the bib-style
+---
+
+## X-Ray diffraction (XRD)
+
+To obtain a representative collection of cherts with diverse macroscopic characteristics—particularly those displaying intra-outcrop variability—samples were selected from all four chert-bearing geological formations identified in the Algarve region.
+
+All samples underwent manual preparation following standardized procedures to ensure optimal and reproducible results. The process began with crushing the samples into small chips, during which any cortex or alteration rinds were carefully removed. This step ensured that only unaltered areas of the nodules were used. A steel geological hammer was employed for this purpose, and the work was carried out on a clean plastic surface, which was either cleaned or replaced between samples to avoid cross-contamination.
+
+Following the initial preparation, the chips were ground into a fine, homogeneous powder using a planetary ball mill equipped with agate balls. The equipment and tools were thoroughly cleaned and dried after each sample to prevent contamination. The resulting powders were stored in individual plastic vials, each clearly labelled with the corresponding sample ID.
+
+The initial sample preparation was conducted at the ICArEHB laboratories (Interdisciplinary Centre for Archaeology and the Evolution of Human Behaviour), while bulk sample processing took place at the Laboratory of Environmental Sedimentology at CIMA (Centro de Investigação Marinha e Ambiental), University of Algarve (https://www.cima.ualg.pt/pt/cima/infraestruturas).
+
+To ensure the reproducibility of results across different XRD instruments and researchers, larger quantities of chips were processed, allowing for the preparation of multiple bulk samples from the same nodules and the same internal areas within each nodule.
+
+X-ray diffraction (XRD) analysis was performed using a Bruker AXS D8 Discover system with Da Vinci design, equipped with a Cu Kα source (operating at 40 kV and 40 mA) and a Lynxeye one-dimensional detector. Scans were conducted over a 2θ range of 3° to 75°, with a step size of 0.05°, at the HERCULES Laboratory at the University of Évora.
+
+Following analysis, bulk samples were returned to their original containers. Standard circular XRD mounts were cleaned and dried between uses to prevent contamination.
+
+Preliminary phase identification was performed using Bruker's Diffrac.Suite™ software, available at the HERCULES Laboratory. The data, initially generated in Bruker's proprietary format, were converted to raw files using the free PowDll Converter software to enable further analysis using open-source tools.
+
+Phase identification was completed using Profex (version 5.2.9), with the Bruker Lynxeye Cu source configuration file, utilizing the Search-Match functionality. Mineral quantification was performed with the Rietveld Refinement functionality. All collected data from Profex were organized and visualized using R Studio.
+
+## Scanning Electron Microscopy and Energy Dispersive X-Ray (SEM-EDS)
+
+SEM-EDS analysis was conducted on chert chips mounted in resin molds. Several small chips (1–5 mm in size) were carefully selected from the previously prepared samples.
+
+For geological specimens, chip selection followed the same procedure as that used for XRD sample preparation. Selection criteria also included chip flatness, appropriate thickness, and the macroscopic characteristics of the nodules to ensure a representative sampling of chert variability within each formation. Selected chips were stored individually for further processing, while remaining material was retained for powdering.
+
+For archaeological specimens, chips were chosen based on the morphology of the lithic artifacts, with preference given to edges that allowed for chip removal with minimal damage. Unretouched artifacts from various archaeological layers were prioritized for sampling.
+
+Chips were extracted using either a small metal cutter or by controlled knapping with a non-chert stone or antler. A small marker dot was placed on each artifact to indicate the area from which the chip was removed, and the artifact was labelled with a reference to the corresponding chip ID. This procedure ensured clear identification of modified archaeological artifacts for future reference.
+
+```{r}
+#| label: fig-moulds
+#| fig-cap: "Resin moulds with chert chips after polishing. All moulds and chips were given an individual ID (e.g., M3_1)."
+
+knitr::include_graphics(here::here('analysis/figures/SOM/sample_scheme.png'))
+
+```
+
+The selected chips were then mounted in plastic moulds filled with transparent epoxy resin (Struers Epofix). Chip arrangement within each mould was carefully planned to optimize visibility and identification during analysis—typically in alternating rows of even and uneven numbers when feasible. Prior to resin casting, the arranged chips were photographed for documentation. The resin mixture (resin and hardener) was then poured into the mould and left to cure for 8–12 hours. This step was conducted at both the HERCULES Laboratory (University of Évora) with technical assistance, and the ICArEHB Geochemistry Laboratory (University of Algarve).
+
+Once the resin had fully hardened, the moulds were removed, and the chips were cut and sanded to produce a uniform height. Cutting was performed using a precision saw at the HERCULES Laboratory. Each chip was labelled on the cut surface and sides with the corresponding mould ID and an orientation arrow referencing the earlier photographs.
+
+The exposed chip faces were then sanded to improve surface quality for SEM-EDS analysis. Sanding was carried out using a water-cooled sanding machine at the ICArEHB Geoarchaeology Laboratory, employing a sequence of progressively finer sandpaper grits (e.g., 240, 800, 1000, 1200, 2400, and 4000). Final polishing was done using a cloth and a liquid diamond polishing compound to achieve a smooth, reflective surface.
+
+After each round of sanding, samples were inspected under a microscope to check for residual surface scratches. If needed, additional sanding was performed until a flawless finish was achieved. Once polishing was complete, the moulds were secured with double-sided tape inside small boxes for storage and transport. This ensured the polished surfaces remained protected from contact with rough materials, minimizing the risk of scratches during handling.
+
+## Portable X-Ray Fluorescence (pXRF)
+
+Portable X-ray fluorescence (pXRF) analysis was carried out using a Bruker Titan S1 portable XRF device, operated in a benchtop configuration at the ICArEHB laboratory. The instrument was powered by a battery—maintained at a minimum 25% charge before being replaced with a fully charged unit. Battery operation was preferred over direct power connection due to a faulty power cable and to avoid potential power fluctuations during the analysis process.
+
+Prior to sample analysis, a validation run was conducted using two standard reference materials provided by Bruker, applying the standard calibration. The Bruker standard database was utilized with the Geochem application and the Dual Mining method.
+
+A total of 166 chert samples were analysed, representing a range of geological and archaeological sources and types. Each sample was scanned for a total of 180 seconds: 90 seconds in the first phase targeting major elements, and 90 seconds in the second phase targeting minor elements. A minimum of one scan was performed per sample, with additional scans conducted on specimens displaying macroscopic variability (e.g., differing colours or degrees of translucency).
+
+Following each scan, the analysed point was marked with an "X" directly on the sample surface. Additionally, the sample bags were labelled with a unique pXRF ID code. In cases where multiple scans were conducted on a single sample, corresponding IDs were also marked adjacent to each "X" to ensure accurate identification.
+
+Prior to storage, the thickness and diameter of the scanned face of each sample were measured to confirm compliance with the minimum requirements for pXRF analysis. This step was guided by findings from previous research [e.g., @newlander2015], which indicate that sample size and thickness can significantly affect data homogeneity and analytical accuracy. Complete measurements for each sample, including thickness and diameter, are provided in Online resource 2.
+
+For geological samples, scans were conducted on fresh, flat surfaces, deliberately avoiding areas with cortex or signs of alteration. When necessary, nodules were broken to expose suitable surfaces. The selected geological specimens were chosen to represent the full spectrum of chert types identified in the Algarve region, as well as comparative samples from Central Portugal and southern Spain. This broad selection enabled comparative analysis and supported hypotheses grounded in both macroscopic and petrographic data.
+
+For archaeological samples, artifacts were selected based on previously established typologies [@belmiro2025], with priority given to pieces that exhibited larger, flatter surfaces and minimal surface alteration. This ensured reliable analytical results while preserving the integrity of the artifacts.
+
+\newpage
+
+# References
+
+<!-- The following line ensures the references appear here for the MS Word or HTML output files, rather than right at the end of the document (this will not work for PDF files):  -->
+
+::: {#refs}
+:::
