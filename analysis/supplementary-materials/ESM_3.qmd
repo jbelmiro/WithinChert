@@ -1,13 +1,14 @@
 ---
 title: "Online resource 3. Chemical elements/compounds and geological implications"
 subtitle: "Within chert: a multi-technique mineral and geochemical approach to the study of chert of southwestern Iberia"
+author: Joana Belmiro
 date: now
 date-format: long
 format: 
   docx:
     reference-doc: "../templates/template.docx" # Insert path for the DOCX file
 execute:
-  echo: true
+  echo: false
   warning: false
   message: false
   comment: "#>"
@@ -19,67 +20,63 @@ filters:
   - ../templates/pagebreak.lua
 bibliography: references.bib
 csl: "../templates/journal-of-archaeological-science.csl" # Insert path for the bib-style
-abstract: |
-  Text of abstract
-keywords: |
-  keyword 1; keyword 2; keyword 3
 ---
 
-**Silica (Silicon dioxide, SiO~2~)**
+### Aluminium oxide (Al~2~O~3~)
 
-Silica is mostly found in nature as quartz and primarily composes cherts in a microcrystalline, cryptocrystalline or microfibrous form (Folk, 1980; Knauth, 1994). It is the key compound in chert diagenetic genesis, and can be expected to be found in high percentages within chert samples (Marshall & Fairbridge, 1998; Murray, 1994). Silica can also be found in limestone and takes a key role in the preservation of some fossils, through their silicification due to organic silica naturally occurring in living organisms (e.g., sponge spicules).
-
-**Iron(II) oxide (Fe~2~O~3~)**
-
-Iron is a component in all mineral classes, and it occurs mainly as reduced ferrous iron (Fe^2+^) or oxidized ferric iron (Fe^3+^) in sedimentary rocks (Marshall & Fairbridge, 1998). Iron oxides are a common constituent of cherts and are often related to metal input during the diagenetic formation process of cherts. Its presence has been used to identify the cherts diagenetic history due to being immobile during chert formation (Murray, 1994). The thermodynamically favoured phase of iron oxides in mostly sedimentary environments is hematite (Fe~2~O~3~). Ferric oxides in sedimentary environments with abundant organic matter may form Pyrite (FeS~2~) due to the interaction with sulphur (Marshall & Fairbridge, 1998).
+Aluminium (Al) is an abundant element in the Earth’s crust. Aluminium oxide is a common component of cherts, frequently associated with terrigenous fraction [@encyclop1998]. It is considered that Al is immobile during diagenetic chert formation (@fig-scheme), and its correlation with other immobile elements (e.g., Ti) has been used to identify chert diagenetic and weathering processes [@sugitani1996]. Similarly, Al~2~O~3~ concentrations in different types of cherts may vary [@murray1994], making them a key element to discern between sources, as shown in previous archaeological geochemical studies [@nazaroff2013].
 
 ```{r}
 #| label: fig-scheme
 #| fig-cap: "Schematic diagram of diagenetic chemical fractionations of chemical elements potentially occurring during chert formation. Adapted from Murray (1994)."
 
-knitr::include_graphics("figures/SOM/murray_mobility.png")
+knitr::include_graphics(here::here('analysis/figures/SOM/murray_mobility.png'))
 
 ```
 
-**Titanium dioxide (TiO~2~)**
+### Calcium oxide (CaO)
 
-Titanium dioxide is frequently associated to terrigenous contribution. It is common in cherts, as it is considered immobile during diagenetic chert formation (Murray, 1994). Common Ti phases are the rutile (TiO~2~) and ilmenite (FeTiO~3~) (Marshall & Fairbridge, 1998). Enrichment of TiO~2~ in cherts (in comparison to Al) has been shown to be a useful indicator of specific chert diagenetic and weathering formation processes (Sugitani et al., 1996).
+Calcium (Ca) is a major element in most earth systems and major constituent of rock forming minerals. Calcium oxide (CaO) is an essential component of sedimentary carbonate rocks, primarily found in the form of calcium carbonate (CaCO~3~) in rocks such as calcite, dolomite and aragonite. The formation of carbonate rocks occurs through biological and chemical precipitation in marine and lacustrine environments, where CaO-rich minerals accumulate over time [@encyclop1998]. Chert typically contains very low amounts of calcium oxide (CaO) compared to sedimentary carbonate rocks, due to its high mobilization during the diagenetic process (@fig-scheme). However, CaO can still be present in chert as a minor component, mainly due to impurities such as carbonate inclusions, detrital calcite, or interbedded carbonate layers. In some cases, cherts associated with limestone or dolomite may retain traces of CaO from the original carbonate material.
 
-**Aluminium oxide (Al2O3)**
+### Chlorine (Cl)
 
-Aluminium (Al) is an abundant element in the Earth’s crust. Aluminium oxide is a common component of cherts, frequently associated with terrigenous fraction (Marshall & Fairbridge, 1998). It is considered that Al is immobile during diagenetic chert formation (Murray, 1994), and its correlation with other immobile elements (e.g., Ti) has been used to identify chert diagenetic and weathering processes (Sugitani et al., 1996). Similarly, Al~2~O~3~ concentrations in different types of cherts may vary (Murray, 1994), making them a key element to discern between sources, as shown in previous archaeological geochemical studies (Nazaroff et al., 2013).
+Chlorine (Cl) is typically present in sedimentary carbonate rocks in trace amounts, mainly as dissolved chloride (Cl⁻) in pore waters or as part of fluid inclusions within carbonate minerals. Chlorine is present in different abundances in different types of rocks. In sedimentary rocks, chlorine is more present in dolomite than in limestone [@johns1967]. In chert, Cl is generally found in very low concentrations, primarily as adsorbed chloride ions in pore waters or as inclusions from saline fluids during silica diagenesis.
 
-**Phosphate (P~2~O~5~)**
+### Copper (Cu)
 
-Phosphate refers to the compound in which phosphorus (P) can be found in rocks and soils; P oxidizes to phosphate and is never found free in nature (Marshall & Fairbridge, 1998). This main form of P in nature is orthophosphate which is abundant in rocks, but is also abundant in aquatic environments (Rezania et al., 2021). Phosphorus is mobilized and removed during silicification of carbonate sediments, thus making its presence less stable than other elements (Murray, 1994).
+Copper (Cu) is typically present in trace amounts in sedimentary carbonate rocks (and in natural waters), often as a result of diagenetic processes, hydrothermal activity, or detrital input. In carbonate formations, Cu can occur as dispersed ions, adsorbed onto clay minerals, or incorporated into secondary minerals, especially in oxidizing environments. In some cases, trace amounts of Cu can be incorporated into biogenic cherts due to the presence of organic matter or associated sulphide minerals (e.g., chalcopyrite, CuFeS~2~) [@encyclop1998].
 
-**Sulphur (S)**
+### Iron(II) oxide (Fe~2~O~3~)
 
-Sulphur is abundant in marine sediments as it is part of a complex cycle of chemical reactions that change the reactions and products when interacting with other elements, depending on the depth and type of sediment (Marshall & Fairbridge, 1998). Sulfur can also be incorporated into limestones as trace sulfate or be present in organic matter derived from microbial activity. In chert, sulfur is typically found in minor amounts, mainly as disseminated sulfides like pyrite.
+Iron is a component in all mineral classes, and it occurs mainly as reduced ferrous iron (Fe^2+^) or oxidized ferric iron (Fe^3+^) in sedimentary rocks [@encyclop1998]. Iron oxides are a common constituent of cherts and are often related to metal input during the diagenetic formation process of cherts. Its presence has been used to identify the cherts diagenetic history due to being immobile during chert formation (@fig-scheme). The thermodynamically favoured phase of iron oxides in mostly sedimentary environments is hematite (Fe~2~O~3~). Ferric oxides in sedimentary environments with abundant organic matter may form Pyrite (FeS~2~) due to the interaction with sulphur [@encyclop1998].
 
-**Chlorine (Cl)**
+### Phosphate (P~2~O~5~)
 
-Chlorine (Cl) is typically present in sedimentary carbonate rocks in trace amounts, mainly as dissolved chloride (Cl⁻) in pore waters or as part of fluid inclusions within carbonate minerals. Chlorine is present in different abundances in different types of rocks. In sedimentary rocks, chlorine is more present in dolomites than in limestones (Johns & Huang, 1967). In chert, Cl is generally found in very low concentrations, primarily as adsorbed chloride ions in pore waters or as inclusions from saline fluids during silica diagenesis.
+Phosphate refers to the compound in which phosphorus (P) can be found in rocks and soils; P oxidizes to phosphate and is never found free in nature [@encyclop1998]. This main form of P in nature is orthophosphate which is abundant in rocks, but is also abundant in aquatic environments [@rezania2021]. Phosphorus is mobilized and removed during silicification of carbonate sediments, thus making its presence less stable than other elements (@fig-scheme).
 
-**Potassium oxide (K~2~O)**
+### Potassium oxide (K~2~O)
 
-Potassium (K) is a trace element in the Earth, but during the weathering of rocks dissolves into the weathering solutions and enters the hydrosphere; it is a major constituent of rock forming minerals (Marshall & Fairbridge, 1998). In sedimentary carbonate rocks, K~2~O is typically present in trace amounts, associated in clay minerals.
+Potassium (K) is a trace element in the Earth, but during the weathering of rocks dissolves into the weathering solutions and enters the hydrosphere; it is a major constituent of rock forming minerals [@encyclop1998]. In sedimentary carbonate rocks, K~2~O is typically present in trace amounts, associated in clay minerals.
 
-**Calcium oxide (CaO)**
+### Silica (Silicon dioxide, SiO~2~)
 
-Calcium (Ca) is a major element in most earth systems and major constituent of rock forming minerals. Calcium oxide (CaO) is an essential component of sedimentary carbonate rocks, primarily found in the form of calcium carbonate (CaCO~3~) in rocks such as calcite, dolomite and aragonite. The formation of carbonate rocks occurs through biological and chemical precipitation in marine and lacustrine environments, where CaO-rich minerals accumulate over time (Marshall & Fairbridge, 1998). Chert typically contains very low amounts of calcium oxide (CaO) compared to sedimentary carbonate rocks, due to its high mobilization during the diagenetic process (Murray, 1994). However, CaO can still be present in chert as a minor component, mainly due to impurities such as carbonate inclusions, detrital calcite, or interbedded carbonate layers. In some cases, cherts associated with limestone or dolomite may retain traces of CaO from the original carbonate material.
+Silica is mostly found in nature as quartz and primarily composes cherts in a microcrystalline, cryptocrystalline or microfibrous form [@folk1980; @knauth1994]. It is the key compound in chert diagenetic genesis and can be expected to be found in high percentages within chert samples [@encyclop1998; @murray1994]. Silica can also be found in limestone and takes a key role in the preservation of some fossils, through their silicification due to organic silica naturally occurring in living organisms (e.g., sponge spicules).
 
-**Copper (Cu)**
+### Strontium (Sr)
 
-Copper (Cu) is typically present in trace amounts in sedimentary carbonate rocks (and in natural waters), often as a result of diagenetic processes, hydrothermal activity, or detrital input. In carbonate formations, Cu can occur as dispersed ions, adsorbed onto clay minerals, or incorporated into secondary minerals, especially in oxidizing environments. In some cases, trace amounts of Cu can be incorporated into biogenic cherts due to the presence of organic matter or associated sulfide minerals (e.g., chalcopyrite, CuFeS~2~) (Marshall & Fairbridge, 1998).
+Strontium is commonly present in sedimentary carbonate rocks. It readily substitutes for Ca in the crystal structure of carbonate minerals such as calcite, dolomite and aragonite, with aragonite generally containing higher Sr concentrations due to its greater affinity for Sr incorporation. Sr in carbonate rocks originates from seawater, biological processes (e.g., coral and shell formation), and diagenetic alteration. During diagenesis, Sr can be released from aragonite as it recrystallizes to calcite, leading to Sr-enriched pore waters or secondary mineral precipitation [@devos2006]. In chert, Sr is typically present in trace amounts, often introduced through diagenetic interactions with surrounding carbonate sediments or the incorporation of biogenic materials and has been used to discern between cherts of different formations [@yamamoto1986].
 
-**Strontium (Sr)**
+### Sulphur (S)
 
-Strontium is commonly present in sedimentary carbonate rocks. It readily substitutes for Ca in the crystal structure of carbonate minerals such as calcite, dolomite and aragonite, with aragonite generally containing higher Sr concentrations due to its greater affinity for Sr incorporation. Sr in carbonate rocks originates from seawater, biological processes (e.g., coral and shell formation), and diagenetic alteration. During diagenesis, Sr can be released from aragonite as it recrystallizes to calcite, leading to Sr-enriched pore waters or secondary mineral precipitation (De Vos and Tarvainen, 2006). In chert, Sr is typically present in trace amounts, often introduced through diagenetic interactions with surrounding carbonate sediments or the incorporation of biogenic materials, and has been used to discern between cherts of different formations (Yamamoto, 1986).
+Sulphur is abundant in marine sediments as it is part of a complex cycle of chemical reactions that change the reactions and products when interacting with other elements, depending on the depth and type of sediment [@encyclop1998]. Sulphur can also be incorporated into limestone as trace sulphate or be present in organic matter derived from microbial activity. In chert, sulphur is typically found in minor amounts, mainly as disseminated sulphides like pyrite.
 
-**Zirconium (Zr)**
+### Titanium dioxide (TiO~2~)
 
-Zirconium is typically present in very low concentrations in sedimentary carbonate rocks. Zr is commonly associated with detrital heavy minerals such as zircon (ZrSiO~4~), which can be present as fine-grained inclusions in carbonate sediments, especially in siliciclastic-influenced depositional environments. Due to its resistance to weathering and diagenesis, zircon grains in carbonate rocks often originate from the erosion of older igneous and metamorphic rocks (De Vos and Tarvainen, 2006). In chert, Zr is also typically present in trace amounts, and has been used to successfully discern between different chert sources (Nazaroff et al., 2013), due to it being relatively unaffected during chert diagenesis (Murray, 1994).
+Titanium dioxide is frequently associated to terrigenous contribution. It is common in cherts, as it is considered immobile during diagenetic chert formation (@fig-scheme). Common Ti phases are the rutile (TiO~2~) and ilmenite (FeTiO~3~) [@encyclop1998]. Enrichment of TiO~2~ in cherts (in comparison to Al) has been shown to be a useful indicator of specific chert diagenetic and weathering formation processes [@sugitani1996].
+
+### Zirconium (Zr)
+
+Zirconium is typically present in very low concentrations in sedimentary carbonate rocks. Zr is commonly associated with detrital heavy minerals such as zircon (ZrSiO~4~), which can be present as fine-grained inclusions in carbonate sediments, especially in siliciclastic-influenced depositional environments. Due to its resistance to weathering and diagenesis, zircon grains in carbonate rocks often originate from the erosion of older igneous and metamorphic rocks [@devos2006]. In chert, Zr is also typically present in trace amounts, and has been used to successfully discern between different chert sources [@nazaroff2013], due to it being relatively unaffected during chert diagenesis [@murray1994].
 
 \newpage
 
