@@ -1,42 +1,19 @@
 ---
-title: "Title Goes Here"
-author:
-  - Jane Doe:
-      correspondence: "yes"
-      email: janedoe@fosg.org
-      orcid: 0000-0003-1689-0557
-      institute:
-        - fosg
-        - fop
-  - John Q. Doe:
-      institute: fosg
-      orcid: 0000-0003-1689-0558
-  - Peder Ås:
-      institute: fosg
-      orcid: 0000-0003-1689-0559
-  - Juan Pérez:
-      orcid: 0000-0003-1689-0551
-      institute:
-        - name: Acme Corporation
-  - Max Mustermann:
-      orcid: 0000-0003-1689-0552
-institute:
-  - fosg:
-      name: Formatting Open Science Group
-      address: 23 Science Street, Eureka, Mississippi, USA
-  - fop: Federation of Planets
+title: "Online resource 4. Supplementary graphs and detailed descriptions of XRD and SEM-EDS results"
+subtitle: "Within chert: a multi-technique mineral and geochemical approach to the study of chert of southwestern Iberia"
+author: Joana Belmiro
 title-block-published: "Last updated"  
 date: now
 date-format: long
 format: 
   docx:
     reference-doc: "../templates/template.docx" # Insert path for the DOCX file
+    toc: true
 execute:
-  echo: true
+  echo: false
   warning: false
   message: false
   comment: "#>"
-  fig-path: "../figures/SOM"
   fig-dpi: 600
 filters:
   - ../templates/scholarly-metadata.lua
@@ -46,11 +23,9 @@ bibliography: references.bib
 csl: "../templates/journal-of-archaeological-science.csl" # Insert path for the bib-style
 ---
 
-# Online resource 4
+# XRD results
 
-## XRD results
-
-In this subsection we present the individual spectra graphs for all XRD samples, organised by geological formation, excluding those presented in the main paper and the results analysed and interpreted at the Geociencias Barcelona-CSIC. The original data necessary to produce these visualisations can be found and freely accessed in our online compendium, in the associated GitHub project under the path "../data/xrd_data".
+In this section we present the individual spectra graphs for all XRD samples, organised by geological formation, excluding those presented in the main paper and the results analysed and interpreted at the Geociencias Barcelona-CSIC. The original data and code necessary to produce these visualisations can be found and freely accessed in our online compendium (https://doi.org/10.17605/OSF.IO/W78V6), in the associated GitHub project under the path "../data/raw_data/xrd_data" and "../supplementary-materials/ESM_4", respectively.
 
 ```{r}
 #| label: somxrd-library
@@ -61,6 +36,7 @@ library(ggplot2)
 library(janitor)
 library(tidyr)
 library(ggpmisc)
+library(here)
 
 ```
 
@@ -68,8 +44,8 @@ library(ggpmisc)
 #| label: somxrd-readtables
 
 # Read grouped supporting data
-xrd_perc <- read_csv('analysis/data/raw_data/xrd_data/xrd_goals.csv') # File with component percentage of all samples for annotations
-xrd_marks <- read_csv('data/xrd_data/xrd_peaks.csv') # File with peak data and d spacing for plot labels
+xrd_perc <- read_csv(here::here('analysis/data/raw_data/xrd_data/xrd_goals.csv')) # File with component percentage of all samples for annotations
+xrd_marks <- read_csv(here::here('analysis/data/raw_data/xrd_data/xrd_peaks.csv')) # File with peak data and d spacing for plot labels
 
 # Turn value from percent table to percentages
 xrd_perc <- xrd_perc %>%
@@ -81,31 +57,34 @@ xrd_marks <- xrd_marks |> # Correct the quartz denomination on base dataset
     TRUE ~ Phase))
 
 # Read individual xrd files
-sp6_xrd <- read_csv('data/xrd_data/SP6_xrd.csv')
-sp7_xrd <- read_csv('data/xrd_data/SP7_xrd.csv')
-sp10_xrd <- read_csv('data/xrd_data/SP10_xrd.csv')
-sp14_xrd <- read_csv('data/xrd_data/SP14_xrd.csv')
-sp18_xrd <- read_csv('analysis/data/raw_data/xrd_data/SP18_xrd.csv')
-sp21_xrd <- read_csv('data/xrd_data/SP21_xrd.csv')
-sp28_xrd <- read_csv('data/xrd_data/SP28_xrd.csv')
-sp30_xrd <- read_csv('data/xrd_data/SP30_xrd.csv')
-sp33_xrd <- read_csv('data/xrd_data/SP33_xrd.csv')
-sp34_xrd <- read_csv('data/xrd_data/SP34_xrd.csv')
-sp40_xrd <- read_csv('data/xrd_data/SP40_xrd.csv')
-sp50_xrd <- read_csv('data/xrd_data/SP50_xrd.csv')
-sp52_xrd <- read_csv('data/xrd_data/SP52_xrd.csv')
-sp57_xrd <- read_csv('data/xrd_data/SP57_xrd.csv')
-sp59_xrd <- read_csv('data/xrd_data/SP59_xrd.csv')
-sp61_xrd <- read_csv('data/xrd_data/SP61_xrd.csv')
-sp62_xrd <- read_csv('analysis/data/raw_data/xrd_data/SP62_xrd.csv')
-sp63_xrd <- read_csv('data/xrd_data/SP63_xrd.csv')
-sp66_xrd <- read_csv('data/xrd_data/SP66_xrd.csv')
+sp6_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP6_xrd.csv'))
+sp7_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP7_xrd.csv'))
+sp10_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP10_xrd.csv'))
+sp14_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP14_xrd.csv'))
+sp18_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP18_xrd.csv'))
+sp21_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP21_xrd.csv'))
+sp28_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP28_xrd.csv'))
+sp30_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP30_xrd.csv'))
+sp33_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP33_xrd.csv'))
+sp34_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP34_xrd.csv'))
+sp40_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP40_xrd.csv'))
+sp50_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP50_xrd.csv'))
+sp52_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP52_xrd.csv'))
+sp57_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP57_xrd.csv'))
+sp59_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP59_xrd.csv'))
+sp61_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP61_xrd.csv'))
+sp62_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP62_xrd.csv'))
+sp63_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP63_xrd.csv'))
+sp66_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP66_xrd.csv'))
 
 ```
 
 ```{r}
 #| label: fig-xrd-sp6
 #| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Cabo S. Vicente (SP6_CSV). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 # SP6 Cabo S. Vicente
 sp6_marks <- xrd_marks |>
@@ -124,20 +103,23 @@ sp6_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Dolomite", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
-  coord_cartesian(ylim = c(-5000, 50000)) +
+  coord_cartesian(ylim = c(-5000, 60000)) +
   geom_point(data = sp6_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
   geom_label(data = sp6_marks, aes(x = Angle, y = Intensity, label = d), 
             size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
   scale_colour_manual(values = c("lightsteelblue3", "salmon", "steelblue1" ,"orchid","snow4")) +
-  annotate(geom = "table", x = 75, y = 50000, label = list(cbind(sp6_perc)))
+  annotate(geom = "table", x = 75, y = 55000, label = list(cbind(sp6_perc)))
 
 ```
 
 ```{r}
 #| label: fig-xrd-sp7
 #| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Cabo S. Vicente (SP7_CSV). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 sp7_marks <- xrd_marks |>
   filter(Sample == "SP7")
@@ -156,7 +138,7 @@ sp7_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Dolomite", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
   coord_cartesian(ylim = c(-5000, 65000)) +
   geom_point(data = sp7_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
@@ -170,6 +152,9 @@ sp7_xrd |>
 ```{r}
 #| label: fig-xrd-sp10
 #| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Ponta dos Altos (SP10_PdA). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 sp10_marks <- xrd_marks |>
   filter(Sample == "SP10")
@@ -185,7 +170,7 @@ sp10_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Calcite", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
   coord_cartesian(ylim = c(-5000, 55000)) +
   geom_point(data = sp10_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
@@ -199,6 +184,9 @@ sp10_xrd |>
 ```{r}
 #| label: fig-xrd-sp14
 #| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Praia do Belixe (SP14_PBX). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 sp14_marks <- xrd_marks |>
   filter(Sample == "SP14")
@@ -215,7 +203,7 @@ sp14_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Dolomite", "Halite", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
   coord_cartesian(ylim = c(-5000, 50000)) +
   geom_point(data = sp14_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
@@ -229,6 +217,9 @@ sp14_xrd |>
 ```{r}
 #| label: fig-xrd-sp18
 #| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Praia do Belixe (SP18_PBX). The rhombus shape signifies the main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 sp18_marks <- xrd_marks |>
   filter(Sample == "SP18")
@@ -245,20 +236,23 @@ sp18_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Dolomite", "Halite", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
-  coord_cartesian(ylim = c(-5000, 50000)) +
+  coord_cartesian(ylim = c(-5000, 58000)) +
   geom_point(data = sp18_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
   geom_label(data = sp18_marks, aes(x = Angle, y = Intensity, label = d), 
             size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
   scale_colour_manual(values = c("lightsteelblue3", "salmon", "steelblue1", "darkgoldenrod1" ,"orchid","snow4")) +
-  annotate(geom = "table", x = 75, y = 50000, label = list(cbind(sp18_perc)))
+  annotate(geom = "table", x = 75, y = 55000, label = list(cbind(sp18_perc)))
 
 ```
 
 ```{r}
 #| label: fig-xrd-sp21
 #| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Belixe Sul, north of Praia do Belixe (SP21_BLS). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 sp21_marks <- xrd_marks |>
   filter(Sample == "SP21")
@@ -275,7 +269,7 @@ sp21_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
   coord_cartesian(ylim = c(-5000, 55000)) +
   geom_point(data = sp21_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
@@ -289,6 +283,9 @@ sp21_xrd |>
 ```{r}
 #| label: fig-xrd-sp28
 #| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Aspa, north of Cabo S. Vicente (SP28_ASP). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 sp28_marks <- xrd_marks |>
   filter(Sample == "SP28")
@@ -305,7 +302,7 @@ sp28_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Dolomite", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
   coord_cartesian(ylim = c(-5000, 60000)) +
   geom_point(data = sp28_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
@@ -319,6 +316,9 @@ sp28_xrd |>
 ```{r}
 #| label: fig-xrd-sp30
 #| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Foz dos Fornos (SP30_FZF). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 sp30_marks <- xrd_marks |>
   filter(Sample == "SP30")
@@ -335,7 +335,7 @@ sp30_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Dolomite", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
   coord_cartesian(ylim = c(-5000, 60000)) +
   geom_point(data = sp30_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
@@ -349,6 +349,9 @@ sp30_xrd |>
 ```{r}
 #| label: fig-xrd-sp33
 #| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Foz dos Fornos (SP33_FZF). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 sp33_marks <- xrd_marks |>
   filter(Sample == "SP33")
@@ -365,7 +368,7 @@ sp33_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Dolomite", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
   coord_cartesian(ylim = c(-5000, 60000)) +
   geom_point(data = sp33_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
@@ -379,6 +382,9 @@ sp33_xrd |>
 ```{r}
 #| label: fig-xrd-sp34
 #| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Ponta dos Altos (SP34_PdA_a). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 sp34_marks <- xrd_marks |>
   filter(Sample == "SP34")
@@ -395,7 +401,7 @@ sp34_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
   coord_cartesian(ylim = c(-5000, 60000)) +
   geom_point(data = sp34_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
@@ -409,6 +415,9 @@ sp34_xrd |>
 ```{r}
 #| label: fig-xrd-sp40
 #| fig-cap: Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Ferrel (SP40_b). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 sp40_marks <- xrd_marks |>
   filter(Sample == "SP40")
@@ -426,7 +435,7 @@ sp40_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Calcite", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
   coord_cartesian(ylim = c(-5000, 50000)) +
   geom_point(data = sp40_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
@@ -440,6 +449,9 @@ sp40_xrd |>
 ```{r}
 #| label: fig-xrd-sp50
 #| fig-cap: Plot of minerals identified through XRD in the Middle Jurassic (Malhão formation) chert sample from the outcrop Casal da Colina (SP50_CdC). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 sp50_marks <- xrd_marks |>
   filter(Sample == "SP50")
@@ -456,7 +468,7 @@ sp50_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
   coord_cartesian(ylim = c(-5000, 70000)) +
   geom_point(data = sp50_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
@@ -470,6 +482,9 @@ sp50_xrd |>
 ```{r}
 #| label: fig-xrd-sp52
 #| fig-cap: Plot of minerals identified through XRD in the Middle Jurassic (Malhão formation) chert sample from the outcrop Casal da Colina (SP52_CdC). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 sp52_marks <- xrd_marks |>
   filter(Sample == "SP52")
@@ -486,7 +501,7 @@ sp52_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Dolomite", "Calcite", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
   coord_cartesian(ylim = c(-5000, 65000)) +
   geom_point(data = sp52_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
@@ -500,6 +515,9 @@ sp52_xrd |>
 ```{r}
 #| label: fig-xrd-sp57
 #| fig-cap: Plot of minerals identified through XRD in the Upper Jurassic (Jordana formations) chert sample from the outcrop Jordana (SP57_JOR). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 sp57_marks <- xrd_marks |>
   filter(Sample == "SP57")
@@ -516,7 +534,7 @@ sp57_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Calcite", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
   coord_cartesian(ylim = c(-5000, 35000)) +
   geom_point(data = sp57_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
@@ -530,6 +548,9 @@ sp57_xrd |>
 ```{r}
 #| label: fig-xrd-sp59
 #| fig-cap: Plot of minerals identified through XRD in the Upper Jurassic (Jordana formation) chert sample from the outcrop Jordana (SP59_JOR). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 sp59_marks <- xrd_marks |>
   filter(Sample == "SP59")
@@ -546,7 +567,7 @@ sp59_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Calcite", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
   coord_cartesian(ylim = c(-5000, 35000)) +
   geom_point(data = sp59_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
@@ -560,6 +581,9 @@ sp59_xrd |>
 ```{r}
 #| label: fig-xrd-sp61
 #| fig-cap: Plot of minerals identified through XRD in the Upper Jurassic (Jordana formation) chert sample from the secondary outcrop Peral (SP61_PER). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 sp61_marks <- xrd_marks |>
   filter(Sample == "SP61")
@@ -576,7 +600,7 @@ sp61_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Calcite", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
   coord_cartesian(ylim = c(-5000, 65000)) +
   geom_point(data = sp61_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
@@ -590,6 +614,9 @@ sp61_xrd |>
 ```{r}
 #| label: fig-xrd-sp62
 #| fig-cap: Plot of minerals identified through XRD in the Middle Jurassic (Malhão formation) chert sample from the outcrop Oliveiras (SP7_CSV). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 # SP62 Oliveiras
 sp62_marks <- xrd_marks |> 
@@ -607,7 +634,7 @@ sp62_plot <- sp62_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity (counts)") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
   coord_cartesian(ylim = c(-5000, 50000)) +
   geom_point(data = sp62_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
@@ -621,6 +648,9 @@ sp62_plot <- sp62_xrd |>
 ```{r}
 #| label: fig-xrd-sp63
 #| fig-cap: Plot of minerals identified through XRD in the Middle Jurassic (Malhão formation) chert sample from the outcrop Oliveiras (SP63_OLV). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 sp63_marks <- xrd_marks |>
   filter(Sample == "SP63")
@@ -637,7 +667,7 @@ sp63_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
   coord_cartesian(ylim = c(-5000, 70000)) +
   geom_point(data = sp63_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
@@ -651,6 +681,9 @@ sp63_xrd |>
 ```{r}
 #| label: fig-xrd-sp66
 #| fig-cap: Plot of minerals identified through XRD in the Middle Jurassic (Malhão formation) chert sample from the outcrop Malhão (SP66_MALH). The rhombus shape signifies main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks.
+#| fig-width: 6
+#| fig-asp: 0.6
+#| fig-align: center
 
 sp66_marks <- xrd_marks |>
   filter(Sample == "SP66")
@@ -667,7 +700,7 @@ sp66_xrd |>
   mutate(Phase = factor(Phase, levels = c("Observed", "Quartz", "Background", "Difference"))) |>
   ggplot(aes(x = Angle, y = Count, colour = Phase)) +
   geom_line(linewidth = 0.5) +
-  labs(x = "Diffraction Angle", y = "Intensity") +
+  labs(x = "Diffraction Angle", y = "Intensity (count)") +
   theme_minimal() +
   coord_cartesian(ylim = c(-5000, 70000)) +
   geom_point(data = sp66_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
@@ -678,50 +711,53 @@ sp66_xrd |>
 
 ```
 
-## SEM-EDS results
+# SEM-EDS results
+
+In this section we present the supplementary SEM photos and associated maps/spectra, organised by geological formation and archaeological chert type, excluding those presented in the main paper. The original data and code necessary to produce the spectra visualisations can be found and freely accessed in our online compendium (https://doi.org/10.17605/OSF.IO/W78V6), in the associated GitHub project under the path "../data/raw_data/sem_data" and "../supplementary-materials/ESM_4", respectively.
 
 ```{r}
 #| label: sem-read-som
 
-M2_3_map2 <- read_csv('analysis/data/raw_data/sem_data/M2_3_map2.csv')
-M3_1 <- read_csv('analysis/data/raw_data/sem_data/M3_1_map1_map2.csv')
-M3_3_s1 <- read_csv('analysis/data/raw_data/sem_data/M3_3_s1.csv')
-M3_3_s2 <- read_csv('analysis/data/raw_data/sem_data/M3_3_s2.csv')
-M4_2_s5_1 <- read_csv('analysis/data/raw_data/sem_data/M4_2_s5_1.csv')
-M4_2_s5_4 <- read_csv('analysis/data/raw_data/sem_data/M4_2_s5_4.csv')
-M8_2 <- read_csv('analysis/data/raw_data/sem_data/M8_2.csv')
-M10_4 <- read_csv('analysis/data/raw_data/sem_data/M10_4.csv')
-M11_1 <- read_csv('analysis/data/raw_data/sem_data/M11_1.csv')
-M12_1_s2_1 <- read_csv('analysis/data/raw_data/sem_data/M12_1_s2_1.csv')
-M12_1_s3_1 <- read_csv('analysis/data/raw_data/sem_data/M12_1_s3_1.csv')
-M12_3_s3_2 <- read_csv('analysis/data/raw_data/sem_data/M12_3_s3_2.csv')
-M12_5_s1_1 <- read_csv('analysis/data/raw_data/sem_data/M12_5_s1_1.csv')
-M12_5_s1_3 <- read_csv('analysis/data/raw_data/sem_data/M12_5_s1_3.csv')
-M12_5_s3_3 <- read_csv('analysis/data/raw_data/sem_data/M12_5_s3_3.csv')
-M12_5_s6_1 <- read_csv('analysis/data/raw_data/sem_data/M12_5_s6_1.csv')
-M12_5_s6_2 <- read_csv('analysis/data/raw_data/sem_data/M12_5_s6_2.csv')
-M13_1_3_s2 <- read_csv('analysis/data/raw_data/sem_data/M13_1_3_s2.csv')
-M14_3_2_s1_1 <- read_csv('analysis/data/raw_data/sem_data/M14_3_2_s1_1.csv')
-M14_3_2_s2_1 <- read_csv('analysis/data/raw_data/sem_data/M14_3_2_s2_1.csv')
-M14_4_1 <- read_csv('analysis/data/raw_data/sem_data/M14_4_1.csv')
-M15_2_s2_1 <- read_csv('analysis/data/raw_data/sem_data/M15_2_s2_1.csv')
-M15_2_s2_2 <- read_csv('analysis/data/raw_data/sem_data/M15_2_s2_2.csv')
-M16_1_1 <- read_csv('analysis/data/raw_data/sem_data/M16_1_1.csv')
-M18_1_1 <- read_csv('analysis/data/raw_data/sem_data/M18_1_1.csv')
-M18_5_1 <- read_csv('analysis/data/raw_data/sem_data/M18_5_1.csv')
-M20_2_1 <- read_csv('analysis/data/raw_data/sem_data/M20_2_1.csv')
-M22_4.1_1 <- read_csv('analysis/data/raw_data/sem_data/M22_4.1_1.csv')
-M22_5.1_1 <- read_csv('analysis/data/raw_data/sem_data/M22_5.1_1.csv')
-M22_5.1_3 <- read_csv('analysis/data/raw_data/sem_data/M22_5.1_3.csv')
-M23_2_1 <- read_csv('analysis/data/raw_data/sem_data/M23_2_1.csv')
-M23_7_1 <- read_csv('analysis/data/raw_data/sem_data/M23_7_1.csv')
-M24_1_1 <- read_csv('analysis/data/raw_data/sem_data/M24_1_1.csv')
-M24_1_2 <- read_csv('analysis/data/raw_data/sem_data/M24_1_2.csv')
+M2_3_map2 <- read_csv(here::here('analysis/data/raw_data/sem_data/M2_3_map2.csv'))
+M3_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M3_1_map1_map2.csv'))
+M3_3_s1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M3_3_s1.csv'))
+M3_3_s2 <- read_csv(here::here('analysis/data/raw_data/sem_data/M3_3_s2.csv'))
+M4_2_s5_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M4_2_s5_1.csv'))
+M4_2_s5_4 <- read_csv(here::here('analysis/data/raw_data/sem_data/M4_2_s5_4.csv'))
+M8_2 <- read_csv(here::here('analysis/data/raw_data/sem_data/M8_2.csv'))
+M10_4 <- read_csv(here::here('analysis/data/raw_data/sem_data/M10_4.csv'))
+M11_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M11_1.csv'))
+M12_1_s2_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M12_1_s2_1.csv'))
+M12_1_s3_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M12_1_s3_1.csv'))
+M12_3_s3_2 <- read_csv(here::here('analysis/data/raw_data/sem_data/M12_3_s3_2.csv'))
+M12_5_s1_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M12_5_s1_1.csv'))
+M12_5_s1_3 <- read_csv(here::here('analysis/data/raw_data/sem_data/M12_5_s1_3.csv'))
+M12_5_s3_3 <- read_csv(here::here('analysis/data/raw_data/sem_data/M12_5_s3_3.csv'))
+M12_5_s6_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M12_5_s6_1.csv'))
+M12_5_s6_2 <- read_csv(here::here('analysis/data/raw_data/sem_data/M12_5_s6_2.csv'))
+M13_1_3_s2 <- read_csv(here::here('analysis/data/raw_data/sem_data/M13_1_3_s2.csv'))
+M14_3_2_s1_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M14_3_2_s1_1.csv'))
+M14_3_2_s2_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M14_3_2_s2_1.csv'))
+M14_4_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M14_4_1.csv'))
+M15_2_s2_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M15_2_s2_1.csv'))
+M15_2_s2_2 <- read_csv(here::here('analysis/data/raw_data/sem_data/M15_2_s2_2.csv'))
+M16_1_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M16_1_1.csv'))
+M18_1_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M18_1_1.csv'))
+M18_5_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M18_5_1.csv'))
+M20_2_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M20_2_1.csv'))
+M22_4.1_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M22_4.1_1.csv'))
+M22_5.1_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M22_5.1_1.csv'))
+M22_5.1_3 <- read_csv(here::here('analysis/data/raw_data/sem_data/M22_5.1_3.csv'))
+M23_2_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M23_2_1.csv'))
+M23_7_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M23_7_1.csv'))
+M24_1_1 <- read_csv(here::here('analysis/data/raw_data/sem_data/M24_1_1.csv'))
+M24_1_2 <- read_csv(here::here('analysis/data/raw_data/sem_data/M24_1_2.csv'))
 
 ```
 
 ```{r}
 #| label: sem-graphs-som
+#| include: false
 
 # Resulting graphics were exported and mounted with the SEM images
 
@@ -1044,7 +1080,7 @@ M22_4.1_1_graph <- filtered_M22_4.1_1 |>
   C = "#4461A8", O = "#2BACC2", F = "#3EADA9", Na = "#4FC46A", Mg = "#AEC491", Mg_b = "#AEC491", Al = "#F2C86C", Si = "#F5A838", P = "#EE850E", S = "#D54F34", S_b = "#D54F34", Cl = "#A51122", K = "#A71B4B", K_b = "#A71B4B", Ca = "#D35C79" , Ca_b = "#D35C79", Ca_L = "#D35C79", Ti = "#992766", Ti_b = "#992766", Ti_L = "#992766", Fe = "#762181" , Fe_b = "#762181" , Fe_L = "#762181")) +
   theme(legend.position="none", axis.text = element_text(size = 12), axis.title = element_text(size = 12))
 
-ggsave("M22_4.1_1_graph.png", width = 5, height = 3.75, units = "in", bg = "white" , dpi = 300, path = "analysis/figures/SOM/Graphs")
+# ggsave("M22_4.1_1_graph.png", width = 5, height = 3.75, units = "in", bg = "white" , dpi = 300, path = "analysis/figures/SOM/Graphs")
 
 # M20_2_1
 filtered_M20_2_1 <- subset(M20_2_1, Energy >= 0.2 & Energy < 9)
@@ -1212,7 +1248,7 @@ M16_1_1_graph <- filtered_M16_1_1 |>
   C = "#4461A8", O = "#2BACC2", F = "#3EADA9", Na = "#4FC46A", Mg = "#AEC491", Mg_b = "#AEC491", Al = "#F2C86C", Si = "#F5A838", P = "#EE850E", S = "#D54F34", S_b = "#D54F34", Cl = "#A51122", K = "#A71B4B", K_b = "#A71B4B", Ca = "#D35C79" , Ca_b = "#D35C79", Ca_L = "#D35C79", Ti = "#992766", Ti_b = "#992766", Ti_L = "#992766", Fe = "#762181" , Fe_b = "#762181" , Fe_L = "#762181")) +
   theme(legend.position="none", axis.text = element_text(size = 12), axis.title = element_text(size = 12))
 
-ggsave("M16_1_1_graph.png", bg = "white", width = 5, height = 3.75, unit ="in", dpi = 300, path = "analysis/figures/SOM/Graphs")
+# ggsave("M16_1_1_graph.png", bg = "white", width = 5, height = 3.75, unit ="in", dpi = 300, path = "analysis/figures/SOM/Graphs")
 
 # M15_2_s2_2
 filtered_M15_2_s2_2 <- subset(M15_2_s2_2, Energy >= 0.2 & Energy < 9)
@@ -1254,7 +1290,7 @@ M15_2_s2_2_graph <- filtered_M15_2_s2_2 |>
   C = "#4461A8", O = "#2BACC2", F = "#3EADA9", Na = "#4FC46A", Mg = "#AEC491", Mg_b = "#AEC491", Al = "#F2C86C", Si = "#F5A838", P = "#EE850E", S = "#D54F34", S_b = "#D54F34", Cl = "#A51122", K = "#A71B4B", K_b = "#A71B4B", Ca = "#D35C79" , Ca_b = "#D35C79", Ca_L = "#D35C79", Ti = "#992766", Ti_b = "#992766", Ti_L = "#992766", Fe = "#762181" , Fe_b = "#762181" , Fe_L = "#762181")) +
   theme(legend.position="none", axis.text = element_text(size = 12), axis.title = element_text(size = 12))
 
-ggsave("M15_2_s2_2_graph.png", bg = "white", width = 5, height = 3.75, unit ="in", dpi = 300, path = "analysis/figures/SOM/Graphs")
+# ggsave("M15_2_s2_2_graph.png", bg = "white", width = 5, height = 3.75, unit ="in", dpi = 300, path = "analysis/figures/SOM/Graphs")
 
 # M15_2_s2_1
 filtered_M15_2_s2_1 <- subset(M15_2_s2_1, Energy >= 0.2 & Energy < 9)
@@ -1381,7 +1417,7 @@ M14_3_2_s2_1_graph <- filtered_M14_3_2_s2_1 |>
   C = "#4461A8", O = "#2BACC2", F = "#3EADA9", Na = "#4FC46A", Mg = "#AEC491", Mg_b = "#AEC491", Al = "#F2C86C", Si = "#F5A838", P = "#EE850E", S = "#D54F34", S_b = "#D54F34", Cl = "#A51122", K = "#A71B4B", K_b = "#A71B4B", Ca = "#D35C79" , Ca_b = "#D35C79", Ca_L = "#D35C79", Ti = "#992766", Ti_b = "#992766", Ti_L = "#992766", Fe = "#762181" , Fe_b = "#762181" , Fe_L = "#762181")) +
   theme(legend.position="none", axis.text = element_text(size = 12), axis.title = element_text(size = 12))
 
-ggsave("M14_3_2_s2_1_graph.png", bg = "white", width = 5, height = 3.75, unit ="in", dpi = 300, path = "analysis/figures/SOM/Graphs")
+# ggsave("M14_3_2_s2_1_graph.png", bg = "white", width = 5, height = 3.75, unit ="in", dpi = 300, path = "analysis/figures/SOM/Graphs")
 
 # M14_3_2_s1_1
 filtered_M14_3_2_s1_1 <- subset(M14_3_2_s1_1, Energy >= 0.2 & Energy < 9)
@@ -1507,7 +1543,7 @@ M12_5_s6_2_graph <- filtered_M12_5_s6_2 |>
   C = "#4461A8", O = "#2BACC2", F = "#3EADA9", Na = "#4FC46A", Mg = "#AEC491", Mg_b = "#AEC491", Al = "#F2C86C", Si = "#F5A838", P = "#EE850E", S = "#D54F34", S_b = "#D54F34", Cl = "#A51122", K = "#A71B4B", K_b = "#A71B4B", Ca = "#D35C79" , Ca_b = "#D35C79", Ca_L = "#D35C79", Ti = "#992766", Ti_b = "#992766", Ti_L = "#992766", Fe = "#762181" , Fe_b = "#762181" , Fe_L = "#762181")) +
   theme(legend.position="none", axis.text = element_text(size = 12), axis.title = element_text(size = 12))
 
-ggsave("M12_5_s6_2_graph.png", width = 5, height = 3.75, units = "in", bg = "white" , dpi = 300, path = "analysis/figures/SOM/Graphs")
+# ggsave("M12_5_s6_2_graph.png", width = 5, height = 3.75, units = "in", bg = "white" , dpi = 300, path = "analysis/figures/SOM/Graphs")
 
 # M12_5_s6_1
 filtered_M12_5_s6_1 <- subset(M12_5_s6_1, Energy >= 0.2 & Energy < 9)
@@ -2097,7 +2133,7 @@ M8_2_graph <- filtered_M8_2 |>
   C = "#4461A8", O = "#2BACC2", F = "#3EADA9", Na = "#4FC46A", Mg = "#AEC491", Mg_b = "#AEC491", Al = "#F2C86C", Si = "#F5A838", P = "#EE850E", S = "#D54F34", S_b = "#D54F34", Cl = "#A51122", K = "#A71B4B", K_b = "#A71B4B", Ca = "#D35C79" , Ca_b = "#D35C79", Ca_L = "#D35C79", Ti = "#992766", Ti_b = "#992766", Ti_L = "#992766", Fe = "#762181" , Fe_b = "#762181" , Fe_L = "#762181")) +
   theme(legend.position="none", axis.text = element_text(size = 12), axis.title = element_text(size = 12))
 
-ggsave("M8_2_graph.png",width = 5, height = 3.75, units = "in", bg = "white" , dpi = 300, path = "analysis/figures/SOM/Graphs")
+# ggsave("M8_2_graph.png",width = 5, height = 3.75, units = "in", bg = "white" , dpi = 300, path = "analysis/figures/SOM/Graphs")
 
 
 # M10_4
@@ -2140,7 +2176,7 @@ M10_4_graph <- filtered_M10_4 |>
   C = "#4461A8", O = "#2BACC2", F = "#3EADA9", Na = "#4FC46A", Mg = "#AEC491", Mg_b = "#AEC491", Al = "#F2C86C", Si = "#F5A838", P = "#EE850E", S = "#D54F34", S_b = "#D54F34", Cl = "#A51122", K = "#A71B4B", K_b = "#A71B4B", Ca = "#D35C79" , Ca_b = "#D35C79", Ca_L = "#D35C79", Ti = "#992766", Ti_b = "#992766", Ti_L = "#992766", Fe = "#762181" , Fe_b = "#762181" , Fe_L = "#762181")) +
   theme(legend.position="none", axis.text = element_text(size = 12), axis.title = element_text(size = 12))
 
-ggsave("M10_4_graph.png", bg = "white", width = 5, height = 3.75, unit ="in", dpi = 300, path = "analysis/figures/SOM/Graphs")
+# ggsave("M10_4_graph.png", bg = "white", width = 5, height = 3.75, unit ="in", dpi = 300, path = "analysis/figures/SOM/Graphs")
 
 # M11_1
 filtered_M11_1 <- subset(M11_1, Energy >= 0.2 & Energy < 9)
@@ -2185,23 +2221,25 @@ M11_1_graph <- filtered_M11_1 |>
 
 ```
 
-### Geological samples
+## Geological samples
 
-#### Lower Jurassic of western Algarve (LJW)
+### Lower Jurassic of western Algarve (LJW)
 
-The analysed samples from the Lower Jurassic outcrops (Carixian) are homogeneous regarding their structure, inclusions and mineral compositions. The analysis of their composition and inclusions shows no specific differences between the outcrops, and they will be described as a single group (Carixian, Lower Jurassic formations of western Algarve, including the inland outcrop of Ferrel).
+The analysed samples from the Lower Jurassic outcrops (Carixian) are homogeneous regarding their structure, inclusions and mineral compositions. The analysis of their composition and inclusions shows no specific differences between the outcrops, and they will be described as a single group.
 
-They are mainly composed of cryptocrystalline quartz (predominantly silica or SiO2), and small peaks of aluminium, with a single sample also showing a high aluminium peak. Small peaks of chlorine and potassium can also be identified in less than 50% of the samples.
+They are mainly composed of cryptocrystalline quartz (predominantly silica or SiO~2~), and small peaks of aluminium, with a single sample also showing a high aluminium peak. Small peaks of chlorine and potassium can also be identified in less than 50% of the samples.
 
-Fossils are very frequent, occurring in more than 80% of the samples. These are all composed of calcium and phosphorus, and frequently show an associated smaller peak of sulphur (\~70% of the samples; @fig-m4-2 and @fig-m3-1). These fossils also frequently show some oxidation, due to the associated presence of iron bands or restricted areas within the fossils (@fig-m4-4, @fig-m2-3-mp1 and @fig-m23-3). These skeletal remains are frequently irregular and indeterminate; however, a small number of samples show fossils with homogeneous oval shapes, which are currently indeterminate (@fig-m8-3, @fig-m23-2 and @fig-m4-2-m23-2).
+Fossils are very frequent, occurring in more than 80% of the samples. These are all composed of calcium and phosphorus, and frequently show an associated smaller peak of sulphur (\~70% of the samples; @fig-m4-2 and @fig-m3-1). These fossils may also show some oxidation, due to the associated presence of iron bands or restricted areas within the fossils (@fig-m4-4, @fig-m2-3-mp1 and @fig-m23-3). These skeletal remains are frequently irregular and indeterminate; however, a small number of samples show fossils with homogeneous oval shapes, which are currently indeterminate (@fig-m8-3, @fig-m23-2 and @fig-m4-2-m23-2).
 
-Finally, iron oxides are present in all the samples, with an iron (Fe) composition (@fig-m2-1-m4-1, @fig-m23-7 and @fig-m22-4). Other types of iron oxides are also present in lesser frequencies, as equally large peaks of iron and titanium (40% of the samples; @fig-m4-4) and titanium with a small peak of iron (\<10%). A single sample shows a high titanium peak without iron (@fig-m2-3-mp2) and another titanium with a smaller peak of phosphorus. Most of these iron or titanium inclusions have irregular shapes and varying sizes. Albeit rare (present in 3 samples), pyrite can possibly be identified in the form of spherical framboids or dispersed pyrite nanocrystals (@fig-m22-5-m23-2).
+Finally, iron oxides are present in all the samples, with an iron composition (@fig-m2-1-m4-1, @fig-m23-7 and @fig-m22-4). Other types of iron oxides are also present in lesser frequencies, as equally large peaks of iron and titanium (40% of the samples; @fig-m4-4) and titanium with a small peak of iron (\<10%). A single sample shows a high titanium peak without iron (@fig-m2-3-mp2) and another titanium with a smaller peak of phosphorus. Most of these iron or titanium inclusions have irregular shapes and varying sizes.
+
+Albeit rare (present in 3 samples), spherical framboids or dispersed nanocrystals were also identified (@fig-m22-5-m23-2).
 
 ```{r}
 #| label: fig-m4-2
 #| fig-cap: "A) general view of the sample (x250 magnification) showing several inclusions and porosity. B) detail of the inclusions (x900 magnification), showing an irregular  fossil composed mainly of calcium, phosphorus, and with small peaks of sulphur (1). Some iron oxides are found in close proximity to the fossil (2). Dots represent the location of the measured spectra plotted in graph 1 and 2. Geological sample SP34_PdA_b from the LJW formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M4_2_spectra5_graphs.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M4_2_spectra5_graphs.png"))
 
 ```
 
@@ -2209,7 +2247,8 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M4_2_spectra5_graph
 #| label: fig-m3-1
 #| fig-cap: "A) detail of a fossil (x1k magnification) composed mainly of calcium, phosphorus, and with small peaks of sulphur (1). Dot represents the location of the measured spectrum plotted in graph 1. Geological sample SP40_FER from the LJW formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M3_1_map1_map2_graphs.png"))
+
+knitr::include_graphics(here::here("analysis/figures/SOM/M3_1_map1_map2_graphs.png"))
 
 ```
 
@@ -2217,7 +2256,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M3_1_map1_map2_grap
 #| label: fig-m4-4
 #| fig-cap: "A) detail of inclusions (x800 magnification) composed of calcium (A1), phosphorus (A2) and sulphur (A3), possibly corresponding to fossils, with a small peak of iron oxides (A4), and an inclusion composed of iron (A4) and titanium (A5). Geological sample SP8_PdA from the LJW formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M4_4_map1.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M4_4_map1.png"))
 
 ```
 
@@ -2225,7 +2264,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M4_4_map1.png"))
 #| label: fig-m2-3-mp1
 #| fig-cap: "A) general view of the sample (x250 magnification) showing several inclusions and porosity. B) detail of a fossil (x2.1k magnification) composed of calcium (B1) and phosphorus (B2) with trace presence of sulphur (B3). The fossils may be oxidized, due to the presence of iron (B4). Geological sample SP14_BLX from the LJW formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M2_3_map1_gen.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M2_3_map1_gen.png"))
 
 ```
 
@@ -2233,7 +2272,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M2_3_map1_gen.png")
 #| label: fig-m23-3
 #| fig-cap: "A) detail of an irregular fossil (x1.6k magnification) composed of calcium (A1), phosphorus (A2), a small peak of sulphur, and iron speckles (A3) which correspond to the lighter dots in figure A. Geological sample SP32_FZF from the LJW formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M23_3_map1.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M23_3_map1.png"))
 
 ```
 
@@ -2241,7 +2280,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M23_3_map1.png"))
 #| label: fig-m8-3
 #| fig-cap: "A) general view of the sample (x250 magnification) showing a large oval fossil. B) detail of the fossil (x1k magnification) composed by calcium (B1), phosphorus (B2) and a small peak of sulphur (B3). The fossil may be oxidized, with small peaks of iron within (B4). Geological sample SP21_BLS from the LJW formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M8_3_map1.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M8_3_map1.png"))
 
 ```
 
@@ -2249,7 +2288,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M8_3_map1.png"))
 #| label: fig-m23-2
 #| fig-cap: "A) detail of an oval fossil (x850 magnification) composed of calcium (A1), phosphorus (A2) and iron speckles (A3) which correspond to the lighter dots in figure A. Geological sample SP30_FZF from the LJW formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M23_2_map1.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M23_2_map1.png"))
 
 ```
 
@@ -2257,7 +2296,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M23_2_map1.png"))
 #| label: fig-m4-2-m23-2
 #| fig-cap: "A) general view of the sample (x250 magnification) showing a large fossil. B) detailed view of the fossil (x650 magnification) mainly composed of calcium, phosphorus and small peaks of sulphur. Geological sample SP34_PdA_b from the LJW formation. C) general of the sample (x250 magnification) showing two large fossils. D) detail of the fossil (x1k magnification) composed of calcium, phosphorus and a small peak of sulphur. Geological sample SP30_FZF from the LJW formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M4_2_M23_2.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M4_2_M23_2.png"))
 
 ```
 
@@ -2265,7 +2304,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M4_2_M23_2.png"))
 #| label: fig-m2-1-m4-1
 #| fig-cap: "A) detail of inclusions (x420 magnification) mainly composed of iron (A1). Geological sample SP15_BLX from the LJW formation. B) detail of a small inclusion (x1k magnification) mainly composed of iron (B1), with small peaks of calcium and phosphorus. Geological sample SP10_PdA from the LJW formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M2_1_M4_1.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M2_1_M4_1.png"))
 
 ```
 
@@ -2273,7 +2312,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M2_1_M4_1.png"))
 #| label: fig-m23-7
 #| fig-cap: "Detail of small, round inclusions (x1.5 magnification) composed of iron within a quartz matrix composed of silicon, oxygen and a small peak of aluminium (1). Dot represents the location of the measured spectrum plotted in graph 1. Geological sample SP29_ASP from the LJW formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M23_7_spectra2_graph.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M23_7_spectra2_graph.png"))
 
 ```
 
@@ -2281,7 +2320,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M23_7_spectra2_grap
 #| label: fig-m22-4
 #| fig-cap: "Detail of an irregular inclusion (x1k magnification) composed mainly of iron (1). Dot represents the location of the measured spectrum plotted in graph 1. Geological sample SP41_FER from the LJW formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M22_4.1_spectra1_graph.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M22_4.1_spectra1_graph.png"))
 
 ```
 
@@ -2289,7 +2328,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M22_4.1_spectra1_gr
 #| label: fig-m2-3-mp2
 #| fig-cap: "Detail of an inclusion (x3.7k magnification) mainly composed of titanium. Dot represents the location of the measured spectrum plotted in graph 1. Geological sample SP14_BLX from the LJW formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M2_3_map2_graph.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M2_3_map2_graph.png"))
 
 ```
 
@@ -2297,27 +2336,39 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M2_3_map2_graph.png
 #| label: fig-m22-5-m23-2
 #| fig-cap: "A) detail of inclusions (x2.3k magnification) composed mainly of iron (A1). Possibly originally pyrite nanocrystal aggregates and spherical framboids. Geological sample SP40_FER from the LJW formation. B) detail of inclusions (x1.4k magnification) composed of iron, silicon and a small peak of aluminium (1). The cluster of rounded iron inclusions is possibly originally dispersed pyrite nanocrystals. Geological sample SP30_FZF from the LJW formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M22_5.1_M23_2_graph.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M22_5.1_M23_2_graph.png"))
 
 ```
 
-#### Triassic of western Algarve (TW)
+### Triassic of western Algarve (TW)
 
-#### Upper Jurassic of western Algarve (UJW)
+The analysed sample from the Triassic formations of western Algarve, characterised by thermal origin fibrous quartz veins, is composed of quartz, mainly silica and oxygen and show little to no inclusions (@fig-m13-4).
+
+```{r}
+#| label: fig-m13-4
+#| fig-cap: "General view of the sample (x250 magnification) showing no inclusions or porosity. Geological sample of the Tabual outcrop from the TW formation."
+
+knitr::include_graphics(here::here("analysis/figures/SOM/M13_4.png"))
+
+```
+
+### Upper Jurassic of western Algarve (UJW)
 
 The analysed samples from the Upper Jurassic outcrops of western Algarve (Malm) are homogeneous regarding their structure, inclusions and mineral compositions.
 
-They are mainly composed of cryptocrystalline quartz (SiO2), and small peaks of aluminium. Small peaks of magnesium were also identified, and calcite was identified in a single sample. In this sample, calcite represents the only identified inclusions, which seem to show varied shapes, which may be skeletal remains.
+They are mainly composed of cryptocrystalline quartz (SiO~2~), and small peaks of aluminium. Small peaks of magnesium were also identified, and calcite was identified in a single sample. In this sample, calcite represents the only identified inclusions, which seem to show varied shapes, which may be skeletal remains.
 
-Skeletal remains are rare, occurring in a single sample. These are composed of calcium, phosphorus, and also show an associated smaller peak of sulphur. These fossils also frequently show some oxidation, due to the associated presence of iron bands or restricted areas within the skeletal remains (@fig-m24-1). These skeletal remains are frequently irregular and indeterminate.
+Skeletal remains are rare, occurring in a single sample. These are composed of calcium, phosphorus, and also show an associated smaller peak of sulphur. These fossils also frequently show possible oxidation, due to the associated presence of iron bands or restricted areas within the skeletal remains (@fig-m24-1). These skeletal remains are frequently irregular and indeterminate.
 
-Finally, iron oxides are present in 3 of 4 of the samples, with an iron (Fe) composition, but also iron and sulphur or iron and titanium (@fig-m24-4). Although characterized by irregular iron inclusions, iron is also found in framboids. Of the 4 samples, 3 show the presence of spherical framboids, as well as dispersed nanocrystals (in association with spherical framboids; @fig-m24-1-m24-2).
+Finally, iron oxides are present in 3 of 4 of the samples, with an iron composition, but also iron and sulphur or iron and titanium (@fig-m24-4).
+
+Although characterized by irregular iron inclusions, iron is also found in framboids. Of the 4 samples, 3 show the presence of spherical framboids, as well as dispersed nanocrystals (in association with spherical framboids; @fig-m24-1-m24-2).
 
 ```{r}
 #| label: fig-m24-1
 #| fig-cap: "A) general view of the sample (x250 magnification). B) detail of a fossil (x400 magnification) composed of calcium (B1), phosphorus (B2), sulphur (B3) and iron (B4) possibly the result of the oxidation. Geological sample SP69_MAR from the UJW formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M24_1.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M24_1.png"))
 
 ```
 
@@ -2325,27 +2376,29 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M24_1.png"))
 #| label: fig-m24-4
 #| fig-cap: "A) general view of the sample (x250 magnification) showing an inclusion. Round and oval shapes in lighter grey may be calcispheres identified in thin-section. B) detailed view of the inclusion (x950 magnification) composed of titanium (B1) and iron, as well as scattered, irregular iron oxides (B2). Geological sample SP69_MAR from the UJW formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M24_4_map1.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M24_4_map1.png"))
 
 ```
 
 ```{r}
 #| label: fig-m24-1-m24-2
-#| fig-cap: "A) detailed view of iron inclusions (x1.8k magnification), possibly originally spherical pyrite framboids (black arrow) and dispersed pyrite nanocrystals (white arrow). B) detail of an irregular inclusion (x2.1k magnification) composed mainly of iron (1) and inclusions composed of iron, possibly originally dispersed pyrite nanocrystals (2). Dot represents the location of the measured spectrum plotted in graph 1 and 2. Geological sample SP69_MAR from the UJW formation."
+#| fig-cap: "A) detailed view of iron inclusions (x1.8k magnification), possibly originally spherical pyrite framboids (black arrow) and dispersed nanocrystals (white arrow). B) detail of an irregular inclusion (x2.1k magnification) composed mainly of iron (1) and inclusions composed of iron, possibly dispersed nanocrystals (2). Dot represents the location of the measured spectrum plotted in graph 1 and 2. Geological sample SP69_MAR from the UJW formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M24_1_M24_2_graphs.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M24_1_M24_2_graphs.png"))
 
 ```
 
-#### Middle Jurassic of eastern Algarve (MJE)
+### Middle Jurassic of eastern Algarve (MJE)
 
 The analysed samples from the Middle Jurassic outcrops (Malhão formation) are somewhat variable in their structure, inclusions and mineral compositions. The analysis of their composition and inclusions shows no specific differences between the outcrops, and they will be described as a single group.
 
-They are mainly composed of cryptocrystalline quartz (predominantly silica or SiO2), and small and large peaks of aluminium. Small peaks of chlorine and potassium can also be identified.
+They are mainly composed of cryptocrystalline quartz (predominantly silica or SiO~2~), and small and large peaks of aluminium. Small peaks of chlorine and potassium can also be identified.
 
 Skeletal remains occur in less than 50% of the samples. These are all composed of calcium and phosphorus and frequently show an associated smaller peak of sulphur (@fig-m8-2-mp1). These skeletal remains are all irregular and indeterminate.
 
-Iron oxides are present in more than 90% of the samples, with an iron (Fe) composition (@fig-m12-5-s1). Other types of iron oxides are also present in lesser frequencies, such as equally large peaks of iron and titanium (20% of the samples; @fig-m12-5-s1) and titanium with a small peak of iron (20%; @fig-m7-3). EDS results also show a small subset of samples with a small peak of calcium frequently associated with iron inclusions (@fig-m12-3-mp1) and inclusions which are mainly composed of large peaks of potassium, aluminium, and magnesium and small peaks of iron or iron with titanium (@fig-m12-1-s2). Most of these inclusions have irregular shapes and varying sizes, although framboids are also present.
+Iron oxides are present in more than 90% of the samples, with an iron composition (@fig-m12-5-s1). Other types of iron oxides are also present in lesser frequencies, such as equally large peaks of iron and titanium (20% of the samples; @fig-m12-5-s1) and titanium with a small peak of iron (20%; @fig-m7-3).
+
+EDS results also show a small subset of samples with a small peak of calcium frequently associated with iron inclusions (@fig-m12-3-mp1) and inclusions which are mainly composed of large peaks of potassium, aluminium, and magnesium and small peaks of iron or iron with titanium (@fig-m12-1-s2). Most of these inclusions have irregular shapes and varying sizes, although framboids are also present.
 
 Spherical framboids are present in 40% of the samples, and dispersed nanocrystals are present in 10% of the samples (in association with spherical framboids), and composed of iron, aluminium and a small peak of calcium and magnesium (@fig-m12-5-s6; @fig-m8-1; @fig-m12-3-s3).
 
@@ -2353,7 +2406,7 @@ Spherical framboids are present in 40% of the samples, and dispersed nanocrystal
 #| label: fig-m8-2-mp1
 #| fig-cap: "A) general view of the sample (x250 magnification) showing several inclusions and porosity. B) detail of a fossil (x1k magnification) composed mainly of calcium (B1), phosphorus (B2) and small peaks of sulphur (B3; 1). Dot represents the location of the measured spectrum plotted in graph 1. Geological sample SP49_CdC from the MJE formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M8_2_map1_spectra1_graph.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M8_2_map1_spectra1_graph.png"))
 
 ```
 
@@ -2361,7 +2414,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M8_2_map1_spectra1_
 #| label: fig-m12-5-s1
 #| fig-cap: "A) general view of the sample (x450 magnification) showing several inclusions. B) detail of small inclusions (x1.3k magnification) composed of titanium, iron and a large peak of aluminium (1) and iron (2). C) detail of the large inclusion (x3.5k magnification) composed mainly of iron (3). Dot represents the location of the measured spectra plotted in graphs 1-3. Geological sample SP50_CdC from the MJE formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M12_5_s1_s3_graph.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M12_5_s1_s3_graph.png"))
 
 ```
 
@@ -2369,7 +2422,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M12_5_s1_s3_graph.p
 #| label: fig-m7-3
 #| fig-cap: "A) detail of the sample (x1k magnification) showing an irregular inclusion composed mainly of titanium (A1) with very small peaks of iron (A3). Small peaks of potassium (A2) can be observed around the inclusion. Geological sample SP52_GUI from the MJE formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M7_3_map2.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M7_3_map2.png"))
 
 ```
 
@@ -2377,7 +2430,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M7_3_map2.png"))
 #| label: fig-m12-3-mp1
 #| fig-cap: "A) general view of the sample (x250 magnification) showing frequent irregular inclusions and porosity. B) detail of the cluster of irregular inclusions (x700 magnification) composed of iron (B1) and calcium (B2). Geological sample SP67_DESCAM from the MJE formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M12_3_map1.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M12_3_map1.png"))
 
 ```
 
@@ -2385,7 +2438,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M12_3_map1.png"))
 #| label: fig-m12-1-s2
 #| fig-cap: "A, C) general view of the sample (x250 magnification) showing porosity and uncommon inclusions. B) detail of irregular inclusions composed mainly of iron (1). D) detail of an inclusion characterised by a large peak of aluminium and potassium, and a small peak of iron and titanium (2, unmarked). Dot represents the location of the measured spectra plotted in graphs 1-2. Geological sample SP67_DESCAM from the MJE formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M12_1_s2_s3.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M12_1_s2_s3.png"))
 
 ```
 
@@ -2393,7 +2446,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M12_1_s2_s3.png"))
 #| label: fig-m12-5-s6
 #| fig-cap: "A) general view of the sample (x250 magnification) showing several inclusions and porosity. B) detail of inclusions (x1.7k magnification) composed mainly of iron (1-2). The inclusion from spectrum 1 is possibly a spherical framboid. Dot represents the location of the measured spectra plotted in graphs 1-2. Geological sample SP50_CdC from the MJE formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M12_5_spectra6_graph.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M12_5_spectra6_graph.png"))
 
 ```
 
@@ -2401,7 +2454,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M12_5_spectra6_grap
 #| label: fig-m8-1
 #| fig-cap: "A) iron inclusion (x1k magnification) which was possibly originally a spherical pyrite framboid. It is composed mainly of iron (A1) and possibly some indeterminate fossils characterised by a small peak of calcium (A2), phosphorus (A3) and sulphur (A4). B) detail of the inclusion (x2.3k magnification). Geological sample SP50_CdC from the MJE formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M8_1_map1.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M8_1_map1.png"))
 
 ```
 
@@ -2409,29 +2462,29 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M8_1_map1.png"))
 #| label: fig-m12-3-s3
 #| fig-cap: "A) detailed view (x1.5k magnification) and B) close-up (x3.5k magnification) of inclusions composed of iron and aluminium, possibly framboids. Geological sample SP67_DESCAM from the MJE formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M12_3_spectra3.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M12_3_spectra3.png"))
 
 ```
 
-#### Upper Jurassic of eastern Algarve (UJE)
+### Upper Jurassic of eastern Algarve (UJE)
 
 The analysed samples from the Upper Jurassic outcrops (Jordana formation) are homogeneous, with little variation in the identified inclusions. The analysis of their composition and inclusions shows no specific differences between the outcrops, and they will be described as a single group. Here, we also include the secondary deposition outcrop sample of Peral, since it shows similar patterns to the samples in primary deposition.
 
-They are mainly composed of cryptocrystalline quartz (predominantly silica or SiO2), and large peaks of aluminium, with smaller peaks of aluminium being present in a small number of samples (n=3). Small peaks of potassium can also be identified.
+They are mainly composed of cryptocrystalline quartz (predominantly silica or SiO~2~), and large peaks of aluminium, with smaller peaks of aluminium being present in a small number of samples (n=3). Small peaks of potassium can also be identified.
 
 Skeletal remains were identified in 30% of the samples (n=3). These are composed of calcium and phosphorus and two samples show an associated smaller peak of sulphur (@fig-m6-2-mp1). These skeletal remains are all irregular and indeterminate.
 
-Iron oxides are present in all samples, presenting mainly an iron (Fe) composition, and less commonly associated with small titanium (n=2; @fig-m6-1-mp1) and sulphur (n=4) peaks (@fig-m10-3-mp1). A single sample shows an inclusion composed of titanium with a small peak of iron (@fig-m10-4-s1).
+Iron oxides are present in all samples, presenting mainly an iron composition, and less commonly associated with small titanium (n=2; @fig-m6-1-mp1) and sulphur (n=4) peaks (@fig-m10-3-mp1). A single sample shows an inclusion composed of titanium with a small peak of iron (@fig-m10-4-s1).
 
 EDS results also show a small subset of samples with a peak of calcium, rarely with sulphur peaks (n=1) and occasionally associated with iron oxides. These calcium peaks occur in irregular, large structures, and represent calcite in the chert or replacing fossils (@fig-m6-3-mp1; @fig-m10-2-mp1; @fig-m10-6-mp2).
 
-Spherical pyrite framboids are present in 20% of the samples (n=2) and are composed of iron or iron with sulphur (@fig-m10-1-mp1).
+Spherical framboids are present in 20% of the samples (n=2) and are composed of iron or iron with sulphur (@fig-m10-1-mp1).
 
 ```{r}
 #| label: fig-m6-2-mp1
 #| fig-cap: "A) general view of the sample (x250 magnification) with a fossil, inclusions and porosity. B) detail of the fossil (x1k magnification) composed of calcium (B1), phosphorus (B2) and a small peak of sulphur (B3). Iron (B4) is identifiable in certain areas of the fossil which are possibly oxidised and scattered in the sample, corresponding to the white dots. Geological sample SP57_JOR from the UJE formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M6_2_map1.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M6_2_map1.png"))
 
 ```
 
@@ -2439,7 +2492,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M6_2_map1.png"))
 #| label: fig-m6-1-mp1
 #| fig-cap: "A) general view of the sample (x250 magnification) with iron inclusions and a large unidentifiable inclusion. B) detail of the inclusion (x1k magnification) composed of aluminium (B1), potassium (B2), magnesium (B3), iron (B4) and possibly small peaks of titanium. Geological sample SP59_JOR from the UJE formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M6_1_map1.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M6_1_map1.png"))
 
 ```
 
@@ -2447,7 +2500,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M6_1_map1.png"))
 #| label: fig-m10-3-mp1
 #| fig-cap: "A) general view of the sample (x250 magnification) with uncommon inclusions. B) detail of an irregular inclusion (x3.7k magnification) characterised by iron (B1) and possible small peaks of sulphur (B2). Geological sample SP58_JOR_002 from the UJE formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M10_3_map1.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M10_3_map1.png"))
 
 ```
 
@@ -2455,7 +2508,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M10_3_map1.png"))
 #| label: fig-m10-4-s1
 #| fig-cap: "Detail of an inclusion (x1.9k magnification) mainly composed of titanium and a small peak of iron (1). Dot represents the location of the measured spectra plotted in graphs 1. Geological sample SP58_JOR from the UJE formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M10_4_spectra1_graph.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M10_4_spectra1_graph.png"))
 
 ```
 
@@ -2463,7 +2516,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M10_4_spectra1_grap
 #| label: fig-m6-3-mp1
 #| fig-cap: "A) general view (x140 magnification) of a large, irregular calcium inclusion. B) detail of a section of the inclusion (x400 magnification), composed mainly of calcium (B1) with small peaks of iron (B2) occurring in the white speckles around the calcium. Geological sample SP58_JOR_004 from the UJE formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M6_3_map1_spectra1.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M6_3_map1_spectra1.png"))
 
 ```
 
@@ -2471,7 +2524,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M6_3_map1_spectra1.
 #| label: fig-m10-2-mp1
 #| fig-cap: "A) general view (x140 magnification) of a large, irregular calcium inclusion. B) detail of a section of the inclusion (x400 magnification), composed mainly of calcium (B1) with small peaks of iron (B2) occurring in the white speckles around the calcium. Geological sample SP58_JOR_004 from the UJE formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M10_2_map1.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M10_2_map1.png"))
 
 ```
 
@@ -2479,7 +2532,7 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M10_2_map1.png"))
 #| label: fig-m10-6-mp2
 #| fig-cap: "A) general view of the sample (x250 magnification) showing a large area (lighter grey) composed mainly of calcite, seen in the maps as the presence of calcium (A1) and small peaks of sulphur (A2). Small iron concentrations (A3) can also be seen in the sample, represented by the bright white splotches in A. Geological sample SP59_JOR_001 from the UJE formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M10_6_map2.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M10_6_map2.png"))
 
 ```
 
@@ -2487,12 +2540,164 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M10_6_map2.png"))
 #| label: fig-m10-1-mp1
 #| fig-cap: "A) detail of a spherical pyrite framboid (x1.5k magnification) and B) close-up (x2.7k magnification), composed mainly of iron (A1) and a small peak of sulphur (A2). Geological sample SP58_JOR_003 from the UJE formation."
 
-knitr::include_graphics(here::here("figures/within-chert/SOM/M10_1_map1.png"))
+knitr::include_graphics(here::here("analysis/figures/SOM/M10_1_map1.png"))
 
 ```
 
-### Archaeological samples
+## Archaeological samples
 
-#### Local chert types
+### Local chert types
 
-#### Non-local chert types
+**Type 1 (T1)** samples are composed of quartz, mainly silica and oxygen and show little to no inclusions (@fig-m13-1-3).
+
+As these correspond to a fibrous quartz of thermal origin, the rare identified inclusions within the chert may be related with naturally occurring fractures and porosity (@fig-m13-1-2).
+
+```{r}
+#| label: fig-m13-1-3
+#| fig-cap: "A) general view of the sample (x250 magnification) without inclusions or visible porosity. Archaeological sample from T1 (I21-2394). B) general view of the sample (x250 magnification) without inclusions or visible porosity. Archaeological sample from T1 (I18-4729)."
+
+knitr::include_graphics(here::here("analysis/figures/SOM/M13_1_3.png"))
+
+```
+
+```{r}
+#| label: fig-m13-1-2
+#| fig-cap: "A) detail of a porosity or fracture (x1k magnification) filled with iron (A1) and aluminium (A2). Archaeological sample from T1 (I21-2394). B) general view (x250 magnification) and detailed maps (x450 magnification) of an inclusion or porosity filled with calcium (B1) and sulphur (B2). Archaeological sample from T1 (H18-3169)."
+
+knitr::include_graphics(here::here("analysis/figures/SOM/M13_1_2.png"))
+
+```
+
+**Type 2 (T2)** samples are composed of quartz, mainly silica and oxygen, with small peaks of aluminium. Inclusions vary from uncommon to common, depending on the sample and the area of the sample.
+
+Skeletal remains were identified in a single sample, composed mainly of calcium and phosphorus. This fossil is oval, with similarities to those found in other samples from the Lower Jurassic outcrops (@fig-m21-5-mp1).
+
+Other inclusions are irregular or round oxides, composed of iron (@fig-m21-5-mp1). In a single sample (sample where the oval fossil was identified), besides iron oxides, titanium with a small iron peak was also identified.
+
+```{r}
+#| label: fig-m21-5-mp1
+#| fig-cap: "A) detail of an oval fossil (x850 magnification) composed of calcium (A1), phosphorus (A2) and small concentrations of iron (A3). Iron concentrations can also be seen around the fossil (A3). Archaeological sample from T2 (H21-2358)."
+
+knitr::include_graphics(here::here("analysis/figures/SOM/M21_5_map1.png"))
+
+```
+
+**Type 3 (T3)** samples are homogeneous, showing uncommon inclusions, some porosity and fractures. They are mainly composed of quartz (silica and oxygen), with small peaks of aluminium.
+
+Inclusions include rounded or irregular iron oxides (@fig-m20-2-5), often associated with small peaks of calcium, phosphorus and sulphur, which may be related to the oxidation of skeletal remains.
+
+The presence of iron is also related to the identification of spherical framboids and associated dispersed nanocrystals. In both analysed samples, small titanium peaks were also identified in association with iron (@fig-m20-2-5).
+
+```{r}
+#| label: fig-m20-2-5
+#| fig-cap: "A) general view of the sample (x250 magnification) showing uncommon inclusions and porosity. Archaeological sample from T3 (H18-4007). B) detail of two irregular inclusions (x1k magnification): the inclusion on the right is mainly composed of iron (B1) and the inclusion on the left is mainly composed of iron (B1) and titanium (B2). Archaeological sample from T3 (H19-3054)."
+
+knitr::include_graphics(here::here("analysis/figures/SOM/M20_2_M20_5.png"))
+
+```
+
+**Type 4 (T4)** samples are composed of quartz, mainly silica and oxygen, with small peaks of aluminium. Inclusions vary from uncommon to very frequent, depending on the sample and the area of the sample.
+
+Skeletal remains are very frequent, composed mainly of calcium and phosphorus, and with or without the presence of small sulphur peaks (@fig-m15-2-s2). Although also irregular-shaped, these fossils are frequently oval and can be found in concentrations of more than 3 fossils (@fig-m15-3-mp1).
+
+Other inclusions are less common and composed mainly of titanium. All samples showed the presence of irregular titanium grains, and in two samples grains composed of titanium with small iron peaks were also identified (@fig-m15-2-s2). No inclusions composed of large or individual peaks of iron were identified in the samples.
+
+```{r}
+#| label: fig-m15-2-s2
+#| fig-cap: "A) general view of the sample (x270 magnification) showing several inclusions and porosity. B) detail of the inclusions (x1.4 magnification): irregular skeletal remains composed of calcium, phosphorus and a small peak of titanium (1); and an irregular inclusion composed mainly of titanium and a small peak of iron (2). Dot represents the location of the measured spectra plotted in graphs 1-2. Archaeological sample from T4 (H19-3064)."
+
+knitr::include_graphics(here::here("analysis/figures/SOM/M15_2_spectra2_graph.png"))
+
+```
+
+```{r}
+#| label: fig-m15-3-mp1
+#| fig-cap: "A) general view of a sample (x250 magnification) showing an oval fossil and possibly ghosts of other similar fossils in lighter grey. B) detail of the fossil (x1.6k magnification) composed of calcium (B1) and phosphorus (B2). Archaeological sample from T4 (H20-2782)."
+
+knitr::include_graphics(here::here("analysis/figures/SOM/M15_3_map1.png"))
+
+```
+
+**Type 5 (T5)** samples are characterized by high porosity and uncommon inclusions. They are composed of quartz, mainly silica and oxygen, with small peaks of aluminium and magnesium.
+
+Inclusions include rounded or irregular iron oxides, often associated with small peaks of calcium and phosphorus (@fig-m14-3-2 D), which may be related to the oxidation of skeletal remains.
+
+In a single case, a small peak of titanium was also identified in association with iron (@fig-m14-3-2 C).
+
+```{r}
+#| label: fig-m14-3-2
+#| fig-cap: "A) general view of the sample (x250 magnification) showing uncommon inclusions and porosity. Archaeological sample from T5 (H20-2573). B) general view of the sample (x250 magnification). C) detail of an inclusion (x3.7k magnification) composed of iron and a small peak of titanium and aluminium (1). D) detail of an inclusion (x1k magnification) composed of iron and small peaks of calcium and phosphorus (2).  Dot represents the location of the measured spectra plotted in graphs 1-2. Archaeological sample from T5 (I20-1942)."
+
+knitr::include_graphics(here::here("analysis/figures/SOM/M14_3_M14_2_graph.png"))
+
+```
+
+### Non-local chert types
+
+**Type 6 (T6)** samples are cherts composed of cryptocrystalline quartz, characterized by high peaks of silica and oxygen. The samples are very homogeneous and with little porosity, and inclusions range from uncommon to rare, and whenever present, are small (@fig-m18-1-s3 C).
+
+These inclusions are always mainly composed of iron (@fig-m18-1-s3), mostly present in the following combinations: 1) single iron peaks; 2) iron peaks with small peaks of calcium and phosphorus, which may be oxidized skeletal remains; 3) iron peaks with associated small peaks of titanium.
+
+```{r}
+#| label: fig-m18-1-s3
+#| fig-cap: "A) detailed view of the sample (x1k magnification). B) detail of the inclusion seen in A, composed mostly of iron and small peaks of calcium and phosphorus (1), making this inclusion a possible oxidised fossil. Archaeological sample from T6 (I21-2983). C) general view of the sample (x250 magnification) showing rare inclusions. D) detail of the inclusions (x3.7k magnification) composed mainly of iron (2). Archaeological sample from T6 (I21-3673). Dot represents the location of the measured spectra plotted in graphs 1-2."
+
+knitr::include_graphics(here::here("analysis/figures/SOM/M18_5_spectra2_M18_1_spectra3_graph.png"))
+
+```
+
+**Type 7 (T7)** samples are mainly composed of cryptocrystalline quartz (predominantly silica or SiO~2~), and small to large peaks of aluminium. They are homogeneous and with little, observable structures or inclusions (@fig-m17).
+
+Aside from uncommon and very small percentages of skeletal remains (calcium and phosphorus), also associated with sulphur, they show barely any visible skeletal remains or other inclusions, despite their abundant presence observed in thin sections.
+
+Whenever present, inclusions are oxides, either rounded or irregular, and composed of iron (@fig-m17-1-5) and iron and titanium. Pyrite was also identified in a single sample.
+
+```{r}
+#| label: fig-m17
+#| fig-cap: "A-D) General view of samples (x250 magnification) from different facies identified within T7: A) facies 01a (I19-4013); B) facies 02 (I18-3780); C) facies 01b (H21-3663); D) facies 04 (I18-3967)."
+
+knitr::include_graphics(here::here("analysis/figures/SOM/M17_1_2_3_4.png"))
+
+```
+
+```{r}
+#| label: fig-m17-1-5
+#| fig-cap: "A) detail view of inclusions (x1k magnification) composed mainly of iron (A1). Archaeological sample from T7 facies 01a (I19-4013). B) A) detail view of inclusions (x1k magnification) composed mainly of iron (A1). Archaeological sample from T7 facies 04 (J18-1264)."
+
+knitr::include_graphics(here::here("analysis/figures/SOM/M17_1_M17_5.png"))
+
+```
+
+The **Type 8 (T8)** sample shows, like the previous two types, a homogeneous structure, with rare to uncommon inclusions (@fig-m14-4-m16-1 A-B). It is mainly composed of cryptocrystalline quartz (predominantly silica or SiO~2~), and large peaks of aluminium.
+
+Similar to the previous type, skeletal remains, despite being abundant in thin sections, are barely visible in the SEM. Whenever present, they show small peaks of calcium, associated with sulphur.
+
+Similarly, oxides are also present in the sample, showing the presence of iron, either in isolated peaks, or combined with large peaks of sulphur (@fig-m14-4-m16-1 B) or titanium.
+
+```{r}
+#| label: fig-m14-4-m16-1
+#| fig-cap: "A) general view the sample (x250 magnification) with rare inclusions. B) detail of an inclusion (x3k magnification) composed mainly of sulphur and a smaller peak of iron (1). Archaeological sample from T8 (H18-3971). B) general view of the sample (x250 magnification) with inclusions and frequent porosity. C) detail of the inclusions, composed mainly by iron and a small peak of sulphur (2). Archaeological sample from T9 (H18-1982). Dot represents the location of the measured spectra plotted in graphs 1-2."
+
+knitr::include_graphics(here::here("analysis/figures/SOM/M14_4_M16_1.png"))
+
+```
+
+The **Type 9 (T9)** sample is characterized by high porosity and uncommon, visible inclusions (@fig-m14-4-m16-1 C-D). It is mainly composed of cryptocrystalline quartz (predominantly silica or SiO~2~), and small peaks of aluminium and magnesium.
+
+Visible inclusions seem to be small and rounded or irregular. They are composed of small peaks of phosphorus and calcium (suggesting poorly preserved skeletal remains), associated with large peaks of iron, which might suggest the oxidation of bioclastic material.
+
+These iron oxides are characterised by either the presence of iron or its combination with sulphur (@fig-m14-4-m16-1 D).
+
+**Type 10 (T10)** is characterised by some porosity and uncommon inclusions (@fig-m16-4-5 A-B). It is mainly composed of cryptocrystalline quartz (predominantly silica or SiO~2~), and small peaks of aluminium.
+
+Visible inclusions are small and rounded or irregular. They are composed of small peaks of phosphorus and calcium associated with large peaks of iron.
+
+The iron inclusions also show associated sulphur peaks. Associated with the iron oxides, large copper peaks were also identified, present in irregular-shaped inclusions (@fig-m16-4-5 C-D).
+
+```{r}
+#| label: fig-m16-4-5
+#| fig-cap: "A) general view of the sample (x250 magnification). Archaeological sample from T10 (H20-1544). B) general view of the sample (x250 magnification). C) detail of an inclusion (x1k magnification) and close-up (C1; x3.5k magnification) composed of copper and iron. Archaeological sample from T10 (H18-3920). Round and oval (although irregular) shapes are visible in the general views (A-B), possibly corresponding to ooids."
+
+knitr::include_graphics(here::here("analysis/figures/SOM/M16_4_M16_5.png"))
+
+```
