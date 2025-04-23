@@ -2187,9 +2187,9 @@ M11_1_graph <- filtered_M11_1 |>
 
 ### Geological samples
 
-#### Lower Jurassic of western Algarve
+#### Lower Jurassic of western Algarve (LJW)
 
-The analysed samples from the Lower Jurassic outcrops are homogeneous regarding their structure, inclusions and mineral compositions. The analysis of their composition and inclusions shows no specific differences between the outcrops, and they will be described as a single group (Carixian, Lower Jurassic formations of western Algarve, including the inland outcrop of Ferrel).
+The analysed samples from the Lower Jurassic outcrops (Carixian) are homogeneous regarding their structure, inclusions and mineral compositions. The analysis of their composition and inclusions shows no specific differences between the outcrops, and they will be described as a single group (Carixian, Lower Jurassic formations of western Algarve, including the inland outcrop of Ferrel).
 
 They are mainly composed of cryptocrystalline quartz (predominantly silica or SiO2), and small peaks of aluminium, with a single sample also showing a high aluminium peak. Small peaks of chlorine and potassium can also be identified in less than 50% of the samples.
 
@@ -2300,3 +2300,199 @@ knitr::include_graphics(here::here("figures/within-chert/SOM/M2_3_map2_graph.png
 knitr::include_graphics(here::here("figures/within-chert/SOM/M22_5.1_M23_2_graph.png"))
 
 ```
+
+#### Triassic of western Algarve (TW)
+
+#### Upper Jurassic of western Algarve (UJW)
+
+The analysed samples from the Upper Jurassic outcrops of western Algarve (Malm) are homogeneous regarding their structure, inclusions and mineral compositions.
+
+They are mainly composed of cryptocrystalline quartz (SiO2), and small peaks of aluminium. Small peaks of magnesium were also identified, and calcite was identified in a single sample. In this sample, calcite represents the only identified inclusions, which seem to show varied shapes, which may be skeletal remains.
+
+Skeletal remains are rare, occurring in a single sample. These are composed of calcium, phosphorus, and also show an associated smaller peak of sulphur. These fossils also frequently show some oxidation, due to the associated presence of iron bands or restricted areas within the skeletal remains (@fig-m24-1). These skeletal remains are frequently irregular and indeterminate.
+
+Finally, iron oxides are present in 3 of 4 of the samples, with an iron (Fe) composition, but also iron and sulphur or iron and titanium (@fig-m24-4). Although characterized by irregular iron inclusions, iron is also found in framboids. Of the 4 samples, 3 show the presence of spherical framboids, as well as dispersed nanocrystals (in association with spherical framboids; @fig-m24-1-m24-2).
+
+```{r}
+#| label: fig-m24-1
+#| fig-cap: "A) general view of the sample (x250 magnification). B) detail of a fossil (x400 magnification) composed of calcium (B1), phosphorus (B2), sulphur (B3) and iron (B4) possibly the result of the oxidation. Geological sample SP69_MAR from the UJW formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M24_1.png"))
+
+```
+
+```{r}
+#| label: fig-m24-4
+#| fig-cap: "A) general view of the sample (x250 magnification) showing an inclusion. Round and oval shapes in lighter grey may be calcispheres identified in thin-section. B) detailed view of the inclusion (x950 magnification) composed of titanium (B1) and iron, as well as scattered, irregular iron oxides (B2). Geological sample SP69_MAR from the UJW formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M24_4_map1.png"))
+
+```
+
+```{r}
+#| label: fig-m24-1-m24-2
+#| fig-cap: "A) detailed view of iron inclusions (x1.8k magnification), possibly originally spherical pyrite framboids (black arrow) and dispersed pyrite nanocrystals (white arrow). B) detail of an irregular inclusion (x2.1k magnification) composed mainly of iron (1) and inclusions composed of iron, possibly originally dispersed pyrite nanocrystals (2). Dot represents the location of the measured spectrum plotted in graph 1 and 2. Geological sample SP69_MAR from the UJW formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M24_1_M24_2_graphs.png"))
+
+```
+
+#### Middle Jurassic of eastern Algarve (MJE)
+
+The analysed samples from the Middle Jurassic outcrops (Malhão formation) are somewhat variable in their structure, inclusions and mineral compositions. The analysis of their composition and inclusions shows no specific differences between the outcrops, and they will be described as a single group.
+
+They are mainly composed of cryptocrystalline quartz (predominantly silica or SiO2), and small and large peaks of aluminium. Small peaks of chlorine and potassium can also be identified.
+
+Skeletal remains occur in less than 50% of the samples. These are all composed of calcium and phosphorus and frequently show an associated smaller peak of sulphur (@fig-m8-2-mp1). These skeletal remains are all irregular and indeterminate.
+
+Iron oxides are present in more than 90% of the samples, with an iron (Fe) composition (@fig-m12-5-s1). Other types of iron oxides are also present in lesser frequencies, such as equally large peaks of iron and titanium (20% of the samples; @fig-m12-5-s1) and titanium with a small peak of iron (20%; @fig-m7-3). EDS results also show a small subset of samples with a small peak of calcium frequently associated with iron inclusions (@fig-m12-3-mp1) and inclusions which are mainly composed of large peaks of potassium, aluminium, and magnesium and small peaks of iron or iron with titanium (@fig-m12-1-s2). Most of these inclusions have irregular shapes and varying sizes, although framboids are also present.
+
+Spherical framboids are present in 40% of the samples, and dispersed nanocrystals are present in 10% of the samples (in association with spherical framboids), and composed of iron, aluminium and a small peak of calcium and magnesium (@fig-m12-5-s6; @fig-m8-1; @fig-m12-3-s3).
+
+```{r}
+#| label: fig-m8-2-mp1
+#| fig-cap: "A) general view of the sample (x250 magnification) showing several inclusions and porosity. B) detail of a fossil (x1k magnification) composed mainly of calcium (B1), phosphorus (B2) and small peaks of sulphur (B3; 1). Dot represents the location of the measured spectrum plotted in graph 1. Geological sample SP49_CdC from the MJE formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M8_2_map1_spectra1_graph.png"))
+
+```
+
+```{r}
+#| label: fig-m12-5-s1
+#| fig-cap: "A) general view of the sample (x450 magnification) showing several inclusions. B) detail of small inclusions (x1.3k magnification) composed of titanium, iron and a large peak of aluminium (1) and iron (2). C) detail of the large inclusion (x3.5k magnification) composed mainly of iron (3). Dot represents the location of the measured spectra plotted in graphs 1-3. Geological sample SP50_CdC from the MJE formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M12_5_s1_s3_graph.png"))
+
+```
+
+```{r}
+#| label: fig-m7-3
+#| fig-cap: "A) detail of the sample (x1k magnification) showing an irregular inclusion composed mainly of titanium (A1) with very small peaks of iron (A3). Small peaks of potassium (A2) can be observed around the inclusion. Geological sample SP52_GUI from the MJE formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M7_3_map2.png"))
+
+```
+
+```{r}
+#| label: fig-m12-3-mp1
+#| fig-cap: "A) general view of the sample (x250 magnification) showing frequent irregular inclusions and porosity. B) detail of the cluster of irregular inclusions (x700 magnification) composed of iron (B1) and calcium (B2). Geological sample SP67_DESCAM from the MJE formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M12_3_map1.png"))
+
+```
+
+```{r}
+#| label: fig-m12-1-s2
+#| fig-cap: "A, C) general view of the sample (x250 magnification) showing porosity and uncommon inclusions. B) detail of irregular inclusions composed mainly of iron (1). D) detail of an inclusion characterised by a large peak of aluminium and potassium, and a small peak of iron and titanium (2, unmarked). Dot represents the location of the measured spectra plotted in graphs 1-2. Geological sample SP67_DESCAM from the MJE formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M12_1_s2_s3.png"))
+
+```
+
+```{r}
+#| label: fig-m12-5-s6
+#| fig-cap: "A) general view of the sample (x250 magnification) showing several inclusions and porosity. B) detail of inclusions (x1.7k magnification) composed mainly of iron (1-2). The inclusion from spectrum 1 is possibly a spherical framboid. Dot represents the location of the measured spectra plotted in graphs 1-2. Geological sample SP50_CdC from the MJE formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M12_5_spectra6_graph.png"))
+
+```
+
+```{r}
+#| label: fig-m8-1
+#| fig-cap: "A) iron inclusion (x1k magnification) which was possibly originally a spherical pyrite framboid. It is composed mainly of iron (A1) and possibly some indeterminate fossils characterised by a small peak of calcium (A2), phosphorus (A3) and sulphur (A4). B) detail of the inclusion (x2.3k magnification). Geological sample SP50_CdC from the MJE formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M8_1_map1.png"))
+
+```
+
+```{r}
+#| label: fig-m12-3-s3
+#| fig-cap: "A) detailed view (x1.5k magnification) and B) close-up (x3.5k magnification) of inclusions composed of iron and aluminium, possibly framboids. Geological sample SP67_DESCAM from the MJE formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M12_3_spectra3.png"))
+
+```
+
+#### Upper Jurassic of eastern Algarve (UJE)
+
+The analysed samples from the Upper Jurassic outcrops (Jordana formation) are homogeneous, with little variation in the identified inclusions. The analysis of their composition and inclusions shows no specific differences between the outcrops, and they will be described as a single group. Here, we also include the secondary deposition outcrop sample of Peral, since it shows similar patterns to the samples in primary deposition.
+
+They are mainly composed of cryptocrystalline quartz (predominantly silica or SiO2), and large peaks of aluminium, with smaller peaks of aluminium being present in a small number of samples (n=3). Small peaks of potassium can also be identified.
+
+Skeletal remains were identified in 30% of the samples (n=3). These are composed of calcium and phosphorus and two samples show an associated smaller peak of sulphur (@fig-m6-2-mp1). These skeletal remains are all irregular and indeterminate.
+
+Iron oxides are present in all samples, presenting mainly an iron (Fe) composition, and less commonly associated with small titanium (n=2; @fig-m6-1-mp1) and sulphur (n=4) peaks (@fig-m10-3-mp1). A single sample shows an inclusion composed of titanium with a small peak of iron (@fig-m10-4-s1).
+
+EDS results also show a small subset of samples with a peak of calcium, rarely with sulphur peaks (n=1) and occasionally associated with iron oxides. These calcium peaks occur in irregular, large structures, and represent calcite in the chert or replacing fossils (@fig-m6-3-mp1; @fig-m10-2-mp1; @fig-m10-6-mp2).
+
+Spherical pyrite framboids are present in 20% of the samples (n=2) and are composed of iron or iron with sulphur (@fig-m10-1-mp1).
+
+```{r}
+#| label: fig-m6-2-mp1
+#| fig-cap: "A) general view of the sample (x250 magnification) with a fossil, inclusions and porosity. B) detail of the fossil (x1k magnification) composed of calcium (B1), phosphorus (B2) and a small peak of sulphur (B3). Iron (B4) is identifiable in certain areas of the fossil which are possibly oxidised and scattered in the sample, corresponding to the white dots. Geological sample SP57_JOR from the UJE formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M6_2_map1.png"))
+
+```
+
+```{r}
+#| label: fig-m6-1-mp1
+#| fig-cap: "A) general view of the sample (x250 magnification) with iron inclusions and a large unidentifiable inclusion. B) detail of the inclusion (x1k magnification) composed of aluminium (B1), potassium (B2), magnesium (B3), iron (B4) and possibly small peaks of titanium. Geological sample SP59_JOR from the UJE formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M6_1_map1.png"))
+
+```
+
+```{r}
+#| label: fig-m10-3-mp1
+#| fig-cap: "A) general view of the sample (x250 magnification) with uncommon inclusions. B) detail of an irregular inclusion (x3.7k magnification) characterised by iron (B1) and possible small peaks of sulphur (B2). Geological sample SP58_JOR_002 from the UJE formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M10_3_map1.png"))
+
+```
+
+```{r}
+#| label: fig-m10-4-s1
+#| fig-cap: "Detail of an inclusion (x1.9k magnification) mainly composed of titanium and a small peak of iron (1). Dot represents the location of the measured spectra plotted in graphs 1. Geological sample SP58_JOR from the UJE formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M10_4_spectra1_graph.png"))
+
+```
+
+```{r}
+#| label: fig-m6-3-mp1
+#| fig-cap: "A) general view (x140 magnification) of a large, irregular calcium inclusion. B) detail of a section of the inclusion (x400 magnification), composed mainly of calcium (B1) with small peaks of iron (B2) occurring in the white speckles around the calcium. Geological sample SP58_JOR_004 from the UJE formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M6_3_map1_spectra1.png"))
+
+```
+
+```{r}
+#| label: fig-m10-2-mp1
+#| fig-cap: "A) general view (x140 magnification) of a large, irregular calcium inclusion. B) detail of a section of the inclusion (x400 magnification), composed mainly of calcium (B1) with small peaks of iron (B2) occurring in the white speckles around the calcium. Geological sample SP58_JOR_004 from the UJE formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M10_2_map1.png"))
+
+```
+
+```{r}
+#| label: fig-m10-6-mp2
+#| fig-cap: "A) general view of the sample (x250 magnification) showing a large area (lighter grey) composed mainly of calcite, seen in the maps as the presence of calcium (A1) and small peaks of sulphur (A2). Small iron concentrations (A3) can also be seen in the sample, represented by the bright white splotches in A. Geological sample SP59_JOR_001 from the UJE formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M10_6_map2.png"))
+
+```
+
+```{r}
+#| label: fig-m10-1-mp1
+#| fig-cap: "A) detail of a spherical pyrite framboid (x1.5k magnification) and B) close-up (x2.7k magnification), composed mainly of iron (A1) and a small peak of sulphur (A2). Geological sample SP58_JOR_003 from the UJE formation."
+
+knitr::include_graphics(here::here("figures/within-chert/SOM/M10_1_map1.png"))
+
+```
+
+### Archaeological samples
+
+#### Local chert types
+
+#### Non-local chert types
