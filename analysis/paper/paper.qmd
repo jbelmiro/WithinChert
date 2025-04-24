@@ -1,30 +1,6 @@
 ---
 title: "Within chert: a multi-technique mineral and geochemical approach to the study of chert of southwestern Iberia"
-author:
-  - Jane Doe:
-      correspondence: "yes"
-      email: janedoe@fosg.org
-      orcid: 0000-0003-1689-0557
-      institute:
-        - fosg
-        - fop
-  - John Q. Doe:
-      institute: fosg
-      orcid: 0000-0003-1689-0558
-  - Peder Ås:
-      institute: fosg
-      orcid: 0000-0003-1689-0559
-  - Juan Pérez:
-      orcid: 0000-0003-1689-0551
-      institute:
-        - name: Acme Corporation
-  - Max Mustermann:
-      orcid: 0000-0003-1689-0552
-institute:
-  - fosg:
-      name: Formatting Open Science Group
-      address: 23 Science Street, Eureka, Mississippi, USA
-  - fop: Federation of Planets
+author: Joana Belmiro
 title-block-published: "Last updated"  
 date: now
 date-format: long
@@ -32,7 +8,7 @@ format:
   docx:
     reference-doc: "../templates/template.docx" # Insert path for the DOCX file
 execute:
-  echo: true
+  echo: false
   warning: false
   message: false
   comment: "#>"
@@ -78,6 +54,7 @@ library(factoextra)
 library(ggpmisc)
 library(magick)
 library(ggpubr)
+library(here)
 
 ```
 
@@ -85,13 +62,13 @@ library(ggpubr)
 #| label: xrd-readtables
 
 # Read grouped supporting data
-xrd_perc <- read_csv('analysis/data/raw_data/xrd_data/xrd_goals.csv') # File with component percentage of all samples for annotations
-xrd_marks <- read_csv('analysis/data/raw_data/xrd_data/xrd_peaks.csv') # File with peak data and d spacing for plot labels
+xrd_perc <- read_csv(here::here('analysis/data/raw_data/xrd_data/xrd_goals.csv')) # File with component percentage of all samples for annotations
+xrd_marks <- read_csv(here::here('analysis/data/raw_data/xrd_data/xrd_peaks.csv')) # File with peak data and d spacing for plot labels
 
 # Read individual xrd files
-sp15_xrd <- read_csv('analysis/data/raw_data/xrd_data/SP15_xrd.csv')
-sp58_xrd <- read_csv('analysis/data/raw_data/xrd_data/SP58_xrd.csv')
-sp69_xrd <- read_csv('analysis/data/raw_data/xrd_data/SP69_xrd.csv')
+sp15_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP15_xrd.csv'))
+sp58_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP58_xrd.csv'))
+sp69_xrd <- read_csv(here::here('analysis/data/raw_data/xrd_data/SP69_xrd.csv'))
 
 ```
 
@@ -198,9 +175,9 @@ sp69_plot <- sp69_xrd |>
 ```{r}
 #| label: sem-read
 
-M18_7 <- read_csv('analysis/data/raw_data/sem_data/M18_7.csv')
-M18_8 <- read_csv('analysis/data/raw_data/sem_data/M18_8.csv')
-M4_3 <- read_csv('analysis/data/raw_data/sem_data/M4_3.csv')
+M18_7 <- read_csv(here::here('analysis/data/raw_data/sem_data/M18_7.csv'))
+M18_8 <- read_csv(here::here('analysis/data/raw_data/sem_data/M18_8.csv'))
+M4_3 <- read_csv(here::here('analysis/data/raw_data/sem_data/M4_3.csv'))
 
 ```
 
@@ -360,14 +337,14 @@ M4_3_graph <- filtered_M4_3 |>
   C = "#4461A8", O = "#2BACC2", F = "#3EADA9", Na = "#4FC46A", Mg = "#AEC491", Mg_b = "#AEC491", Al = "#F2C86C", Si = "#F5A838", P = "#EE850E", S = "#D54F34", S_b = "#D54F34", Cl = "#A51122", K = "#A71B4B", K_b = "#A71B4B", Ca = "#D35C79" , Ca_b = "#D35C79", Ca_L = "#D35C79", Ti = "#992766", Ti_b = "#992766", Ti_L = "#992766", Fe = "#762181" , Fe_b = "#762181" , Fe_L = "#762181")) +  
   theme(legend.position="none", axis.text = element_text(size = 12), axis.title = element_text(size = 12))
 
-ggsave("M4_3_graph.png", width = 5, height = 3.75, units = "in", ,bg = "white" , dpi = 300, path = "analysis/figures/SOM/Graphs")
+# ggsave("M4_3_graph.png", width = 5, height = 3.75, units = "in", ,bg = "white" , dpi = 300, path = "analysis/figures/SOM/Graphs")
 
 ```
 
 ```{r}
 #| label: pxrf-read
 
-pxrf_raw <- read_csv('analysis/data/raw_data/pxrf_data/pxrf_data_dec.csv')
+pxrf_raw <- read_csv(here::here('analysis/data/raw_data/pxrf_data/pxrf_data_dec.csv'))
 
 ```
 
@@ -795,7 +772,7 @@ This study utilised X-ray diffraction (XRD) to determine the mineral composition
 #| tbl-cap: "Number of samples (chips) used for the SEM-EDS study, by a) geological formation for the geological samples, and by b) type for the archaeological samples."
 
 # Read table
-tbl_samples <- read_csv('analysis/data/raw_data/geochem_samples_n.csv')
+tbl_samples <- read_csv(here::here('analysis/data/raw_data/geochem_samples_n.csv'))
 # Turn NAs into empty strings
 tbl_samples <- tbl_samples %>%
   mutate(across(everything(), ~ replace(.x, is.na(.x), "")))
@@ -857,7 +834,7 @@ The XRD results are homogeneous, showing little differences between samples. The
 #| tbl-cap: "Identified crystalline phases of chert geological samples from the Algarve. LJW: Lower Jurassic West; MJE: Middle Jurassic East; TW: Triassic West; UPE: Upper Jurassic East; UPW: Upper Jurassic West. (*) refers to results obtained from samples analysed and interpreted at the Geociencias Barcelona-CSIC. Content percentages of samples analysed at the Hércules laboratory are represented by x: xxx refers to > 90%; xx to 90-30%; x to 10-1%; (x) to <1%."
 
 # Read table
-xrd_results_tbl <- read_csv('analysis/data/raw_data/xrd_results.csv')
+xrd_results_tbl <- read_csv(here::here('analysis/data/raw_data/xrd_results.csv'))
 # Turn NAs into empty strings
 xrd_results_tbl <- xrd_results_tbl %>%
   mutate(across(everything(), ~ replace(.x, is.na(.x), "")))
@@ -871,6 +848,9 @@ Dolomite was mainly identified in the samples from the Lower Jurassic and Triass
 ```{r}
 #| label: fig-xrd-15
 #| fig-cap: "Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Praia do Belixe (SP15_PBX). The rhombus shape signifies the main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks. Quantifications presented in the supporting table were obtained using Rietveld refinement."
+#| fig-width: 6
+#| fig-asp: 0.8
+#| fig-align: center
 
 plot(sp15_plot)
 
@@ -892,17 +872,17 @@ Similarly, the presence of skeletal remains, represented by peaks of calcium, ph
 
 ```{r}
 #| label: fig-skeletal
-#| fig-cap: "A) Skeletal remains from sample SP16_BLX, from the Lower Jurassic outcrops of western Algarve. B) Detail of skeletal remains composed of calcium (B1), phosphorus (B2) and a small peak of sulphur (B3). The skeletal remains seem to be oxidized, with small peaks of iron within (B4)."
+#| fig-cap: "A) general view of the sample (x250 magnification) showing a fracture and a skeletal remain. B) detail of skeletal remains (x1.3k magnification) composed of calcium (B1), phosphorus (B2) and a small peak of sulphur (B3). The skeletal remains seem to be oxidized, with small peaks of iron within (B4). Geological sample SP16_BLX from the LJW formation."
 
-knitr::include_graphics(here::here("figures/within-chert/M3_3_map1.png"))
+knitr::include_graphics(here::here('analysis/figures/M3_3_map1.png'))
 
 ```
 
 ```{r}
 #| label: fig-oval-fossils
-#| fig-cap: "A-C) General view and details from an archaeological sample from local chert type (T4). A) general view of a concentration of oval fossils. B) general view of a concentration of oval fossils and other inclusions. C) detail of an irregular inclusion composed of titanium (C1) and an oval skeletal remains composed mainly of calcium (C2), phosphorus (C3) and a small peak of sulphur."
+#| fig-cap: "A-B) general view of the sample (x190 and x250 magnification, respectively) showing multiple oval fossils and other inclusions. C) detail of an irregular inclusion (x1k magnification) composed of titanium (C1) and an oval skeletal remains composed mainly of calcium (C2), phosphorus (C3) and a small peak of sulphur. Archaeological sample from T4 (H20-4359)."
 
-knitr::include_graphics(here::here("figures/within-chert/M15_4.png"))
+knitr::include_graphics(here::here('analysis/figures/M15_4.png'))
 
 ```
 
@@ -910,9 +890,9 @@ By observing the surfaces of samples and the presence of skeletal remains, some 
 
 ```{r}
 #| label: fig-t6-general
-#| fig-cap: "A-D) General view and details from an archaeological sample from non-local chert type (T6). Dots represent the measured spectrum and shown in the corresponding graph. A) general view of the sample with uncommon inclusions. B) detail of an inclusion seen in A, composed mostly of iron and small peaks of calcium and phosphorus, making this inclusion a possible oxidised skeletal remains of a fossil (1). C) general view of the sample with no visible inclusions. D) detail of a small and irregular iron inclusion (2)."
+#| fig-cap: "A) general view of the sample (x250 magnification). B) detail of an inclusion seen in A (x3.2k magnification), composed mostly of iron and small peaks of calcium and phosphorus, making this inclusion a possible oxidised skeletal remains of a fossil (1). Archaeological sample from T6 (H20-3890). C) general view of the sample (x250 magnification) with no visible inclusions. D) detail of the sample (x4.2k magnification) showing a small and irregular iron inclusion (2). Archaeological sample from T6 (I19-2846). Dot represents the location of the measured spectra plotted in graphs 1-2."
 
-knitr::include_graphics(here::here("figures/within-chert/M18_7_M18_8_graphs.png"))
+knitr::include_graphics(here::here('analysis/figures/M18_7_M18_8_graphs.png'))
 
 ```
 
@@ -920,9 +900,9 @@ The rarity of inclusions is not limited to skeletal remains, but to other inclus
 
 ```{r}
 #| label: fig-framboids
-#| fig-cap: "A-B) Detail from the geological sample SP59_JOR from the Upper Jurassic outcrops (Jordana formation) of eastern Algarve. A) detailed view of a spherical pyrite framboid composed of iron (A1) and sulphur (A2). B) detailed view of an inclusion composed of iron (B1) and sulphur (B2)."
+#| fig-cap: "A) detail of the sample (x6.5k magnification) showing a possibly spherical pyrite framboid composed of iron (A1) and sulphur (A2). B) detailed view of an inclusion (x1k magnification) composed of iron (B1) and sulphur (B2). Geological sample SP59_JOR_002 from the UJE formation."
 
-knitr::include_graphics(here::here("figures/within-chert/M10_5_map1_map2.png"))
+knitr::include_graphics(here::here('analysis/figures/M10_5_map1_map2.png'))
 
 ```
 
@@ -934,9 +914,9 @@ Whenever isolated, calcium can be found in high peaks in cherts from Upper Juras
 
 ```{r}
 #| label: fig-calcite
-#| fig-cap: "General view of calcite inclusions (light grey) from the geological sample SP69_MAR from the Upper Jurassic outcrops of western Algarve, composed mainly of calcium and silica (1). Dot represents the measured spectrum and is shown in the corresponding graph."
+#| fig-cap: "General view of calcite inclusions (light grey) composed mainly of calcium and silica (1). Dot represents the location of the measured spectrum plotted in graph 1. Geological sample SP69_MAR from the UJW formation."
 
-knitr::include_graphics(here::here("figures/within-chert/M4_3_graphs.png"))
+knitr::include_graphics(here::here('analysis/figures/M4_3_graphs.png'))
 
 ```
 
@@ -981,13 +961,13 @@ plot_grid(biplot_alg, biplot_nl, biplot_comp, biplot_comp2, labels = c("a", "b",
 
 ```
 
-When comparing the regional Algarve cherts (fig. ++ a), we see that the two first dimensions explain a combined `r 34.6+26.3`% variability in the results, with dimension 1 explaining 34.6% and dimension 2 explaining 26.3%. By observing the scatterplots, it is noticeable that the Lower Jurassic cherts (LJW) are highly variable when compared to the other cherts, with samples which display higher positive values in dimension 1 (Dim1) and dimension 2 (Dim2). However, when focusing on the concentration of LJW results, they seem to fit within the range shown by Middle Jurassic and Upper Jurassic eastern cherts. In comparison, Upper Jurassic cherts from the western basin show higher positive values in dimension 2, which is explained by the higher values of CaO.
+When comparing the regional Algarve cherts (fig. @fig-pca a), we see that the two first dimensions explain a combined `r 34.6+26.3`% variability in the results, with dimension 1 explaining 34.6% and dimension 2 explaining 26.3%. By observing the scatterplots, it is noticeable that the Lower Jurassic cherts (LJW) are highly variable when compared to the other cherts, with samples which display higher positive values in dimension 1 (Dim1) and dimension 2 (Dim2). However, when focusing on the concentration of LJW results, they seem to fit within the range shown by Middle Jurassic and Upper Jurassic eastern cherts. In comparison, Upper Jurassic cherts from the western basin show higher positive values in dimension 2, which is explained by the higher values of CaO.
 
-The differences between the local Lower Jurassic cherts and non-local cherts are more marked. Fig ++ b represents the correlation between elements and Lower Jurassic cherts, central Portugal Cretaceous cherts and southern Spain Upper Jurassic cherts. Dimension 1 explains \~57% of the variability, while dimension 2 explains \~29%, with a combined percentage of `r 56.6+28.6`%. Once again, it is clear that Jurassic cherts, both from southwestern Portugal and southern Spain, show variability, although they are mostly located in the center/bottom of dimension 2 and center of dimension 1. When compared to these values, central Portugal Cretaceous cherts are located in the negative axis of dimension 1 and show little variability.
+The differences between the local Lower Jurassic cherts and non-local cherts are more marked. @fig-pca b represents the correlation between elements and Lower Jurassic cherts, central Portugal Cretaceous cherts and southern Spain Upper Jurassic cherts. Dimension 1 explains \~57% of the variability, while dimension 2 explains \~29%, with a combined percentage of `r 56.6+28.6`%. Once again, it is clear that Jurassic cherts, both from southwestern Portugal and southern Spain, show variability, although they are mostly located in the center/bottom of dimension 2 and center of dimension 1. When compared to these values, central Portugal Cretaceous cherts are located in the negative axis of dimension 1 and show little variability.
 
-A similar pattern emerges when applying a PCA using the same elements but comparing them to archaeological, non-local chert T6, previously attributed to central Portugal (Fig. ++ c). In this PCA, dimension 1 explains \~52% of the variability and dimension 2 \~30%, with a combined percentage of `r 52.2+30.1`%. Similarly to geological Cretaceous samples from central Portugal, T6 samples are also concentrated in the negative side of dimension 1, with a clear overlap between the two.
+A similar pattern emerges when applying a PCA using the same elements but comparing them to archaeological, non-local chert T6, previously attributed to central Portugal (Fig. @fig-pca c). In this PCA, dimension 1 explains \~52% of the variability and dimension 2 \~30%, with a combined percentage of `r 52.2+30.1`%. Similarly to geological Cretaceous samples from central Portugal, T6 samples are also concentrated in the negative side of dimension 1, with a clear overlap between the two.
 
-As observed in Fig. ++ b, Fig. ++ d shows a concentration of all groups in the centre/bottom of dimension 2 (28.7%) and centre of dimension 1 (58.7%), with the first two dimensions explaining a combined percentage of `r 58.7+28.7`% of the variability. The archaeological local cherts T2 to T5 and non-local type T7 (previously attributed to the Upper Jurassic cherts of southern Spain) are congruent with the corresponding geological sources, although with clear decreased variability.
+As observed in @fig-pca b, @fig-pca d shows a concentration of all groups in the centre/bottom of dimension 2 (28.7%) and centre of dimension 1 (58.7%), with the first two dimensions explaining a combined percentage of `r 58.7+28.7`% of the variability. The archaeological local cherts T2 to T5 and non-local type T7 (previously attributed to the Upper Jurassic cherts of southern Spain) are congruent with the corresponding geological sources, although with clear decreased variability.
 
 # Discussion
 
