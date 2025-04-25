@@ -24,7 +24,6 @@ abstract: |
   Text of abstract
 keywords: |
   keyword 1; keyword 2; keyword 3
-
 ---
 
 <!-- This is the format for text comments that will be ignored during renderings. Do not put R code in these comments because it will not be ignored. -->
@@ -137,12 +136,12 @@ sp58_plot <- sp58_xrd |>
   geom_line(linewidth = 0.5) +
   labs(x = "Diffraction Angle", y = "Intensity (counts)") +
   theme_minimal() +
-  coord_cartesian(ylim = c(-5000, 50000)) +
+  coord_cartesian(ylim = c(-5000, 45000)) +
   geom_point(data = sp58_marks, aes(x = Angle, y = Intensity + 600, colour = Phase), size = 3, shape = 18) +
   geom_label(data = sp58_marks, aes(x = Angle, y = Intensity, label = d), 
             size = 3, fill = "white", label.size = 0.2, vjust = -1, show.legend = FALSE) +
   scale_colour_manual(values = c("lightsteelblue3", "salmon", "darkseagreen" ,"orchid","snow4")) +
-  annotate(geom = "table", x = 75, y = 50000, label = list(cbind(sp58_perc)))
+  annotate(geom = "table", x = 75, y = 40000, label = list(cbind(sp58_perc)))
 
 
 # SP69 Mareta
@@ -848,8 +847,8 @@ Dolomite was mainly identified in the samples from the Lower Jurassic and Triass
 ```{r}
 #| label: fig-xrd-15
 #| fig-cap: "Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Praia do Belixe (SP15_PBX). The rhombus shape signifies the main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks. Quantifications presented in the supporting table were obtained using Rietveld refinement."
-#| fig-width: 6
-#| fig-asp: 0.8
+#| fig-width: 7
+#| fig-height: 5
 #| fig-align: center
 
 plot(sp15_plot)
@@ -861,8 +860,11 @@ In opposition, calcite was mainly identified in the Upper Jurassic samples and t
 ```{r}
 #| label: fig-xrd-58-69
 #| fig-cap: "Plot of minerals identified through XRD in the a) eastern Upper Jurassic (Jordana formation) chert sample from the outcrop Jordana (SP58_JOR) and b) western Upper Jurassic (Malm) chert sample from the outcrop Praia da Mareta (SP69_MAR). The rhombus shape signifies the main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks. Quantifications presented in the supporting table were obtained using Rietveld refinement."
+#| fig-align: center
+#| fig-width: 7
+#| fig-height: 8
 
-plot_grid(sp58_plot, sp69_plot, labels = c("a", "b"), rows = 2)
+plot_grid(sp58_plot, sp69_plot, labels = c("a", "b"), nrow = 2)
 
 ```
 
@@ -927,6 +929,9 @@ The pXRF measured 44 major and minor elements, although, for a large majority, t
 ```{r}
 #| label: fig-pxrf-barplot
 #| fig-cap: "Comparison of success (values successfully measured by the pXRF, excluding values of 0 which were non-existent) and < LOD counts by element. Only elements with Success counts above 50% are included."
+#| fig-width: 6
+#| fig-height: 4
+#| fig-align: center
 
 plot(succ_barplot)
 
@@ -939,9 +944,11 @@ In general, silica is the main component of all cherts. However, there is some v
 ```{r}
 #| label: fig-pxrf-boxplots
 #| fig-cap: "Boxplots of raw element percentages (a: SiO2, b: CaO, c: Fe2O3, d: TiO2) by geological formation or archaeological chert type. Only chert groups with n>5 were included in the boxplots."
+#| fig-width: 7
+#| fig-height: 7
+#| fig-align: center
 
-ggarrange(si_boxplot, ca_boxplot, fe_boxplot, ti_boxplot, labels = c("a","b","c","d"),
-          ncol = 2, nrow = 2, common.legend = TRUE, legend = "bottom")
+ggarrange(si_boxplot, ca_boxplot, fe_boxplot, ti_boxplot, labels = c("a","b","c","d"), ncol = 2, nrow = 2, common.legend = TRUE, legend = "bottom")
 
 ```
 
@@ -956,6 +963,9 @@ Fig ++ shows the PCAs for several combinations of elements and comparisons betwe
 ```{r}
 #| label: fig-pca
 #| fig-cap: "Visual representations of dimension 1 and 2 of PCAs showing the correlation between elements and different chert groups. a) PCA using the geological cherts of the regional southern Portugal formations: Lower Jurassic west (LJW), Triassic west (TW), Upper Jurassic west (UPW), Middle Jurassic east (MJE) and Upper Jurassic east (UJE); b) PCA using geological samples of local Lower Jurassic cherts (LJW) and non-local Cretaceous cherts (central Portugal; CPT) and Upper Jurassic cherts (Betic Systems; UCA); c) PCA using geological samples of local Lower Jurassic cherts (LJW), geological chert samples from Cretaceous central Portugal formations (CPT), and archaeological samples from Vale Boi attributed to CPT sources (T6); d) PCA using geological samples of local Lower Jurassic cherts (LJW), geological chert samples from Upper Jurassic southern Spain formations (UCA), and archaeological samples from Vale Boi attributed to local sources (T2-5) and non-local, southern Spain sources (T7)."
+#| fig-width: 8
+#| fig-height: 7
+#| fig-align: center
 
 plot_grid(biplot_alg, biplot_nl, biplot_comp, biplot_comp2, labels = c("a", "b", "c", "d"))
 
@@ -970,6 +980,58 @@ A similar pattern emerges when applying a PCA using the same elements but compar
 As observed in @fig-pca b, @fig-pca d shows a concentration of all groups in the centre/bottom of dimension 2 (28.7%) and centre of dimension 1 (58.7%), with the first two dimensions explaining a combined percentage of `r 58.7+28.7`% of the variability. The archaeological local cherts T2 to T5 and non-local type T7 (previously attributed to the Upper Jurassic cherts of southern Spain) are congruent with the corresponding geological sources, although with clear decreased variability.
 
 # Discussion
+
+The results from this study reveal several patterns in the mineral and chemical composition of the analysed chert samples. In general, they allowed us to answer and explore the several research questions presented above. More importantly, they allow further interpretations about human behaviours related to mobility and raw material procurement and selection. All methods used in this chapter allowed a more complete characterisation of the geological cherts from the Algarve region, complementing the petrographic analysis, showing key differences in their mineral and chemical compositions.
+
+For example, the presence of calcite in Upper Jurassic cherts (both eastern and western) seen both in XRD but also SEM-EDS and pXRF provided an added characterisation which may prove useful for future archaeological chert raw material studies. This is especially relevant for SEM and pXRF methods, which can be used with little to no impact on the archaeological materials and possibly help distinguish between the visually similarities present among regional cherts (with exception of the Jordana formation cherts in eastern Algarve).
+
+This is especially relevant for the overall goal of providing a detailed lithotheque, both physical and online. By expanding the previously used methods to characterise these geological cherts, we have provided a key reference collection of the Algarve region which can, from this point onwards, be consistently used in archaeological studies for prehistoric assemblages across Iberia.
+
+However, despite the added layers of mineral and chemical characterisation to these cherts, one of the main research questions for this paper and regional research [@belmiroCreatingFramesReference2023; @belmiroChertProcurementPatterns2025], continues to be unanswered. As mentioned in section 1 “Introduction” one of the goals of this research was to test the potential of several methods to distinguish between the cherts from the Lower Jurassic Carixian (west Algarve basin) and Middle Jurassic Malhão (east Algarve basin) formations.
+
+Perhaps one of the main differences between the cherts from these two formations is related to the presence of dolomite. The nodules of LJW show small peaks of dolomite in the XRD results. This was expected since a process of dolomitization of the chert nodules, especially on the outer edges, has been identified in previous works [@belmiroCreatingFramesReference2023; @ribeiro_evolucao_2005], and is related to the formation and diagenesis processes of the geological layers and chert nodules [@ribeiro_evolucao_2005; @rochaNoticiaExplicativaFolha1979].
+
+As previously mentioned, however, dolomite is only present in around 60% of the analysed chert samples. This may be related to the size and portion of the nodule selected for powdering since it is expected that dolomite will be present at the edges of the nodule, closer to the cortex, and can be absent on the inside of a larger nodule. This also may be related to the previously identified heterogeneity in dolomite presence shown in petrographic results or its presence in small percentages within the thin sections [@belmiroCreatingFramesReference2023]. Similar results were identified in previous mineral and geochemical studies, which showed the presence of different degrees of silicification and dolomitization in nodules in the formations [@ribeiro_evolucao_2005].
+
+In comparison, the XRD results for MJE cherts show a single sample with small dolomite and calcite presence. This is probably related to the process of dolomitization occurring in the Carixian (LJW) formation not being present in the Malhão (MJE) formation. This is expected given that the chert nodules are found in limestone formations [@manuppellaNoticiaExplicativaFolha2007].
+
+Similarly, elements and compounds like chlorine or calcium oxide are found in found in higher percentages in LJW cherts (Table) but with high standard deviations, meaning that is the presence of outliers. Silica is, in all analysed groups, the main component of the cherts. However, the LJW group shows a low mean value and high standard deviation (92.4 and 14.7, respectively; Fig), as well as the presence of several outliers, possibly related to an incomplete process of chertification, as identified in previous geochemical works from LJW cherts (Ribeiro, 2005). In comparison MJE cherts shows a higher silica mean (96.4; table) and less variability and outliers regarding other elements and compounds, also seen in the PCA results (++ a).
+
+While this variability seems to be specific of LJW cherts, it is not a key element to distinguish between the cherts of the formations, since a great majority of LJW samples show similar values and characteristics to the UJE cherts. In other words, if dolomitized or chemically variable with high outliers, the cherts are probably from the Lower Jurassic Carixian formation of western Algarve, but if not exhibiting these characteristics they cannot be ascribed specifically to any of the two.
+
+This means that it is currently still impossible to clearly identify whether chert raw materials are being procured from the eastern Algarve outcrops, and the local LJW cherts are currently still the most probable chert sources being used at Vale Boi during the UP.
+
+Following this interpretation, it is however, possible to use the presence or absence of dolomite and the chemical variability of archaeological cherts to identify other behaviours related to procurement aside from distance and mobility. The dolomitization process impacts the knapping characteristics of the nodules. This means that there may be the potential for identifying selection behaviours from UP hunter-gatherers focusing on obtaining less dolomitized nodules.
+
+Although the XRD analysis was not applied to archaeological samples, the pXRF results may shed light on this subject. In comparison to the results from LJW cherts, the T2-5 cherts show less outliers and variability than their geological counterparts.
+
+This may be related to the process of nodule selection for knapping, choosing mostly less altered chert nodules, and avoiding the highly altered and dolomitized cherts found in the Lower Jurassic formations. This is also supported by macroscopic observations of the artefacts knapped in the UP assemblages.
+
+Given the previously referred lack of dolomite and lesser chemical variability from the Middle Jurassic Malhão formation cherts, located east of the site, it is also possible that the T2-5 not only reflects the selection of local cherts, but also the procurement of cherts outside of the local range (30 km; REF). However, the lack of clear identifiers between the two geological sources and cherts, and following previous interpretations, it is more likely that the disparities between LJW and T2-5 cherts mostly reflect nodule selection during raw material procurement.
+
+The comparison between other archaeological chert types and the geological samples also provided key results to further explore and ascertain previous source attributions.
+
+Although previously explored, the fibrous quartz chert variety from Vale Boi (T1, known as chalcedony) and the cherts from the Triassic formation of the Algarve also showed clear similarities, especially through the SEM photos and EDS spectra.
+
+Similarly, other local types such as T4 were suggested as not having an exact macroscopic equivalent in the currently known local and regional formations, despite their petrographic similarities. However, the SEM-EDS results showed clear similarities in the visible skeletal remain morphologies between T4, T2 and samples from LJW, and the presence of inclusions composed of titanium in T4 and LJW, cementing the interpretation that despite the macroscopic variability, T4 are clearly local, possibly from a limited or currently not available outcrop.
+
+Compared to the similar characteristics of local cherts, both geological and archaeological, non-local types showed clearer differences. This allows us to further cement the interpretation that types T6-11 are not local or regional, although their exact sources cannot be pinpointed.
+
+For example, the pXRF results comparing the chemical composion of local cherts, LJW samples, T7 cherts (previously interpreted as coming from the Betic systems) and samples from the UCA lithotheque showed little differences. In this case, methods such as macroscopy, petrography [@belmiroChertProcurementPatterns2025] and SEM-EDS proved more adequate to show similarities between T7 and cherts of southern Spain.
+
+In comparison, cases like T11 showed clear differences in their chemical compositions, especially in the presence of copper and zirconium while macroscopically they show no visible fossils or inclusions. These black cherts have been identified in south Portugal, in the Alentejo region and central Spain [@araujoRegioesCentralSul2013; @oliveiraTracosGeraisEvolucao1991]. Further, studies have discussed the presence of copper mineralization present in cherts from the region [@oliveiraComplexoVulcanoSedimentarToca2013]. While further studies need to explore this, given the lack of a reference collection for cherts and jaspers from southeastern Portugal and central western Spain, or the inclusion of jasper in this study, we suggest that alike TL01 [@belmiroChertProcurementPatterns2025], T11 may have a source in the Zona Ossa Morena in central Iberia.
+
+The T6 cherts also showed clear differences from the local cherts. While the results obtained through SEM-EDS are like those surmised from petrographic analysis, T6 cherts show a clear absence of inclusions, fossils or porosity, as well as lower to near absent peaks of aluminium, hinting at different rates of sedimentation (and thus different formation environment) than LJW cherts. Unlike T7 cherts, T6 cherts when analysed through a PCA showed a clearer association with geological samples from central Portugal Cretaceous cherts.
+
+These results show that a multi-layered approach to raw material studies, specifically chert, seems to be key for sourcing studies. While XRD may not be an ideal technique for archaeological artefacts, given its destructive nature and the general homogeneity of chert, other methods provided their own contributions to source attribution.
+
+For example, coupled with petrography, SEM-EDS provides a good characterisation for cherts and preliminary chemical composition. The method showed that with little impact on archaeological artefacts, it was possible to further characterise them and establish parallels or differences between archaeological samples and geological. However, it is important to note that for SEM-EDS the only geological samples used were from the regional Jurassic and Triassic chert bearing formations of the Algarve. Similarly, this technique was not tested with unpolished samples, possibly placing a difficulty on the identification of some fossils or other inclusions.
+
+A future approach should include added geological samples from cherts of other regions of Iberia which can be directly compared to the archaeological samples and the use of non-polished samples.
+
+Similarly, pXRF provides a quick and non-destructive technique for the chemical characterisation of cherts, being ideal to complement other methods and results. However, our results showed some limitations of this methods. While the PCAs using pXRF results were able to discern between cherts of different ages (Cretaceous and Jurassic), it showed little differences between cherts of the same age but different formations (Jurassic from the Algarve basin and Jurassic from the Betic systems).
+
+As such, pXRF seems to be an ideal method for preliminary studies and characterisations, that can then be complemented with other geochemical techniques, such as LA-ICP-MS or REEs. In this case, a future approach for the geochemical study from Vale Boi would be to apply these methods and compare their potential to the current results.
 
 # Conclusion
 
