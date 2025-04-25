@@ -440,12 +440,13 @@ count_data_sio2 <- boxplots_pxrf |> # Count number of observations per group whe
 
 si_boxplot <- boxplots_pxrf |> 
   ggplot(aes(x = `Formation/Type`, y = SiO2, fill = `Formation/Type`)) +
-  geom_boxplot(color = "#5C5C5C") +
+  geom_boxplot(aes(color = `Formation/Type`), alpha = 0.4) +
   stat_summary(fun = mean, geom = "point", shape = 18) +
   #geom_text(data = count_data_sio2, aes(x = `Formation/Type`, y = 70, label = n), size = 3) +
   coord_cartesian(ylim = c(70, 100)) +
   theme_minimal() +
-  scale_fill_manual(values = c("LJW" = "#EDA92B", "UJW" = "#F1B6DA", "UJE" = "#8E95C8", "MJE" = "#BA68C8", "CPT" = "#4EB3D3", "UCA" = "#93C54E", "T2-5" = "#FEE391","T6" = "#9CCFD1", "T7" = "#B1C7AB", "T8" = "#D7617A")) +
+  scale_fill_manual(values = c("LJW" = "#EDA92B", "UJW" = "#D7617A", "UJE" = "#5C6BC0", "MJE" = "#BA68C8", "CPT" = "#114D94", "UCA" = "#93C54E", "T2-5" = "#EF6C00","T6" = "#4EB3D3", "T7" = "#00796B", "T8" = "#777")) +
+  scale_color_manual(values = c("LJW" = "#EDA92B", "UJW" = "#D7617A", "UJE" = "#5C6BC0", "MJE" = "#BA68C8", "CPT" = "#114D94", "UCA" = "#93C54E", "T2-5" = "#EF6C00","T6" = "#4EB3D3", "T7" = "#00796B", "T8" = "#777"), guide = "none") +
   theme(axis.title.x = element_blank(),
         axis.text.x = element_blank())
 
@@ -458,11 +459,12 @@ count_data_cao <- boxplots_pxrf |> # Count number of observations per group wher
 
 ca_boxplot <- boxplots_pxrf |> 
   ggplot(aes(x = `Formation/Type`, y = CaO, fill = `Formation/Type`)) +
-  geom_boxplot(color = "#5C5C5C") +
+  geom_boxplot(aes(color = `Formation/Type`), alpha = 0.4) +
   stat_summary(fun = mean, geom = "point", shape = 18) +
   #geom_text(data = count_data_cao, aes(x = `Formation/Type`, y = -0.3, label = n), size = 3) +
   theme_minimal() +
-  scale_fill_manual(values = c("LJW" = "#EDA92B", "UJW" = "#F1B6DA", "UJE" = "#8E95C8", "MJE" = "#BA68C8", "CPT" = "#4EB3D3", "UCA" = "#93C54E", "T2-5" = "#FEE391","T6" = "#9CCFD1", "T7" = "#B1C7AB", "T8" = "#D7617A")) +
+  scale_fill_manual(values = c("LJW" = "#EDA92B", "UJW" = "#D7617A", "UJE" = "#5C6BC0", "MJE" = "#BA68C8", "CPT" = "#114D94", "UCA" = "#93C54E", "T2-5" = "#EF6C00","T6" = "#4EB3D3", "T7" = "#00796B", "T8" = "#777")) +
+  scale_color_manual(values = c("LJW" = "#EDA92B", "UJW" = "#D7617A", "UJE" = "#5C6BC0", "MJE" = "#BA68C8", "CPT" = "#114D94", "UCA" = "#93C54E", "T2-5" = "#EF6C00","T6" = "#4EB3D3", "T7" = "#00796B", "T8" = "#777"), guide = "none") +
   theme(axis.title.x = element_blank(),
         axis.text.x = element_blank())
 
@@ -475,11 +477,12 @@ count_data_tio2 <- boxplots_pxrf |> # Count number of observations per group whe
 
 ti_boxplot <- boxplots_pxrf |> 
   ggplot(aes(x = `Formation/Type`, y = TiO2, fill = `Formation/Type`)) +
-  geom_boxplot(color = "#5C5C5C") +
+  geom_boxplot(aes(color = `Formation/Type`), alpha = 0.4) +
   stat_summary(fun = mean, geom = "point", shape = 18) +
   #geom_text(data = count_data_tio2, aes(x = `Formation/Type`, y = -0.02, label = n), size = 3) +
   theme_minimal() +
-  scale_fill_manual(values = c("LJW" = "#EDA92B", "UJW" = "#F1B6DA", "UJE" = "#8E95C8", "MJE" = "#BA68C8", "CPT" = "#4EB3D3", "UCA" = "#93C54E", "T2-5" = "#FEE391","T6" = "#9CCFD1", "T7" = "#B1C7AB", "T8" = "#D7617A")) +
+  scale_fill_manual(values = c("LJW" = "#EDA92B", "UJW" = "#D7617A", "UJE" = "#5C6BC0", "MJE" = "#BA68C8", "CPT" = "#114D94", "UCA" = "#93C54E", "T2-5" = "#EF6C00","T6" = "#4EB3D3", "T7" = "#00796B", "T8" = "#777")) +
+  scale_color_manual(values = c("LJW" = "#EDA92B", "UJW" = "#D7617A", "UJE" = "#5C6BC0", "MJE" = "#BA68C8", "CPT" = "#114D94", "UCA" = "#93C54E", "T2-5" = "#EF6C00","T6" = "#4EB3D3", "T7" = "#00796B", "T8" = "#777"), guide = "none") +
   theme(axis.title.x = element_blank(),
         axis.text.x = element_blank())
 
@@ -492,12 +495,13 @@ count_data_fe2o3 <- boxplots_pxrf |> # Count number of observations per group wh
 
 fe_boxplot <- boxplots_pxrf |> 
   ggplot(aes(x = `Formation/Type`, y = Fe2O3, fill = `Formation/Type`)) +
-  geom_boxplot(color = "#5C5C5C") +
+  geom_boxplot(aes(color = `Formation/Type`), alpha = 0.4) +
   stat_summary(fun = mean, geom = "point", shape = 18) +
   #geom_text(data = count_data_fe2o3, aes(x = `Formation/Type`, y = 0, label = n), size = 3) +
   coord_cartesian(ylim = c(0, 0.75)) +
   theme_minimal() +
-  scale_fill_manual(values = c("LJW" = "#EDA92B", "UJW" = "#F1B6DA", "UJE" = "#8E95C8", "MJE" = "#BA68C8", "CPT" = "#4EB3D3", "UCA" = "#93C54E", "T2-5" = "#FEE391","T6" = "#9CCFD1", "T7" = "#B1C7AB", "T8" = "#D7617A")) +
+  scale_fill_manual(values = c("LJW" = "#EDA92B", "UJW" = "#D7617A", "UJE" = "#5C6BC0", "MJE" = "#BA68C8", "CPT" = "#114D94", "UCA" = "#93C54E", "T2-5" = "#EF6C00","T6" = "#4EB3D3", "T7" = "#00796B", "T8" = "#777")) +
+  scale_color_manual(values = c("LJW" = "#EDA92B", "UJW" = "#D7617A", "UJE" = "#5C6BC0", "MJE" = "#BA68C8", "CPT" = "#114D94", "UCA" = "#93C54E", "T2-5" = "#EF6C00","T6" = "#4EB3D3", "T7" = "#00796B", "T8" = "#777"), guide = "none") +
   theme(axis.title.x = element_blank(),
         axis.text.x = element_blank())
 
@@ -586,7 +590,7 @@ biplot_nl <- fviz_pca_biplot(pca_result_nl,
                 habillage = group_var_nl,  # Use stored group column
                 addEllipses = TRUE, 
                 ellipse.level = 0.80,
-                palette = c("LJW" = "#EDA92B", "CPT" = "#4EB3D3", "UCA" = "#93C54E"),
+                palette = c("LJW" = "#EDA92B", "CPT" = "#114D94", "UCA" = "#93C54E"),
                 col.var = "#757575") +
   scale_shape_manual(values=c(17, 16, 15)) +
   ggtitle(NULL)
@@ -646,7 +650,7 @@ biplot_comp <- fviz_pca_biplot(pca_result_comp,
                 habillage = group_var_comp,  # Use stored group column
                 addEllipses = TRUE, 
                 ellipse.level = 0.80,
-                palette = c("LJW" = "#EDA92B", "T6" = "#7FCDBB", "CPT" = "#4EB3D3"),
+                palette = c("LJW" = "#EDA92B", "T6" = "#4EB3D3", "CPT" = "#114D94"),
                 col.var = "#757575") +
   scale_shape_manual(values=c(17, 16, 15)) +
   ggtitle(NULL)
