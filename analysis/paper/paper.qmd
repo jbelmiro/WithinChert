@@ -750,7 +750,9 @@ Additionally, evidence suggests that non-local materials were frequently introdu
 
 To further explore these questions and topics, this study employs an integrated analytical approach to geological chert samples from local, regional, and non-local formations, as well as archaeological assemblages from the UP levels of Vale Boi to accomplish the following goals:
 
--   Complete the characterization of chert samples from the Algarve region, including data on their mineral and chemical composition. This will deepen our understanding of the characteristics of outcrops across the region and make this information accessible to the scientific community through an online database. Additionally, we aim to assess the potential of mineral and chemical analyses to distinguish between macroscopic and petrographically similar chert samples from the Lower Jurassic Carixian (west Algarve basin) and Middle Jurassic Malhão (east Algarve basin) formations. This will enhance our understanding of which regional sources were exploited by hunter-gatherer groups at Vale Boi—whether the majority of “pink/yellow” cherts were sourced from local outcrops (within 20 km of Vale Boi) or if some portion was procured from more distant sources.
+-   Expand the characterization of chert samples from the Algarve region, including data on their mineral and chemical composition. This will deepen our understanding of the characteristics of outcrops across the region and make this information accessible to the scientific community through its integration in our online lithotheque (https://lusolit.icarehb.com).
+
+-	  Assess the potential of mineral and chemical analyses to distinguish between macroscopic and petrographically similar chert samples from the Lower Jurassic Carixian (west Algarve) and Middle Jurassic Malhão (east Algarve formations.
 
 -   Use geochemical methods to further characterize the archaeological samples, as well as geological samples from other regions of interest (e.g., Cretaceous cherts from central Portugal and cherts from the Betic Systems of southern Spain). This will enable us to compare the geological and archaeological data, testing, corroborating, and strengthening the petrographic and macroscopic source attributions of archaeological chert types. Additionally, comparing local geological and archaeological data may provide valuable insights into the selection of nodules for knapping, especially considering the known process of dolomitization in the Lower Jurassic outcrops.
 
@@ -762,15 +764,9 @@ By refining the characterization of chert in the region, improving source attrib
 
 # Materials and methods
 
-## X-Ray Diffraction (XRD)
+Given the particularities of each analytical technique used in this study, availability of samples and level of destructiveness on the artefacts, and research questions, different samples were used in each method. These methods, they application in chert characterization studies, especially in Iberia, and summarized methodology are further discussed below.
 
-X-ray diffraction (XRD) is a widely used laboratory technique for examining the atomic structure of crystalline materials (Adams, 2005). The minerals are crystalline, meaning their atoms are arranged in a three-dimensional repeating pattern. The crystal structure is defined by the arrangement of atoms within a single unit cell, as well as the cell’s size and shape.
-
-XRD works by directing a beam of X-rays onto a crystal, causing the rays to diffract and produce a characteristic diffraction pattern. The d-spacings—the distances between parallel planes of atoms in the crystal lattice—are derived from the angular positions and intensities of the diffracted beams. These d-spacings serve as a unique fingerprint for crystalline compounds, allowing for mineral identification (Marshall & Fairbridge, 1998).
-
-Although powder-XRD is a destructive technique, it has been used alongside petrographic characterisation (thin-section analysis) to gain a comprehensive understanding of the petrographic and mineral composition of lithic raw materials, such as chert, in both geological and archaeological contexts. This combined approach enables comparisons with potential archaeological implications, particularly in raw material sourcing studies in the Iberian Peninsula (e.g., Columbu et al., 2023; Gómez De Soler et al., 2023; Ortega et al., 2018).
-
-This study utilised X-ray diffraction (XRD) to determine the mineral composition of 23 geological powdered samples of chert from the Algarve region (Table 1). These samples, previously characterised and published by our team (Belmiro et al., 2023), represent at least one specimen from each outcrop, with a focus on primary and sub-primary locations across all chert-bearing formations in the region. A detailed description of the sample preparation process is available in our online research repository.
+Table 1 shows the samples used for each method. These included chert geological samples from different regions of Iberia, with a focus on the Algarve region. The Algarve materials include geological samples from western and eastern Algarve basin collected from 2021 and 2022 prospection works. The western groups include the Triassic formation cherts (sensu Luedke ++), also identified as chalcedony (Triassic west, hereon TW), the Lower Jurassic (Carixian) formation (Lower Jurassic west, hereon LJW) and Upper Jurassic (Malm) formations (Upper Jurassic west, hereon UJW).
 
 ```{r}
 #| label: tbl-samples
@@ -786,9 +782,27 @@ knitr::kable(tbl_samples)
 
 ```
 
+The eastern groups include the Middle Jurassic (Malhão) formation (Middle Jurassic east, MJE hereon) and the Jordana formation (Upper Jurassic east, hereon UJW).
+
+Other geological samples included in the study were the central Portugal (Rio Maior region) cherts from the Cretaceous formation (hereon CPT), previously prospected and collected by previous researchers (Pereira et al., 2016 Lusolit), and the southern Portugal cherts from the Betic systems (hereon UCA) from the UCA lithotheque.
+
+The archaeological samples used for the study are from the archaeological site of Vale Boi, mainly the Terrace and Shelter areas. The samples were chosen based on the groups identified in our previous works, with T1-5 corresponding to the archaeological chert types corresponding to local types, T6 possibly originating from central Portugal Cretaceous formation, T7 and T9 with sources possibly from southern Portugal Betic systems and T8 and T10-11 without a current identified source.
+
+For further reproducibility and replicability, and working towards the goal of open science (Johnson et al., 2024; Marwick, 2017), all analyses were performed through R Studio. The R code used for the analysis, datasets, and visual representations presented in this paper are available through our online repository (++). We utilised the rrtools package by Marwick et al. (2018) to create a research compendium and produce a reproducible journal article. The repository includes the complete set of raw data used in the analysis, along with a custom R project (Wickham, 2015) that contains the necessary code to generate all tables and figures. To facilitate broad reuse, the code is provided under the MIT license, the data under CC‐0, and the figures under CC‐BY. For more details, see Marwick (2017).
+
+## X-Ray Diffraction (XRD)
+
+X-ray diffraction (XRD) is a widely used laboratory technique for examining the atomic structure of crystalline materials (Adams, 2005). The minerals are crystalline, meaning their atoms are arranged in a three-dimensional repeating pattern. The crystal structure is defined by the arrangement of atoms within a single unit cell, as well as the cell’s size and shape.
+
+XRD works by directing a beam of X-rays onto a crystal, causing the rays to diffract and produce a characteristic diffraction pattern. The d-spacings—the distances between parallel planes of atoms in the crystal lattice—are derived from the angular positions and intensities of the diffracted beams. These d-spacings serve as a unique fingerprint for crystalline compounds, allowing for mineral identification (Marshall & Fairbridge, 1998).
+
+Although powder-XRD is a destructive technique, it has been used alongside petrographic characterisation (thin-section analysis) to gain a comprehensive understanding of the petrographic and mineral composition of lithic raw materials, such as chert, in both geological and archaeological contexts. This combined approach enables comparisons with potential archaeological implications, particularly in raw material sourcing studies in the Iberian Peninsula (e.g., Columbu et al., 2023; Gómez De Soler et al., 2023; Ortega et al., 2018).
+
+This study utilised X-ray diffraction (XRD) to determine the mineral composition of 23 geological powdered samples of chert from the Algarve region (Table 1). These samples, previously characterised and published by our team (Belmiro et al., 2023), represent at least one specimen from each outcrop, with a focus on primary and sub-primary locations across all chert-bearing formations in the region. A detailed description of the sample preparation process is available in our online research repository (Online resource 1).
+
 The samples were analysed using a Bruker AXS D8 Discover XRD with the Da Vinci design, equipped with a Cu Kα source operating at 40 kV and 40 mA, and a Lynxeye 1D detector. Scans were conducted from 3° to 75° 2θ, with a 0.05° 2θ step, at the HERCULES Laboratory, University of Évora.
 
-Preliminary phase identification was performed using Diffrac.Suite™ (Bruker) and further refined with Profex (version 5.2.9) after converting raw files using PowDll Converter. All data processed in Profex was organised and plotted in R Studio, where visual representations of the XRD data were also generated. The code and original files used in this analysis are available in our online repository.
+Preliminary phase identification was performed using Diffrac.Suite™ (Bruker) and further refined with Profex (version 5.2.9) after converting raw files using PowDll Converter. All data processed in Profex was organised and plotted in R Studio, where visual representations of the XRD data were also generated.
 
 Three additional samples (SP21, SP40, and a geological sample from the Triassic outcrop of Western Algarve) had previously been sent for XRD analysis and interpretation at Geociencias Barcelona-CSIC (Table 1). The analysis was conducted using a Bruker D8-A25 XRD, equipped with a Cu source (wavelength λ = 1.5405 Å) and an ultra-fast PSD detector (Lynxeye). The diffraction spectrum data were interpreted using the Diffrac.Suite software by Bruker by a technician.
 
@@ -802,7 +816,7 @@ Despite this limitation, EDS coupled with SEM has been widely used alongside oth
 
 This study employed scanning electron microscopy and energy-dispersive X-ray spectroscopy (SEM-EDS) to analyse the surface structure and elemental composition of the samples. The analysis included 39 geological samples from all five chert-bearing formations (Belmiro et al., 2023; Table 2a). Additionally, 27 samples were examined from archaeological artefacts, representing all previously identified chert types (Belmiro et al., 2025; Table 2b).
 
-The samples consisted of lithic chips mounted in resin and sanded until minimal to no scratches were visible under the microscope. A detailed description of the sample preparation process and analysis is available in our online repository (SOM_1).
+The samples consisted of lithic chips mounted in resin and sanded until minimal to no scratches were visible under the microscope. A detailed description of the sample preparation process and analysis is available in our online repository (Online resource 1).
 
 The chip analysis was conducted at the HERCULES Laboratory (Évora) using a variable pressure Hitachi S3700N SEM, coupled with a Quantax EDS microanalysis system. Specifically, the Quantax system is equipped with a Bruker AXS 5010 XFlash Silicon Drift Detector, which offers a spectral resolution of 129 eV at FWHM for MnKα. The EDS elemental analysis and quantification was carried out with the ESPRIT software by Bruker.
 
@@ -826,8 +840,6 @@ For geological samples, fresh, flat surfaces were scanned, avoiding altered face
 
 The analysis and reporting protocol were established based on previous studies, emphasising both the accuracy of the obtained data and the transparency and reproducibility of the results (Johnson et al., 2024; Newlander et al., 2015). The analysis focused on descriptive statistics and the generation of ANOVAs to compare different groups.
 
-For further reproducibility and replicability, and working towards the goal of open science (Johnson et al., 2024; Marwick, 2017), all analyses were performed through R Studio. The R code used for the analysis, datasets, and visual representations presented in this paper are available through our online repository (++). We utilised the rrtools package by Marwick et al. (2018) to create a research compendium and produce a reproducible journal article. The repository includes the complete set of raw data used in the analysis, along with a custom R project (Wickham, 2015) that contains the necessary code to generate all tables and figures. To facilitate broad reuse, the code is provided under the MIT license, the data under CC‐0, and the figures under CC‐BY. For more details, see Marwick (2017).
-
 # Results
 
 The results presented in this section focus on the main observed patterns of the analysis between outcrops, formations and chert types. The detailed analysis/graphs regarding individual samples for all methods can be found in our online repository (Online resource 4).
@@ -836,7 +848,7 @@ The XRD results are homogeneous, showing little differences between samples. The
 
 ```{r}
 #| label: tbl-xrd-results
-#| tbl-cap: "Identified crystalline phases of chert geological samples from the Algarve. LJW: Lower Jurassic West; MJE: Middle Jurassic East; TW: Triassic West; UPE: Upper Jurassic East; UPW: Upper Jurassic West. (*) refers to results obtained from samples analysed and interpreted at the Geociencias Barcelona-CSIC. Content percentages of samples analysed at the Hércules laboratory are represented by x: xxx refers to > 90%; xx to 90-30%; x to 10-1%; (x) to <1%."
+#| tbl-cap: "Identified crystalline phases of chert geological samples from the Algarve. LJW: Lower Jurassic west (Carixian formation); MJE: Middle Jurassic west (Malm formation); TW: Triassic west; UPE: Upper Jurassic west (Malhão formation); UPW: Upper Jurassic West (Jordana formation). (*) refers to results obtained from samples analysed and interpreted at the Geociencias Barcelona-CSIC. Content percentages of samples analysed at the Hércules laboratory are represented by x: xxx refers to > 90%; xx to 90-30%; x to 10-1%; (x) to <1%."
 
 # Read table
 xrd_results_tbl <- read_csv(here::here('analysis/data/raw_data/xrd_results.csv'))
@@ -852,7 +864,7 @@ Dolomite was mainly identified in the samples from the Lower Jurassic and Triass
 
 ```{r}
 #| label: fig-xrd-15
-#| fig-cap: "Plot of minerals identified through XRD in the Lower Jurassic (Carixian) chert sample from the outcrop Praia do Belixe (SP15_PBX). The rhombus shape signifies the main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks. Quantifications presented in the supporting table were obtained using Rietveld refinement."
+#| fig-cap: "Plot of minerals identified through XRD in the LJW chert sample from the outcrop Praia do Belixe (SP15_PBX). The rhombus shape signifies the main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks. Quantifications presented in the supporting table were obtained using Rietveld refinement."
 #| fig-width: 7
 #| fig-height: 5
 #| fig-align: center
@@ -861,11 +873,11 @@ plot(sp15_plot)
 
 ```
 
-In opposition, calcite was mainly identified in the Upper Jurassic samples and the Triassic samples. The primary and sub-primary cherts from the Jordana formation (Eastern Algarve) and the Upper Jurassic of Praia da Mareta (Western Algarve) all show the presence of calcite peaks. In comparison, only 1 sample out of 12 of the Lower Jurassic outcrops and 1 out of 5 of the Middle Jurassic outcrops show the presence of calcite.
+In opposition, calcite was mainly identified in the Upper Jurassic samples and the Triassic samples. The primary and sub-primary cherts from the UJE and the UJW all show the presence of calcite peaks. In comparison, only 1 sample out of 12 of the LJW and 1 out of 5 of the MJE show the presence of calcite.
 
 ```{r}
 #| label: fig-xrd-58-69
-#| fig-cap: "Plot of minerals identified through XRD in the a) eastern Upper Jurassic (Jordana formation) chert sample from the outcrop Jordana (SP58_JOR) and b) western Upper Jurassic (Malm) chert sample from the outcrop Praia da Mareta (SP69_MAR). The rhombus shape signifies the main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks. Quantifications presented in the supporting table were obtained using Rietveld refinement."
+#| fig-cap: "Plot of minerals identified through XRD in the a) UJE chert sample from the outcrop Jordana (SP58_JOR) and b) UJW chert sample from the outcrop Praia da Mareta (SP69_MAR). The rhombus shape signifies the main peaks key to identify each mineral. Labels represent the d spacing values of key mineral peaks. Quantifications presented in the supporting table were obtained using Rietveld refinement."
 #| fig-align: center
 #| fig-width: 7
 #| fig-height: 8
@@ -904,7 +916,9 @@ knitr::include_graphics(here::here('analysis/figures/M18_7_M18_8_graphs.png'))
 
 ```
 
-The rarity of inclusions is not limited to skeletal remains, but to other inclusions such as oxides, which in T6-8 are small and rare. Despite this difference in abundance and size, oxides are mainly composed of iron, often associated with other elements, possibly suggesting the existence of iron oxide (Fe~2~O~3~), pyrite (FeS~2~) and ilmenite (FeTiO~3~). Iron oxides were found both as inclusions scattered in the samples, but also frequently associated with skeletal remains, which may be related to their oxidisation. Pyrite was also identified in the shape of spherical pyrite framboids, as well as dispersed pyrite nanocrystals. These are characterised not only by large peaks of iron and associated sulphur, but also by round/angular small nanocrystals organised in spherical shapes, semi-spherical or simply dispersed crystals, frequently in association with spherical framboids. These were present mainly in geological samples from the Upper Jurassic (both west and eastern formations), but barely identified in archaeological samples.
+The rarity of inclusions is not limited to skeletal remains, but to other inclusions such as oxides, which in T6-8 are small and rare. Despite this difference in abundance and size, oxides are mainly composed of iron, often associated with other elements, possibly suggesting the existence of iron oxide (Fe~2~O~3~), pyrite (FeS~2~) and ilmenite (FeTiO~3~). Iron oxides were found both as inclusions scattered in the samples, but also frequently associated with skeletal remains, which may be related to their oxidisation.
+
+Pyrite was also identified in the shape of spherical pyrite framboids, as well as dispersed pyrite nanocrystals. These are characterised not only by large peaks of iron and associated sulphur, but also by round/angular small nanocrystals organised in spherical shapes, semi-spherical or simply dispersed crystals, frequently in association with spherical framboids. These were present mainly in geological samples from the Upper Jurassic (UJW and UJE), but barely identified in archaeological samples.
 
 ```{r}
 #| label: fig-framboids
@@ -914,11 +928,11 @@ knitr::include_graphics(here::here('analysis/figures/M10_5_map1_map2.png'))
 
 ```
 
-In a single sample from Lower Jurassic and samples from local T4 (both characterised by the previously mentioned oval fossils) inclusions composed of titanium (without associated iron) were identified, which may be related to the presence of rutile (TiO~2~). Small peaks of titanium were also identified in 3 out of 4 non-local T6 samples.
+In a single sample from LJW and samples from local T4 (both characterised by the previously mentioned oval fossils) inclusions composed of titanium (without associated iron) were identified, which may be related to the presence of rutile (TiO~2~). Small peaks of titanium were also identified in 3 out of 4 non-local T6 samples.
 
 Other elements were identified through EDS maps and spectra (e.g., chlorine, potassium or magnesium), although their distribution also showed no patterns between formations and chert types. The exceptions are calcium and aluminium.
 
-Whenever isolated, calcium can be found in high peaks in cherts from Upper Jurassic formations and is probably related to the presence of calcite inclusions.
+Whenever isolated, calcium can be found in high peaks in cherts from Upper Jurassic formations (UJW and UJE) and is probably related to the presence of calcite inclusions.
 
 ```{r}
 #| label: fig-calcite
@@ -928,7 +942,7 @@ knitr::include_graphics(here::here('analysis/figures/M4_3_graphs.png'))
 
 ```
 
-Aluminium may be related to the speed of sedimentation; low peaks of aluminium may be related to the fastest sedimentations speeds and may be a useful component to identify differences between cherts. Almost all chert samples show aluminium peaks, although mostly small. An exception is the cherts from the Eastern basin of the Algarve (MJE and UJE), samples from non-local archaeological T7 and T8 which show large peaks. The exception to the presence of aluminium is the chert of both geological samples from the Triassic formations and archaeological group T1 and all archaeological samples from the non-local group T6, with sources previously attributed to the Cretaceous cherts from Central Portugal.
+Aluminium may be related to the speed of sedimentation; low peaks of aluminium may be related to the fastest sedimentations speeds and may be a useful component to identify differences between cherts. Almost all chert samples show aluminium peaks, although mostly small. An exception is the cherts from the Eastern basin of the Algarve (MJE and UJE), samples from non-local archaeological T7 and T8 which show large peaks. The exception to the presence of aluminium is the chert of both geological samples from the Triassic formations and archaeological group T1 and all archaeological samples from the non-local group T6, with sources previously attributed to the CPT formation.
 
 The pXRF measured 44 major and minor elements, although, for a large majority, these were mostly composed of values below the detection level (\< LOD) or with values equal to 0. Only elements with more than 50% (n\>80) of successful values were maintained in the analysis to allow the successful interpretation of the data (Fig. ++). This list and a summarised description of the elements and their presence in sedimentary rocks/chert can be found in the supplementary materials (Online resource 3).
 
@@ -945,7 +959,7 @@ plot(succ_barplot)
 
 When focusing on the chosen elements, some patterns become clear; these can be seen as differences in the values between different types of chert, as well as similarities between geological and archaeological samples.
 
-In general, silica is the main component of all cherts. However, there is some variability and outliers in both silica and other elements. From these, LJW cherts (Lower Jurassic West) seem to show higher variability and more outliers. This may be related to the higher dolomitization process occurring in LJW cherts. Similarly, the lower mean values of silica for UJW (Upper Jurassic West) samples may be related to high values of calcium oxide (Fig. ++).
+In general, silica is the main component of all cherts. However, there is some variability and outliers in both silica and other elements. From these, LJW cherts seem to show higher variability and more outliers. This may be related to the higher dolomitization process occurring in LJW cherts. Similarly, the lower mean values of silica for UJW (Upper Jurassic West) samples may be related to high values of calcium oxide (Fig. ++).
 
 ```{r}
 #| label: fig-pxrf-boxplots
@@ -958,7 +972,7 @@ ggarrange(si_boxplot, ca_boxplot, fe_boxplot, ti_boxplot, labels = c("a","b","c"
 
 ```
 
-No clear patterns seem to occur between geological groups and archaeological groups, with the exception of the samples from central Portugal (CPT) and non-local archaeological types T6 and T7. This is more marked in Fe~2~O~3~ (Fig. ++ b) and, to a lesser degree, in TiO~2~ (Fig. ++ c), which show smaller means and values for these groups. The similarity between these groups can also be seen in the near absence of Sr; where other groups show smaller values but are well represented, the numbers of CPT, T6 and T8 samples are reduced to \<50%, meaning Sr (Table s++) presence is limited in these cherts. Similarly, CPT and T6 cherts also show less than 50% samples with Zr (Table s++), making this element also limited in these chert groups.
+No clear patterns seem to occur between geological groups and archaeological groups, with the exception of the CPT samples and non-local archaeological types T6 and T7. This is more marked in Fe~2~O~3~ (Fig. ++ b) and, to a lesser degree, in TiO~2~ (Fig. ++ c), which show smaller means and values for these groups. The similarity between these groups can also be seen in the near absence of Sr; where other groups show smaller values but are well represented, the numbers of CPT, T6 and T8 samples are reduced to \<50%, meaning Sr (Table s++) presence is limited in these cherts. Similarly, CPT and T6 cherts also show less than 50% samples with Zr (Table s++), making this element also limited in these chert groups.
 
 Finally, archaeological types T9 to T11 seem to show the most differences in element percentages of all analysed samples; due to the small sample, instead of boxplots (with a minimum in the sample of 5), the results are shown in Table s++ in the SOM. Albeit with some variation, T9 and T10 to show lower percentages of silica in comparison to other samples. As expected, other elements show much higher percentages, especially Fe~2~O~3~, TiO~2~, Al~2O~3 and K~2~O. T11 shows the lower percentages of silica (\~90%; Table s++), and, similarly to T9-10 high peaks of Fe~2~O~3~, TiO~2~, K~2~O. Compared to all the other samples analysed in this study, T11 shows the highest values for Cu and Zr. However, these are still small percentages within the total chemical composition (\<0.0006).
 
@@ -977,11 +991,11 @@ plot_grid(biplot_alg, biplot_nl, biplot_comp, biplot_comp2, labels = c("a", "b",
 
 ```
 
-When comparing the regional Algarve cherts (fig. @fig-pca a), we see that the two first dimensions explain a combined `r 34.6+26.3`% variability in the results, with dimension 1 explaining 34.6% and dimension 2 explaining 26.3%. By observing the scatterplots, it is noticeable that the Lower Jurassic cherts (LJW) are highly variable when compared to the other cherts, with samples which display higher positive values in dimension 1 (Dim1) and dimension 2 (Dim2). However, when focusing on the concentration of LJW results, they seem to fit within the range shown by Middle Jurassic and Upper Jurassic eastern cherts. In comparison, Upper Jurassic cherts from the western basin show higher positive values in dimension 2, which is explained by the higher values of CaO.
+When comparing the regional Algarve cherts (fig. @fig-pca a), we see that the two first dimensions explain a combined `r 34.6+26.3`% variability in the results, with dimension 1 explaining 34.6% and dimension 2 explaining 26.3%. By observing the scatterplots, it is noticeable that the LJW cherts are highly variable when compared to the other cherts, with samples which display higher positive values in dimension 1 (Dim1) and dimension 2 (Dim2). However, when focusing on the concentration of LJW results, they seem to fit within the range shown by MJE and UJE cherts. In comparison, UJW cherts show higher positive values in dimension 2, which is explained by the higher values of CaO.
 
-The differences between the local Lower Jurassic cherts and non-local cherts are more marked. @fig-pca b represents the correlation between elements and Lower Jurassic cherts, central Portugal Cretaceous cherts and southern Spain Upper Jurassic cherts. Dimension 1 explains \~57% of the variability, while dimension 2 explains \~29%, with a combined percentage of `r 56.6+28.6`%. Once again, it is clear that Jurassic cherts, both from southwestern Portugal and southern Spain, show variability, although they are mostly located in the center/bottom of dimension 2 and center of dimension 1. When compared to these values, central Portugal Cretaceous cherts are located in the negative axis of dimension 1 and show little variability.
+The differences between the LJW cherts and non-local cherts are more marked. @fig-pca b represents the correlation between elements and LJW, CPT and UCA cherts. Dimension 1 explains \~57% of the variability, while dimension 2 explains \~29%, with a combined percentage of `r 56.6+28.6`%. Once again, it is clear that Jurassic cherts, both from southwestern Portugal and southern Spain, show variability, although they are mostly located in the center/bottom of dimension 2 and center of dimension 1. When compared to these values, CPT cherts are located in the negative axis of dimension 1 and show little variability.
 
-A similar pattern emerges when applying a PCA using the same elements but comparing them to archaeological, non-local chert T6, previously attributed to central Portugal (Fig. @fig-pca c). In this PCA, dimension 1 explains \~52% of the variability and dimension 2 \~30%, with a combined percentage of `r 52.2+30.1`%. Similarly to geological Cretaceous samples from central Portugal, T6 samples are also concentrated in the negative side of dimension 1, with a clear overlap between the two.
+A similar pattern emerges when applying a PCA using the same elements but comparing them to archaeological, non-local chert T6, previously attributed to central Portugal (Fig. @fig-pca c). In this PCA, dimension 1 explains \~52% of the variability and dimension 2 \~30%, with a combined percentage of `r 52.2+30.1`%. Similarly to geological Cretaceous samples from CPT, T6 samples are also concentrated in the negative side of dimension 1, with a clear overlap between the two.
 
 As observed in @fig-pca b, @fig-pca d shows a concentration of all groups in the centre/bottom of dimension 2 (28.7%) and centre of dimension 1 (58.7%), with the first two dimensions explaining a combined percentage of `r 58.7+28.7`% of the variability. The archaeological local cherts T2 to T5 and non-local type T7 (previously attributed to the Upper Jurassic cherts of southern Spain) are congruent with the corresponding geological sources, although with clear decreased variability.
 
@@ -993,7 +1007,7 @@ For example, the presence of calcite in Upper Jurassic cherts (both eastern and 
 
 This is especially relevant for the overall goal of providing a detailed lithotheque, both physical and online. By expanding the previously used methods to characterise these geological cherts, we have provided a key reference collection of the Algarve region which can, from this point onwards, be consistently used in archaeological studies for prehistoric assemblages across Iberia.
 
-However, despite the added layers of mineral and chemical characterisation to these cherts, one of the main research questions for this paper and regional research [@belmiroCreatingFramesReference2023; @belmiroChertProcurementPatterns2025], continues to be unanswered. As mentioned in section 1 “Introduction” one of the goals of this research was to test the potential of several methods to distinguish between the cherts from the Lower Jurassic Carixian (west Algarve basin) and Middle Jurassic Malhão (east Algarve basin) formations.
+However, despite the added layers of mineral and chemical characterisation to these cherts, one of the main research questions for this paper and regional research (Belmiro et al., 2025, 2023), continues to be unanswered. As previously mentioned, one of the goals of this research was to test the potential of several methods to distinguish between the cherts from the LJW and MJE formations.
 
 Perhaps one of the main differences between the cherts from these two formations is related to the presence of dolomite. The nodules of LJW show small peaks of dolomite in the XRD results. This was expected since a process of dolomitization of the chert nodules, especially on the outer edges, has been identified in previous works [@belmiroCreatingFramesReference2023; @ribeiro_evolucao_2005], and is related to the formation and diagenesis processes of the geological layers and chert nodules [@ribeiro_evolucao_2005; @rochaNoticiaExplicativaFolha1979].
 
@@ -1027,7 +1041,7 @@ For example, the pXRF results comparing the chemical composion of local cherts, 
 
 In comparison, cases like T11 showed clear differences in their chemical compositions, especially in the presence of copper and zirconium while macroscopically they show no visible fossils or inclusions. These black cherts have been identified in south Portugal, in the Alentejo region and central Spain [@araujoRegioesCentralSul2013; @oliveiraTracosGeraisEvolucao1991]. Further, studies have discussed the presence of copper mineralization present in cherts from the region [@oliveiraComplexoVulcanoSedimentarToca2013]. While further studies need to explore this, given the lack of a reference collection for cherts and jaspers from southeastern Portugal and central western Spain, or the inclusion of jasper in this study, we suggest that alike TL01 [@belmiroChertProcurementPatterns2025], T11 may have a source in the Zona Ossa Morena in central Iberia.
 
-The T6 cherts also showed clear differences from the local cherts. While the results obtained through SEM-EDS are like those surmised from petrographic analysis, T6 cherts show a clear absence of inclusions, fossils or porosity, as well as lower to near absent peaks of aluminium, hinting at different rates of sedimentation (and thus different formation environment) than LJW cherts. Unlike T7 cherts, T6 cherts when analysed through a PCA showed a clearer association with geological samples from central Portugal Cretaceous cherts.
+The T6 cherts also showed clear differences from the local cherts. While the results obtained through SEM-EDS are like those surmised from petrographic analysis, T6 cherts show a clear absence of inclusions, fossils or porosity, as well as lower to near absent peaks of aluminium, hinting at different rates of sedimentation (and thus different formation environment) than LJW cherts. Unlike T7 cherts, T6 cherts when analysed through a PCA showed a clearer association with CPT geological samples.
 
 These results show that a multi-layered approach to raw material studies, specifically chert, seems to be key for sourcing studies. While XRD may not be an ideal technique for archaeological artefacts, given its destructive nature and the general homogeneity of chert, other methods provided their own contributions to source attribution.
 
