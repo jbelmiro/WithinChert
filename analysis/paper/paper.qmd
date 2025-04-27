@@ -21,9 +21,9 @@ filters:
 bibliography: references.bib
 csl: "../templates/journal-of-archaeological-science.csl" # Insert path for the bib-style
 abstract: |
-  Text of abstract
+  Recent advances in the study of chert in the Algarve have applied macroscopic and petrographic methods to geological samples from regional chert-bearing formations and archaeological materials from the Upper Palaeolithic assemblages of Vale Boi to explore hunter-gatherer mobility and technological organisation. However, key questions regarding human behaviour, mobility, and raw material selection remain unanswered, largely due to the limitations of macroscopic and petrographic methods in fully characterising the cherts. This study expands the characterisation of both geological and archaeological samples through the application of additional analytical methods, aiming to address critical research questions and assess the potential of these methods for chert characterisation in the Algarve and at Vale Boi. The results demonstrate that a multi-layered analytical approach is most effective for chert characterisation. While the applied geochemical methods yield strong results in distinguishing between cherts of different geological periods, they struggle to differentiate between cherts from the same period but different epochs. By building on previous analyses, this research contributes to broader discussions on lithic procurement strategies, human mobility, and exchange networks in southwestern Iberia during the Upper Palaeolithic.
 keywords: |
-  keyword 1; keyword 2; keyword 3
+  Geoarchaeology; XRD; SEM-EDS; pXRF
 ---
 
 <!-- This is the format for text comments that will be ignored during renderings. Do not put R code in these comments because it will not be ignored. -->
@@ -1057,9 +1057,35 @@ As such, pXRF seems to be an ideal method for preliminary studies and characteri
 
 # Conclusion
 
+This study highlights the importance of applying a multi-method analytical framework to the characterisation of cherts from the Algarve region. By combining mineralogical and geochemical techniques like XRD, SEM-EDS and pXRF, we were able to refine the characterisation of geological and archaeological cherts and address key questions related to raw material procurement and human mobility during the Upper Palaeolithic at Vale Boi.
+
+Although some challenges remain—particularly the difficulty of consistently distinguishing between cherts from the Lower Jurassic West (LJW) and Middle Jurassic East (MJE) formations—the integration of mineralogical indicators, such as the presence of dolomite and chemical variability, has opened new avenues for understanding raw material selection strategies.
+
+The results suggest that prehistoric groups engaged in selective procurement behaviours, favouring cherts with better knapping qualities, such as those showing less dolomitization. Furthermore, the use of geochemical methods of both local and non-local cherts within the Vale Boi assemblages and their comparison to samples from other regions strengthens the previous source attributions. This is especially relevant for clearly defining central Portugal as a source for a portion of non-local cherts present in Vale Boi.
+
+The study also underscores the value and limitations of different analytical methods. Techniques such as SEM-EDS and pXRF proved highly effective for an (almost) non-destructive analysis. However, pXRF alone showed limited ability to distinguish between closely related chert formations, highlighting the need for complementary high-precision geochemical techniques in future research.
+
+Finally, this work has contributed to the development of a robust regional lithotheque for the Algarve, providing a critical reference point for future studies of prehistoric lithic assemblages in Iberia.
+
+Future research should expand the geological reference collections beyond the Algarve and incorporate higher-resolution geochemical analyses to further refine raw material sourcing. In doing so, it will be possible to deepen our understanding of human behavioural adaptations and regional interaction networks during the Upper Palaeolithic.
+
 # Acknowledgements
 
-I would like to thank Dr. José Mirão for the training in the XRD and SEM-EDS methods and aid in the interpretation of the results, and the Hércules laboratory, for facilitating the equipment necessary for preparation and analyses (++). Still from the Hércules team, I thank the technician Sandra Velez for the training, help and bright mood during the preparation of SEM-EDS samples. In a similar fashion, I thank Dr. Javier Sanchéz-Martinéz for the help in obtaining chips for analysis through meticulous knapping whenever necessary. The preparation of bulk samples for XRD would also not have been possible without the help of the CIMA laboratory and their equipment. Finally, I would like to thank ICArEHB for providing the necessary equipment, contacts and researchers that allowed me to complete this study and explore the different techniques employed here. In particular, I would like to thank Dr. Hussein Kanbar for the support during the analysis and key insights for interpretation and visual presentation of geochemical data; and technician Pedro ++ and Dr. Vera Aldeias for the continuous support and advice.
+I would like to thank Dr. José Mirão for the training in the XRD and SEM-EDS methods and aid in the interpretation of the results, and the HERCULES laboratory, for facilitating the equipment necessary—the analyses were developed at the HERCULES Laboratory of the University of Évora, funded by FCT through the projects UIDB/04449/2020 and UIDP/04449/2020. Still from the Hércules team, I thank the technician Sandra Velez for the training, help and bright mood during the preparation of SEM-EDS samples. Similarly, I thank Dr. Javier Sanchéz-Martinéz for the help in obtaining chips for analysis through meticulous knapping whenever necessary. The preparation of bulk samples for XRD would also not have been possible without the help of the CIMA laboratory and their equipment. Finally, I would like to thank ICArEHB for providing the necessary equipment, contacts and researchers that allowed me to complete this study and explore the different techniques employed here. In particular, I would like to thank Dr. Hussein Kanbar for the support during the analysis and key insights for interpretation and visual presentation of geochemical data; and technician Pedro Coxito and Dr. Vera Aldeias for the continuous support and advice.
+
+# Supplementary Online Materials
+
+**Online resource 1:** Sample preparation and detailed method description.
+
+**Online resource 2:** pXRF sample measurements (thickness and min. diameter).
+
+**Online resource 3:** Chemical elements/compounds and geological implications.
+
+**Online resource 4:** Supplementary graphs and detailed description of XRD and SEM-EDS results.
+
+**Online resource 5:** SEM-EDS results by sample. Presence of chemical elements (EDS) and inclusions/fossils (SEM).
+
+**Online resource 6:** pXRF descriptive statistics table.
 
 <!-- The following line inserts a page break  -->
 
