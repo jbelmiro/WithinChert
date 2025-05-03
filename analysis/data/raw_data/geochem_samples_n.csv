@@ -1,11 +1,20 @@
-﻿Formation/type,XRD,SEM-EDS,pXRF,,XRD,SEM-EDS,pXRF
-a) Geological,,,,b) Archaeological,,,
-LJW,12,14,40,T1,-,3,5
-TW,1,1,2,T2-5,-,11,31
-UJW,1,4,4,T6,-,4,13
-MJE,5,10,14,T7,-,5,7
-UJE,4,10,6,T8,-,1,8
-CPT,-,-,16,T9,-,1,3
-UCA,-,-,12,T10,-,2,3
-Total (a),23,39,94,T11,-,-,2
-Total (a+b),23,66,166,Total (b),-,27,72
+﻿a) Geological,XRD,SEM-EDS,pXRF
+LJW,12,14,40
+TW,1,1,2
+UJW,1,4,4
+MJE,5,10,14
+UJE,4,10,6
+CPT,-,-,16
+UCA,-,-,12
+Total (a),23,39,94
+b) Archaeological,XRD,SEM-EDS,pXRF
+T1,-,3,5
+T2-5,-,11,31
+T6,-,4,13
+T7,-,5,7
+T8,-,1,8
+T9,-,1,3
+T10,-,2,3
+T11,-,-,2
+Total (b),-,27,72
+Total (a+b),23,66,166

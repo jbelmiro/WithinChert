@@ -871,6 +871,8 @@ Dolomite was mainly identified in the samples from LJW and TW outcrops. Small do
 
 plot(sp15_plot)
 
+#ggsave("xrd_15.png", bg = "white", width = 7, height = 5, unit ="in", dpi = 300, path = "analysis")
+  
 ```
 
 In opposition, calcite was mainly identified in the Upper Jurassic samples and the TW samples. The primary and sub-primary cherts from the UJE and the UJW all show the presence of calcite peaks. In comparison, only 1 sample out of 12 of the LJW and 1 out of 5 of the MJE show the presence of calcite.
@@ -882,7 +884,9 @@ In opposition, calcite was mainly identified in the Upper Jurassic samples and t
 #| fig-width: 7
 #| fig-height: 8
 
-plot_grid(sp58_plot, sp69_plot, labels = c("a", "b"), nrow = 2)
+grid_plot <- plot_grid(sp58_plot, sp69_plot, labels = c("a", "b"), nrow = 2)
+
+#ggsave("grid_plot.png", bg = "white", width = 7, height = 8, unit ="in", dpi = 300, path = "analysis")
 
 ```
 
@@ -957,6 +961,8 @@ The pXRF measured 44 major and minor elements, although, for a large majority, t
 
 plot(succ_barplot)
 
+#ggsave("succ_barplot.png", bg = "white", width = 6, height = 4, unit ="in", dpi = 300, path = "analysis")
+
 ```
 
 When focusing on the chosen elements, some patterns become clear; these can be seen as differences in the values between different types of chert, as well as similarities between geological and archaeological samples.
@@ -965,12 +971,14 @@ In general, silica is the main component of all cherts. However, there is some v
 
 ```{r}
 #| label: fig-pxrf-boxplots
-#| fig-cap: "Boxplots of raw element percentages (a: SiO2, b: CaO, c: Fe2O3, d: TiO2) by geological formation or archaeological chert type. Only chert groups with n>5 were included in the boxplots."
+#| fig-cap: "Boxplots of raw element percentages (a: SiO2, b: CaO, c: Fe2O3, d: TiO2) by geological formation or archaeological chert type. Only chert groups with n>5 were included in the boxplots. Diamond symbol represents mean values within each group."
 #| fig-width: 7
 #| fig-height: 7
 #| fig-align: center
 
-ggarrange(si_boxplot, ca_boxplot, fe_boxplot, ti_boxplot, labels = c("a","b","c","d"), ncol = 2, nrow = 2, common.legend = TRUE, legend = "bottom")
+pxrf_boxplots <- ggarrange(si_boxplot, ca_boxplot, fe_boxplot, ti_boxplot, labels = c("a","b","c","d"), ncol = 2, nrow = 2, common.legend = TRUE, legend = "bottom")
+
+#ggsave("pxrf_boxplots.png", bg = "white", width = 7, height = 7, unit ="in", dpi = 300, path = "analysis")
 
 ```
 
@@ -989,7 +997,9 @@ Multicomponent statistical analysis was applied to the pXRF results, to understa
 #| fig-height: 7
 #| fig-align: center
 
-plot_grid(biplot_alg, biplot_nl, biplot_comp, biplot_comp2, labels = c("a", "b", "c", "d"))
+pca_plots <- plot_grid(biplot_alg, biplot_nl, biplot_comp, biplot_comp2, labels = c("a", "b", "c", "d"))
+
+#ggsave("pca_plots.png", bg = "white", width = 9, height = 7, unit ="in", dpi = 300, path = "analysis")
 
 ```
 
