@@ -4,9 +4,9 @@ author: Joana Belmiro
 title-block-published: "Last updated"  
 date: now
 date-format: long
-format: 
-  docx:
-    reference-doc: "../templates/template.docx" # Insert path for the DOCX file
+format: html
+  #docx:
+    #reference-doc: "../templates/template.docx" # Insert path for the DOCX file
 execute:
   echo: false
   warning: false
@@ -871,7 +871,7 @@ Dolomite was mainly identified in the samples from LJW and TW outcrops. Small do
 
 plot(sp15_plot)
 
-#ggsave("xrd_15.png", bg = "white", width = 7, height = 5, unit ="in", dpi = 300, path = "analysis")
+#ggsave("xrd_15.png", bg = "white", width = 7, height = 5, unit ="in", dpi = 600, path = "analysis")
   
 ```
 
@@ -886,7 +886,9 @@ In opposition, calcite was mainly identified in the Upper Jurassic samples and t
 
 grid_plot <- plot_grid(sp58_plot, sp69_plot, labels = c("a", "b"), nrow = 2)
 
-#ggsave("grid_plot.png", bg = "white", width = 7, height = 8, unit ="in", dpi = 300, path = "analysis")
+plot(grid_plot)
+
+#ggsave("grid_plot.png", bg = "white", width = 7, height = 8, unit ="in", dpi = 600, path = "analysis")
 
 ```
 
