@@ -32,7 +32,7 @@ Following the initial preparation, the chips were ground into a fine, homogeneou
 
 The initial sample preparation was conducted at the ICArEHB laboratories (Interdisciplinary Centre for Archaeology and the Evolution of Human Behaviour), while bulk sample processing took place at the Laboratory of Environmental Sedimentology at CIMA (Centro de Investigação Marinha e Ambiental), University of Algarve (https://www.cima.ualg.pt/pt/cima/infraestruturas).
 
-To ensure the reproducibility of results across different XRD instruments and researchers, larger quantities of chips were processed, allowing for the preparation of multiple bulk samples from the same nodules and the same internal areas within each nodule.
+To ensure the reproducibility of results across different XRD instruments and researchers, we prepared multiple bulk samples from the same nodules and the same internal areas within each nodule. These bulk samples are hosted in the LARMAAT laboratory at ICArEHB.
 
 X-ray diffraction (XRD) analysis was performed using a Bruker AXS D8 Discover system with Da Vinci design, equipped with a Cu Kα source (operating at 40 kV and 40 mA) and a Lynxeye one-dimensional detector. Scans were conducted over a 2θ range of 3° to 75°, with a step size of 0.05°, at the HERCULES Laboratory at the University of Évora.
 
