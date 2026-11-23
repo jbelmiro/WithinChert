@@ -23,7 +23,7 @@ csl: "../templates/journal-of-archaeological-science.csl" # Insert path for the 
 abstract: |
   Recent advances in the study of chert in the Algarve have applied macroscopic and petrographic methods to geological samples from regional chert-bearing formations and archaeological materials from the Upper Palaeolithic assemblages of Vale Boi to explore hunter-gatherer mobility and technological organisation. However, key questions regarding human behaviour, mobility, and raw material selection remain unanswered, largely due to the limitations of macroscopic and petrographic methods in fully characterising the cherts. This study expands the characterisation of both geological and archaeological samples through the application of additional analytical methods, aiming to address critical research questions and assess the potential of these methods for chert characterisation in the Algarve and at Vale Boi. The results demonstrate that a multi-layered analytical approach is most effective for chert characterisation. While the applied geochemical methods yield strong results in distinguishing between cherts of different geological periods, they struggle to differentiate between cherts from the same period but different epochs. By building on previous analyses, this research contributes to broader discussions on lithic procurement strategies, human mobility, and exchange networks in southwestern Iberia during the Upper Palaeolithic.
 keywords: |
-  Geoarchaeology; XRD; SEM-EDS; pXRF
+  Geoarchaeology; XRD; SEM-EDS; pXRF; chert
 ---
 
 <!-- This is the format for text comments that will be ignored during renderings. Do not put R code in these comments because it will not be ignored. -->
