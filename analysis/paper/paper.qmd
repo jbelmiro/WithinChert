@@ -1034,6 +1034,8 @@ In general, silica is the main component of all cherts. However, there is some v
 
 pxrf_boxplots <- ggarrange(si_boxplot, ca_boxplot, fe_boxplot, ti_boxplot, labels = c("a","b","c","d"), ncol = 2, nrow = 2, common.legend = TRUE, legend = "bottom")
 
+plot(pxrf_boxplots)
+
 #ggsave("pxrf_boxplots.png", bg = "white", width = 7, height = 7, unit ="in", dpi = 300, path = "analysis")
 
 ```
@@ -1054,6 +1056,8 @@ Multicomponent statistical analysis was applied to the pXRF results, to understa
 #| fig-align: center
 
 pca_plots <- plot_grid(biplot_alg, biplot_nl, biplot_comp, biplot_comp2, labels = c("a", "b", "c", "d"))
+
+plot(pca_plots)
 
 #ggsave("pca_plots.png", bg = "white", width = 9, height = 7, unit ="in", dpi = 300, path = "analysis")
 
